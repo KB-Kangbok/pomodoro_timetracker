@@ -1,6 +1,8 @@
 CREATE DATABASE PTT;
-CREATE USER 'pttadmin'@'localhost' IDENTIFIED BY 'AdminPass';
+SET GLOBAL validate_password_policy = MEDIUM;
+CREATE USER 'pttadmin'@'localhost' IDENTIFIED BY 'AdminPass@$24';
 GRANT ALL PRIVILEGES ON PTT.* TO 'pttadmin'@'localhost';
+FLUSH PRIVILEGES;
 
 CREATE TABLE PTT.user(
     userid INTEGER PRIMARY KEY AUTO_INCREMENT,
