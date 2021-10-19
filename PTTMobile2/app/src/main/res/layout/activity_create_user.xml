@@ -5,47 +5,52 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/loginPageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login Page"
-        android:layout_centerHorizontal="true"
+        android:text="Create User"
+        android:textSize="48dp"
         android:layout_margin="10dp"
-        android:textSize="48dp">
+        android:layout_centerHorizontal="true">
 
     </TextView>
 
     <EditText
-        android:id="@+id/usernameField"
+        android:id="@+id/userFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:hint="Username / Email">
+        android:hint="First Name"
+        android:layout_centerInParent="true">
 
     </EditText>
 
     <EditText
-        android:id="@+id/passwordField"
+        android:id="@+id/userLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/userFirstName"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/usernameField"
-        android:hint="Password">
+        android:hint="Last Name">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userLastName"
+        android:layout_centerHorizontal="true"
+        android:hint="Email Address">
 
     </EditText>
 
     <Button
-        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Create User"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:text="Login"
         android:layout_centerHorizontal="true"
-        android:onClick="login">
+        android:onClick="createUser">
 
     </Button>
-
 
 </RelativeLayout>
