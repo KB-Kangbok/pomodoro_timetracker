@@ -61,7 +61,7 @@ public class SessionService {
     }
 
     private SessionHttp generateSessionHttpFromSession(Session session) {
-        return new SessionHttp(session.getId(), DateTimeConverter.toISO8601(session.getStartTime(), session.getStartTimeZone()), DateTimeConverter.toISO8601(session.getEndTime(), session.getEndTimeZone()), session.getCounter());
+        return new SessionHttp(session.getId(), DateTimeConverter.toISO8601(session.getStartTime()), DateTimeConverter.toISO8601(session.getEndTime()), session.getCounter());
     }
 
     private Session generateSessionFromSessionHttp(Integer userid, Integer projectid, Integer sessionid, SessionHttp sessionHttp) {
@@ -69,9 +69,7 @@ public class SessionService {
             if (sessionRepository.existsSessionByUseridAndProjectidAndId(userid, projectid, sessionid)) {
                 Session updatedSession = sessionRepository.findSessionById(sessionid);
                 updatedSession.setStartTime(DateTimeConverter.toSQLTimestampUTC(sessionHttp.getStartTime()));
-                updatedSession.setStartTimeZone(DateTimeConverter.getISO8601TimeZone(sessionHttp.getStartTime()));
                 updatedSession.setEndTime(DateTimeConverter.toSQLTimestampUTC(sessionHttp.getEndTime()));
-                updatedSession.setEndTimeZone(DateTimeConverter.getISO8601TimeZone(sessionHttp.getEndTime()));
                 updatedSession.setCounter(sessionHttp.getCounter());
                 return updatedSession;
 
@@ -111,9 +109,7 @@ public class SessionService {
     private Session generateSessionFromSessionHttpHelper(Integer userid, Integer projectid, SessionHttp sessionHttp) {
         return new Session(userid, projectid,
                 DateTimeConverter.toSQLTimestampUTC(sessionHttp.getStartTime()),
-                DateTimeConverter.getISO8601TimeZone(sessionHttp.getStartTime()),
                 DateTimeConverter.toSQLTimestampUTC(sessionHttp.getEndTime()),
-                DateTimeConverter.getISO8601TimeZone(sessionHttp.getEndTime()),
                 sessionHttp.getCounter());
     }
 }

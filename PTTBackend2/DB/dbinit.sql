@@ -1,5 +1,7 @@
+DROP DATABASE IF EXISTS PTT;
 CREATE DATABASE PTT;
 SET GLOBAL validate_password_policy = MEDIUM;
+DROP USER IF EXISTS 'pttadmin'@'localhost';
 CREATE USER 'pttadmin'@'localhost' IDENTIFIED BY 'AdminPass@$24';
 GRANT ALL PRIVILEGES ON PTT.* TO 'pttadmin'@'localhost';
 FLUSH PRIVILEGES;
@@ -24,9 +26,7 @@ CREATE TABLE PTT.session(
     projectid INTEGER NOT NULL,
     userid INTEGER NOT NULL,
     starttime DATETIME NOT NULL,
-    starttimezone VARCHAR(100) NOT NULL,
     endtime DATETIME DEFAULT NULL,
-    endtimezone VARCHAR(100) DEFAULT NULL,
     counter INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (projectid, userid) REFERENCES project(projectid, userid) ON UPDATE RESTRICT ON DELETE CASCADE,
     FOREIGN KEY (userid) REFERENCES user(userid) ON UPDATE RESTRICT ON DELETE CASCADE,
