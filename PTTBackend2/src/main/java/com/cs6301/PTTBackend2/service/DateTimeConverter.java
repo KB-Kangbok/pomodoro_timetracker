@@ -11,17 +11,12 @@ public class DateTimeConverter {
     private final static DateTimeFormatter sqlDateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.S");
 
     public static Timestamp toSQLTimestampUTC(String isoDateTime) {
-        DateTime utcTime = isoDateTimeFormatter.parseDateTime(isoDateTime).toDateTime(DateTimeZone.UTC);
+        DateTime utcTime = isoDateTimeFormatter.parseDateTime(isoDateTime);
         return new Timestamp(utcTime.toDateTime().getMillis());
     }
 
-    public static String getISO8601TimeZone(String isoDateTime) {
-        return isoDateTimeFormatter.parseDateTime(isoDateTime).getZone().getID();
-    }
-
-    public static String toISO8601(Timestamp sqlTimestamp, String timeZone) {
-        DateTime utcTime = sqlDateTimeFormatter.parseDateTime(sqlTimestamp.toString()).withZone(DateTimeZone.UTC);
-        DateTime localTime = utcTime.withZone(DateTimeZone.forID(timeZone));
-        return isoDateTimeFormatter.print(localTime);
+    public static String toISO8601(Timestamp sqlTimestamp) {
+        DateTime utcTime = sqlDateTimeFormatter.parseDateTime(sqlTimestamp.toString());
+        return isoDateTimeFormatter.print(utcTime);
     }
 }

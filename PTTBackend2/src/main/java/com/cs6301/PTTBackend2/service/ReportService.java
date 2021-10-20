@@ -49,7 +49,7 @@ public class ReportService {
     }
 
     private ReportSession generateReportSessionFromSession(Session session) {
-        return new ReportSession(DateTimeConverter.toISO8601(session.getStartTime(), session.getStartTimeZone()), DateTimeConverter.toISO8601(session.getEndTime(), session.getEndTimeZone()), getDuration(session.getStartTime(), session.getEndTime()));
+        return new ReportSession(DateTimeConverter.toISO8601(session.getStartTime()), DateTimeConverter.toISO8601(session.getEndTime()), getDuration(session.getStartTime(), session.getEndTime()));
     }
 
     private Integer sumFromIntegerList(List<Integer> inputList) {
