@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 public class CreateUserActivity extends AppCompatActivity {
 
-    private String TAG = "CreateUserActivity";
+    private static final String LOG_TAG = CreateUserActivity.class.getSimpleName();
     private BackendConnections backendConnections;
 
     private EditText firstNameField;
@@ -53,12 +53,12 @@ public class CreateUserActivity extends AppCompatActivity {
         backendConnections.ExecuteHTTPRequest("/users", Request.Method.POST, postData, new BackendConnections.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d(TAG,"POST /users RES " + response);
+                Log.d(LOG_TAG,"POST /users RES " + response);
             }
 
             @Override
             public void onError(VolleyError error) {
-                Log.d(TAG, "POST /users REQ FAILED");
+                Log.d(LOG_TAG, "POST /users REQ FAILED");
             }
         });
 
