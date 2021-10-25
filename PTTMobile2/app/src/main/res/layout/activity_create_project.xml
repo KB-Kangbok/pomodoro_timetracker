@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/userFirstName2"
+        android:id="@+id/projectName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:hint="First Name"
+        android:hint="Project Name"
         tools:layout_editor_absoluteX="158dp"
         tools:layout_editor_absoluteY="236dp">
 
