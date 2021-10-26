@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Login from "../components/Login";
+import { apiUrl } from "../config.json";
 
 const useInput = (initialValue) => {
   const [value, setValue] = useState(initialValue);
@@ -19,7 +20,7 @@ function Home() {
 
   useEffect(() => {
     const getUsers = async () => {
-      const { data } = await axios.get("http://localhost:8080/users");
+      const { data } = await axios.get(`${apiUrl}/users`);
       // This is for test-case, later uncomment axios part and delete this sentence
       // const data = [
       //   {

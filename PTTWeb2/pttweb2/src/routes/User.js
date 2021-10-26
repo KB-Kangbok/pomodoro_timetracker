@@ -6,6 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { apiUrl } from "../config.json";
 
 export default function User({
   location: {
@@ -19,9 +20,7 @@ export default function User({
 
   useEffect(() => {
     const getProjects = async () => {
-      const { data } = await axios.get(
-        `http://localhost:8080/users/${id}/projects`
-      );
+      const { data } = await axios.get(`${apiUrl}/users/${id}/projects`);
       const projects = [
         { id: 1, projectname: "Oliver Hansen" },
         { id: 2, projectname: "Van Henry" },
@@ -43,9 +42,7 @@ export default function User({
   const handleDelete = async () => {
     // This is for test-case. Later delete console.log and uncomment axios part
     console.log(selectedProject.id);
-    await axios.delete(
-      `http://localhost:8080/users/${id}/projects/${selectedProject.id}`
-    );
+    await axios.delete(`${apiUrl}/users/${id}/projects/${selectedProject.id}`);
     setSelectedProject({});
     setUpdate(true);
   };
@@ -58,7 +55,7 @@ export default function User({
   };
 
   const handleCreate = async () => {
-    await axios.post(`http://localhost:8080/users/${id}/projects`, {
+    await axios.post(`${apiUrl}/users/${id}/projects`, {
       projectname: input,
     });
     setInput("");
