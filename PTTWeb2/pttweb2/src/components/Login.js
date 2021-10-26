@@ -22,7 +22,7 @@ function Login({ username, handleChange, users }) {
     width: 280,
     margin: "20px auto",
   };
-  const avatarStyle = { backgroundColor: "#419fc7" };
+  const avatarStyle = { backgroundColor: "rgb(16 134 16)" };
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
