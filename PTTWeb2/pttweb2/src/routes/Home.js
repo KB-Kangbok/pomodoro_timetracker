@@ -1,9 +1,9 @@
 import Login from "../components/Login";
 
-function Home() {
+const Home = () => {
   return (
     <div>
-      <Login />
+      <Login/>
     </div>
   );
 }
