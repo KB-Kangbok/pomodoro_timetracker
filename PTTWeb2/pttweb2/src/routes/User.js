@@ -12,25 +12,27 @@ export default function User({
     state: { firstName, lastName, id },
   },
 }) {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([{ id: 0 }]);
   const [selectedProject, setSelectedProject] = useState({});
-  console.log(`${firstName} ${lastName} ${id}`);
+  const [input, setInput] = useState("");
+  const [update, setUpdate] = useState(false);
+
   useEffect(() => {
     const getProjects = async () => {
       const { data } = await axios.get(
         `http://localhost:8080/users/${id}/projects`
       );
-      // This is for test-case, later delete this whole const projects part and make setProjects(data)
       const projects = [
         { id: 1, projectname: "Oliver Hansen" },
         { id: 2, projectname: "Van Henry" },
       ];
-      setProjects(projects);
+      setProjects(data);
+      setUpdate(false);
     };
     getProjects();
-  }, []);
+  }, [update]);
 
-  const handleChange = (event) => {
+  const handleSelect = (event) => {
     const {
       target: { value },
     } = event;
@@ -38,12 +40,29 @@ export default function User({
     setSelectedProject(value);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     // This is for test-case. Later delete console.log and uncomment axios part
     console.log(selectedProject.id);
-    // await axios.delete(
-    //   `http://localhost:8080/users/${id}/projects/${selectedProject.id}`
-    // );
+    await axios.delete(
+      `http://localhost:8080/users/${id}/projects/${selectedProject.id}`
+    );
+    setSelectedProject({});
+    setUpdate(true);
+  };
+
+  const handleInput = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setInput(value);
+  };
+
+  const handleCreate = async () => {
+    await axios.post(`http://localhost:8080/users/${id}/projects`, {
+      projectname: input,
+    });
+    setInput("");
+    setUpdate(true);
   };
 
   const gridStyle = {
@@ -60,8 +79,8 @@ export default function User({
         <FormControl sx={{ m: 1, width: 200 }}>
           <InputLabel>Project</InputLabel>
           <Select
-            value={projects}
-            onChange={handleChange}
+            value={selectedProject}
+            onChange={handleSelect}
             input={<OutlinedInput label="Name" />}
           >
             {projects.map((project) => (
@@ -80,8 +99,12 @@ export default function User({
             id="outlined-basic"
             label="New Project"
             variant="outlined"
+            onChange={handleInput}
+            value={input}
           />
-          <Button variant="contained">Create</Button>
+          <Button variant="contained" onClick={handleCreate}>
+            Create
+          </Button>
         </FormControl>
       </Grid>
     </div>

@@ -19,22 +19,22 @@ function Home() {
 
   useEffect(() => {
     const getUsers = async () => {
-      // const { data } = await axios.get("http://localhost:8080/users");
+      const { data } = await axios.get("http://localhost:8080/users");
       // This is for test-case, later uncomment axios part and delete this sentence
-      const data = [
-        {
-          id: 1,
-          firstName: "KB",
-          lastName: "Lee",
-          email: "klee869@gatech.edu",
-        },
-        {
-          id: 2,
-          firstName: "Heejoo",
-          lastName: "Cho",
-          email: "joheeju@gatech.edu",
-        },
-      ];
+      // const data = [
+      //   {
+      //     id: 1,
+      //     firstName: "KB",
+      //     lastName: "Lee",
+      //     email: "klee869@gatech.edu",
+      //   },
+      //   {
+      //     id: 2,
+      //     firstName: "Heejoo",
+      //     lastName: "Cho",
+      //     email: "joheeju@gatech.edu",
+      //   },
+      // ];
 
       setUsers(data);
     };
