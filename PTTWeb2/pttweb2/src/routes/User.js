@@ -6,15 +6,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-
 const projects = [
   'Oliver Hansen',
   'Van Henry',
 ];
 
 
-export default function User() {
+export default function User({ location }) {
+  // const { firstName, lastName, id } = location.state;
   const [project, setProject] = React.useState([]);
+  console.log(location.state);
 
   const handleChange = (event) => {
     const {
@@ -35,6 +36,7 @@ export default function User() {
 
   return (
     <div style={{margin: 20}}>
+      {/* <h1>{`Hi ${firstName} ${lastName}`}</h1> */}
       <h1>Manage Projects</h1>
       <Grid style={gridStyle}>
           <FormControl sx={{ m: 1, width: 200 }}>
