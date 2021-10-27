@@ -3,9 +3,13 @@ package com.example.tejasvedantham.pttmobile2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
@@ -34,7 +38,21 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
         // TODO: Login logic here
+        String url = "/users";
+        String email = usernameField.getText().toString();
 
-//        userSession.setUserId(userId);
+        backendConnections.ExecuteHTTPRequest(url, Request.Method.GET, null, new BackendConnections.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.d(LOG_TAG, String.format("GET %s RES %s", url, response));
+                // TODO: filter the list of all users using the email specified by this user
+                // userSession.setUserId(userId);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.d(LOG_TAG, String.format("GET %s REQ FAILED", url));
+            }
+        });
     }
 }
