@@ -6,20 +6,20 @@ import styled from "styled-components";
 const StyledLink = styled(Link)`
   margin-left: 5px;
   color: red;
-  text-decoration: none
+  text-decoration: none;
 `;
 
 function Navigation() {
   return (
     <div>
-      <CssBaseline/>
+      <CssBaseline />
       <AppBar style={{ backgroundColor: "#034B03" }} position="relative">
         <Toolbar>
-          <img src={Pomodoro} width="40" />
+          <img src={Pomodoro} width="40" alt="Pomodoro" />
           <Typography variant="h6">
-          <StyledLink to="/">Tomato Pomodoro</StyledLink>
+            <StyledLink to="/">Tomato Pomodoro</StyledLink>
           </Typography>
-          <div style={{marginLeft: 'auto'}}>
+          <div style={{ marginLeft: "auto" }}>
             {/* two links below are only for test */}
             <StyledLink to="/admin">Admin</StyledLink>
             <StyledLink to="/user">User</StyledLink>
