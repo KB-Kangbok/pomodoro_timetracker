@@ -45,7 +45,11 @@ public class BackendConnections {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestType, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                callback.onSuccess(response);
+                try {
+                    callback.onSuccess(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -59,7 +63,7 @@ public class BackendConnections {
 
 
     public interface VolleyCallback {
-        public void onSuccess(JSONObject response);
+        public void onSuccess(JSONObject response) throws JSONException;
         public void onError(VolleyError error);
     }
 }
