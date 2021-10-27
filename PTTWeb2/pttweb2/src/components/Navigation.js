@@ -1,28 +1,43 @@
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Toolbar, AppBar, Typography, CssBaseline } from "@material-ui/core";
+import { Link } from "@mui/material";
 import Pomodoro from "../assets/pomodoro.png";
 import styled from "styled-components";
 
-const StyledLink = styled(Link)`
-  margin-left: 5px;
-  color: red;
-  text-decoration: none;
-`;
+const linkStyle = {
+  "margin-left": "5px",
+  color: "red",
+  "text-decoration": "none",
+};
 
-function Navigation() {
+function Navigation({ isLogin, setIsLogin }) {
+  let history = useHistory();
+  const handleClick = () => {
+    setIsLogin(false);
+    history.push("/");
+  };
   return (
     <div>
       <CssBaseline />
       <AppBar style={{ backgroundColor: "#034B03" }} position="relative">
         <Toolbar>
           <img src={Pomodoro} width="40" alt="Pomodoro" />
-          <Typography variant="h6">
-            <StyledLink to="/">Tomato Pomodoro</StyledLink>
+          <Typography variant="h6" color="secondary">
+            Tomato Pomodoro
           </Typography>
           <div style={{ marginLeft: "auto" }}>
-            {/* two links below are only for test */}
-            <StyledLink to="/admin">Admin</StyledLink>
-            <StyledLink to="/user">User</StyledLink>
+            {isLogin ? (
+              <Link
+                style={linkStyle}
+                component="button"
+                variant=""
+                onClick={handleClick}
+              >
+                Log Out
+              </Link>
+            ) : (
+              <></>
+            )}
           </div>
         </Toolbar>
       </AppBar>

@@ -2,14 +2,16 @@ import { Grid, Paper, Avatar, TextField, Button } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useHistory } from "react-router-dom";
 
-function Login({ username, handleChange, users }) {
+function Login({ username, handleChange, users, setIsLogin }) {
   let history = useHistory();
   const handleSubmit = () => {
     const userObject = users.find((element) => element.email === username);
     if (username === "admin") {
+      setIsLogin(true);
       history.push("/admin");
     } else {
       if (userObject) {
+        setIsLogin(true);
         history.push({ pathname: "/user", state: userObject });
       } else {
         alert("User not found");
