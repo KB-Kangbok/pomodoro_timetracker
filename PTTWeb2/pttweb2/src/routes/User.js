@@ -8,6 +8,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { apiUrl } from "../config.json";
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
 export default function User({
   location: {
     state: { firstName, lastName, id },
@@ -15,16 +22,13 @@ export default function User({
 }) {
   const [projects, setProjects] = useState([{ id: 0 }]);
   const [selectedProject, setSelectedProject] = useState({});
+  const [hasSessions, setHasSessions] = useState(false);
   const [input, setInput] = useState("");
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const getProjects = async () => {
       const { data } = await axios.get(`${apiUrl}/users/${id}/projects`);
-      const projects = [
-        { id: 1, projectname: "Oliver Hansen" },
-        { id: 2, projectname: "Van Henry" },
-      ];
       setProjects(data);
       setUpdate(false);
     };
@@ -39,11 +43,28 @@ export default function User({
     setSelectedProject(value);
   };
 
-  const handleDelete = async () => {
-    // This is for test-case. Later delete console.log and uncomment axios part
+  const handleClose = () => {
+    setHasSessions(false);
+  };
+
+  const handleDelete = async() => {
     console.log(selectedProject.id);
-    await axios.delete(`${apiUrl}/users/${id}/projects/${selectedProject.id}`);
+    const sessions = await axios.get(`${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`);
+    if (sessions.data.length == 0) {
+      deleteProject();
+    } else {
+      setHasSessions(true);
+    }
+  }
+
+  const deleteProject = async () => {
+    // This is for test-case. Later delete console.log and uncomment axios part
+      const res = await axios.delete(`${apiUrl}/users/${id}/projects/${selectedProject.id}`);
+      if (res.status == 200) {
+        alert("Project \"" + res.data.projectname + "\" is successfully deleted.");
+    }
     setSelectedProject({});
+    setHasSessions(false);
     setUpdate(true);
   };
 
@@ -55,9 +76,10 @@ export default function User({
   };
 
   const handleCreate = async () => {
-    await axios.post(`${apiUrl}/users/${id}/projects`, {
+    const res = await axios.post(`${apiUrl}/users/${id}/projects`, {
       projectname: input,
     });
+    console.log(res.data.id);
     setInput("");
     setUpdate(true);
   };
@@ -73,7 +95,7 @@ export default function User({
     <div style={{ margin: 20 }}>
       <h1>Manage Projects</h1>
       <Grid style={gridStyle}>
-        <FormControl sx={{ m: 1, width: 200 }}>
+        <FormControl sx={{ width: 200}}>
           <InputLabel>Project</InputLabel>
           <Select
             value={selectedProject}
@@ -91,7 +113,7 @@ export default function User({
           </Button>
         </FormControl>
 
-        <FormControl>
+        <FormControl style={{marginLeft:30}}>
           <TextField
             id="outlined-basic"
             label="New Project"
@@ -103,6 +125,31 @@ export default function User({
             Create
           </Button>
         </FormControl>
+        
+      <Dialog
+        open={hasSessions}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Delete project "{selectedProject.projectname}"?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This project has an associated pomodoro(s). 
+            Deleting the project will result in losing all information about the pomodoro(s). 
+            Do you still want to delete this project?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={deleteProject}>Delete</Button>
+          <Button onClick={handleClose} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       </Grid>
     </div>
   );

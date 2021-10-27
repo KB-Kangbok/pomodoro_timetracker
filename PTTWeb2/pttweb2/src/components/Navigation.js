@@ -20,9 +20,9 @@ function Navigation() {
             Tomato Pomodoro
           </Typography>
           <div style={{marginLeft: 'auto'}}>
-            <StyledLink to="/">Home</StyledLink>
+            {/* <StyledLink to="/">Home</StyledLink>
             <StyledLink to="/admin">Admin</StyledLink>
-            <StyledLink to="/user">User</StyledLink>
+            <StyledLink to="/user">User</StyledLink> */}
           </div>
         </Toolbar>
       </AppBar>
