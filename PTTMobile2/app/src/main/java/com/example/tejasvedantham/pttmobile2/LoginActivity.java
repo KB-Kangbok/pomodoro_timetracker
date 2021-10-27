@@ -2,6 +2,7 @@ package com.example.tejasvedantham.pttmobile2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
         // TODO: Login logic here
         String url = "/users";
         String email = usernameField.getText().toString();
+
+        if (email.equals("administrator")) {
+            Intent intent = new Intent(getApplicationContext(), AdminHomeActivity.class);
+            startActivity(intent);
+        }
 
         backendConnections.ExecuteHTTPRequest(url, Request.Method.GET, null, new BackendConnections.VolleyCallback() {
             @Override
