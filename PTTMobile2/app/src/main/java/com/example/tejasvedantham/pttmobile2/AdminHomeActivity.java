@@ -27,14 +27,15 @@ public class AdminHomeActivity extends AppCompatActivity {
         backendConnections = new BackendConnections(this);
         backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
 
+        // Fetch list of user to generate list
         backendConnections.ExecuteHTTPRequest("/users", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d(LOG_TAG,"GET /users RES " + response);
+                Log.d(LOG_TAG, "GET /users RES " + response);
 
                 try {
                     JSONArray jsonArray = new JSONArray(response);
-                    for(int i = 0; i < jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String email = jsonObject.getString("email");
                         String firstName = jsonObject.getString("firstName");
@@ -54,8 +55,18 @@ public class AdminHomeActivity extends AppCompatActivity {
         });
     }
 
-    public void DeleteUser(){
+    public void DeleteUser(String userId){
+        backendConnections.ExecuteHTTPRequest("/users/" + userId, Request.Method.DELETE, null, new BackendConnections.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.d(LOG_TAG,"DELETE /users/"+ userId + ",RES " + response);
+            }
 
+            @Override
+            public void onError(VolleyError error) {
+                Log.d(LOG_TAG, "DELETE /users/"+ userId + ",REQ FAILED");
+            }
+        });
     }
 
 }
