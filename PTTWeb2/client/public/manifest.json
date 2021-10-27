@@ -1,0 +1,15 @@
+{
+  "short_name": "Pomodoro",
+  "name": "Pomodoro Time Tracker",
+  "icons": [
+    {
+      "src": "pomodoro.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
