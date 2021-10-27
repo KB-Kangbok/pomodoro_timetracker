@@ -4,8 +4,8 @@ import Pomodoro from "../assets/pomodoro.png";
 import styled from "styled-components";
 
 const StyledLink = styled(Link)`
-  margin-left: 30px;
-  color: white;
+  margin-left: 5px;
+  color: red;
   text-decoration: none
 `;
 
@@ -16,13 +16,13 @@ function Navigation() {
       <AppBar style={{ backgroundColor: "#034B03" }} position="relative">
         <Toolbar>
           <img src={Pomodoro} width="40" />
-          <Typography variant="h6" style={{'margin-left': 5,color: "red"}}>
-            Tomato Pomodoro
+          <Typography variant="h6">
+          <StyledLink to="/">Tomato Pomodoro</StyledLink>
           </Typography>
           <div style={{marginLeft: 'auto'}}>
-            {/* <StyledLink to="/">Home</StyledLink>
+            {/* two links below are only for test */}
             <StyledLink to="/admin">Admin</StyledLink>
-            <StyledLink to="/user">User</StyledLink> */}
+            <StyledLink to="/user">User</StyledLink>
           </div>
         </Toolbar>
       </AppBar>
