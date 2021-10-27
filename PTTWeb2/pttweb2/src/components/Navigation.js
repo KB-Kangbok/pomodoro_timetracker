@@ -2,7 +2,6 @@ import { useHistory } from "react-router-dom";
 import { Toolbar, AppBar, Typography, CssBaseline } from "@material-ui/core";
 import { Link } from "@mui/material";
 import Pomodoro from "../assets/pomodoro.png";
-import styled from "styled-components";
 
 const linkStyle = {
   "margin-left": "5px",
@@ -30,7 +29,7 @@ function Navigation({ isLogin, setIsLogin }) {
               <Link
                 style={linkStyle}
                 component="button"
-                variant=""
+                variant="subtitle1"
                 onClick={handleClick}
               >
                 Log Out

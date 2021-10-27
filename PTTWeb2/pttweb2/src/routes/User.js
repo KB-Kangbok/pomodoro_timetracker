@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, TextField, Grid } from "@material-ui/core";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import { Button, TextField, Grid, Typography } from "@material-ui/core";
+import {
+  OutlinedInput,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { apiUrl } from "../config.json";
-
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 export default function User({
   location: {
-    state: { firstName, lastName, id },
+    state: { firstName, id },
   },
 }) {
   const [projects, setProjects] = useState([{ id: 0 }]);
@@ -106,7 +107,10 @@ export default function User({
 
   return (
     <div style={{ margin: 20 }}>
-      <h1>Manage Projects</h1>
+      <Typography component="h6" align="right">{`Hi ${firstName}`}</Typography>
+      <Typography variant="inherit" component="h1" align="center">
+        Manage Projects
+      </Typography>
       <Grid style={gridStyle}>
         <FormControl sx={{ width: 200 }}>
           <InputLabel>Project</InputLabel>
