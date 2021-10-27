@@ -2,6 +2,7 @@ package com.example.tejasvedantham.pttmobile2;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,17 +13,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class AdminHomeActivity extends AppCompatActivity {
     private static final String LOG_TAG = AdminHomeActivity.class.getSimpleName();
     private BackendConnections backendConnections;
 
-    private AdminListAdapter adminListAdapter;
+    private ListView userListView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
+
+        userListView = (ListView) findViewById(R.id.admin_user_list);
+        ArrayList<User> allUsers = new ArrayList<User>();
+        UserListAdapter adapter = new UserListAdapter(this, allUsers);
 
         backendConnections = new BackendConnections(this);
         backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
@@ -42,6 +49,9 @@ public class AdminHomeActivity extends AppCompatActivity {
                         String lastName = jsonObject.getString("lastName");
 
                     }
+
+                    //TODO: Once we get all users, we need to add them to allUsers and update adapter
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
