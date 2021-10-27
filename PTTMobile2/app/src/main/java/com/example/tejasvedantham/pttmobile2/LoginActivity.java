@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton = (Button) findViewById(R.id.loginButton);
         usernameField = (EditText) findViewById(R.id.usernameField);
-        passwordField = (EditText) findViewById(R.id.passwordField);
+//        passwordField = (EditText) findViewById(R.id.passwordField);
 
         userSession = new SessionManager(getApplicationContext());
         backendConnections = new BackendConnections(this);
