@@ -1,5 +1,5 @@
-how to build and deploy their project from the command line.
+To install required labraries,
+`npm install` # From ~/6301FALL21PTTPRJ2/PTTWeb2/pttweb2 
 
-npm install
-
-npm start
+To run the react app,
+`npm start`
