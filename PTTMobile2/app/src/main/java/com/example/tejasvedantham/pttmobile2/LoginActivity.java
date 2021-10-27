@@ -12,6 +12,8 @@ import android.widget.EditText;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton = (Button) findViewById(R.id.loginButton);
         usernameField = (EditText) findViewById(R.id.usernameField);
-        passwordField = (EditText) findViewById(R.id.passwordField);
+//        passwordField = (EditText) findViewById(R.id.passwordField);
 
         userSession = new SessionManager(getApplicationContext());
         backendConnections = new BackendConnections(this);
@@ -49,10 +51,17 @@ public class LoginActivity extends AppCompatActivity {
 
         backendConnections.ExecuteHTTPRequest(url, Request.Method.GET, null, new BackendConnections.VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONObject response) throws JSONException {
                 Log.d(LOG_TAG, String.format("GET %s RES %s", url, response));
                 // TODO: filter the list of all users using the email specified by this user
-                // userSession.setUserId(userId);
+                JSONArray users = response.getJSONArray("users");
+                for (int i = 0; i < users.length(); ++i) {
+                    JSONObject user = (JSONObject) users.get(i);
+                    if (user.get("email").equals(email)) {
+                        userSession.setUserId(user.get("id").toString());
+                    }
+                }
+                Utils.displayExceptionMessage(getApplicationContext(), "Invalid email");
             }
 
             @Override

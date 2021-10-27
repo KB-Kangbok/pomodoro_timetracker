@@ -15,6 +15,6 @@ public interface SessionRepository extends CrudRepository<Session, Integer> {
 
     Session findSessionById(Integer sessionid);
 
-    @Query(value = "SELECT * FROM session s WHERE s.userid = ?1 AND s.projectid = ?2 AND (starttime < ?4 OR endtime > ?3)", nativeQuery = true)
+    @Query(value = "SELECT * FROM session s WHERE s.userid = ?1 AND s.projectid = ?2 AND ((starttime < ?4 AND starttime > ?3) OR (endtime > ?3 AND endtime < ?4))", nativeQuery = true)
     List<Session> getSessionReports(Integer userid, Integer projectid, Timestamp startingTime, Timestamp endingTime);
 }
