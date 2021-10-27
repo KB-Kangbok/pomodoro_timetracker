@@ -10,9 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:hint="Project Name"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="236dp">
+        android:hint="Project Name">
 
     </EditText>
 
@@ -22,9 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Create Project"
-        android:textSize="48dp"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="36dp">
+        android:textSize="48dp">
 
     </TextView>
 
@@ -32,7 +28,7 @@
         android:id="@+id/createProjectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
+        android:text="Create Project"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
