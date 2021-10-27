@@ -4,9 +4,9 @@ import { Link } from "@mui/material";
 import Pomodoro from "../assets/pomodoro.png";
 
 const linkStyle = {
-  "margin-left": "5px",
+  marginLeft: "5px",
   color: "red",
-  "text-decoration": "none",
+  textDecoration: "none",
 };
 
 function Navigation({ isLogin, setIsLogin }) {

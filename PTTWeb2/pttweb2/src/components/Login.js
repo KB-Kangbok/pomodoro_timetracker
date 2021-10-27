@@ -1,18 +1,29 @@
 import { Grid, Paper, Avatar, TextField, Button } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { apiUrl } from "../config.json";
+import { useEffect, useState } from "react";
 
-function Login({ username, handleChange, users, setIsLogin }) {
+function Login({ username, handleChange, setIsLogin }) {
   let history = useHistory();
-  const handleSubmit = () => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const getUsers = async () => {
+      const { data } = await axios.get(`${apiUrl}/users`);
+      setUsers(data);
+    };
+    getUsers();
+  }, []);
+  const handleSubmit = async () => {
     const userObject = users.find((element) => element.email === username);
     if (username === "admin") {
-      setIsLogin(true);
       history.push("/admin");
+      setIsLogin(true);
     } else {
       if (userObject) {
-        setIsLogin(true);
         history.push({ pathname: "/user", state: userObject });
+        setIsLogin(true);
       } else {
         alert("User not found");
       }
