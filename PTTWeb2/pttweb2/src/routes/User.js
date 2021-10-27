@@ -107,8 +107,8 @@ export default function User({
 
   return (
     <div style={{ margin: 20 }}>
-      <Typography component="h6" align="right">{`Hi ${firstName}`}</Typography>
-      <Typography variant="inherit" component="h1" align="center">
+      <Typography component="h6" align="right">{`Hi, ${firstName}`}</Typography>
+      <Typography variant="inherit" component="h1" style={{marginTop: -20 }}>
         Manage Projects
       </Typography>
       <Grid style={gridStyle}>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, TextField, Grid } from "@material-ui/core";
+import { Typography, Button, TextField, Grid } from "@material-ui/core";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -121,13 +121,18 @@ function Admin() {
       setUpdate(true);
     }
   };
+
   return (
     <div style={{ margin: 20 }}>
-      <h1>Admin - Manage Users</h1>
-      <Grid container direction="row" justifyContent="space-around">
-        <Grid item>
+        <Typography component="h6" align="right">Hi, Admin</Typography>
+        <Typography variant="inherit" component="h1" style={{marginTop: -20 }}>
+          Manage Users
+        </Typography>
+
+      <Grid container direction="row" justifyContent="center">
+        <Grid item style={{ marginRight: 50 }}>
           <h2>Add User</h2>
-          <FormControl sx={{ width: 200 }}>
+          <FormControl sx={{ width: 200 }} >
             <TextField
               required
               id="outlined-basic"
@@ -156,14 +161,14 @@ function Admin() {
               margin="dense"
             />
             <Button variant="contained" onClick={handleCreate}>
-              Create User
+              Create
             </Button>
           </FormControl>
         </Grid>
 
-        <Grid item>
+        <Grid item style={{ marginRight: 50 }}>
           <h2>Edit User</h2>
-          <FormControl sx={{ m: 1, width: 200 }}>
+          <FormControl sx={{width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
               value={selectedEditUser}
@@ -194,14 +199,14 @@ function Admin() {
               margin="dense"
             />
             <Button variant="contained" onClick={handleUpdate}>
-              Update User
+              Update
             </Button>
           </FormControl>
         </Grid>
 
         <Grid item>
           <h2>Delete User</h2>
-          <FormControl sx={{ m: 1, width: 200 }}>
+          <FormControl sx={{ width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
               value={selectedDelUser}
@@ -215,7 +220,7 @@ function Admin() {
               ))}
             </Select>
             <Button variant="contained" onClick={handleDelete}>
-              Delete User
+              Delete
             </Button>
           </FormControl>
         </Grid>
