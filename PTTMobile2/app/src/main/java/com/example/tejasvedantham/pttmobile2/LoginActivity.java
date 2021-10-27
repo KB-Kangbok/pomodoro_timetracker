@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                         userSession.setUserId(user.get("id").toString());
                     }
                 }
+                Utils.displayExceptionMessage(getApplicationContext(), "Invalid email");
             }
 
             @Override
