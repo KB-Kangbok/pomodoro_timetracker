@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -78,7 +80,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         });
     }
 
-    public void DeleteUserClick(String userId){
+    public void deleteUser(View view, String userId){
         // check if user has any project
 
 
@@ -129,4 +131,19 @@ public class AdminHomeActivity extends AppCompatActivity {
         });
     }
 
+    public void editUser(View view) {
+
+        RelativeLayout parentRow = (RelativeLayout) view.getParent();
+
+        String firstName = ((TextView) parentRow.findViewById(R.id.firstNameText)).getText().toString();
+        String lastName = ((TextView) parentRow.findViewById(R.id.lastNameText)).getText().toString();;
+        String email = ((TextView) parentRow.findViewById(R.id.emailText)).getText().toString();;
+
+        Intent intent = new Intent(getApplicationContext(), CreateUserActivity.class);
+        intent.putExtra("firstName", firstName);
+        intent.putExtra("lastName", lastName);
+        intent.putExtra("email", email);
+
+        startActivity(intent);
+    }
 }
