@@ -36,6 +36,19 @@ public class CreateUserActivity extends AppCompatActivity {
         lastNameField = (EditText) findViewById(R.id.userLastName);
         emailField = (EditText) findViewById(R.id.userEmail);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String firstName = extras.getString("firstName");
+            String lastName = extras.getString("lastName");
+            String email = extras.getString("email");
+
+            firstNameField.setText(firstName);
+            lastNameField.setText(lastName);
+            emailField.setText(email);
+
+            //TODO: Update user here
+        }
+
         backendConnections = new BackendConnections(this);
         backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
     }

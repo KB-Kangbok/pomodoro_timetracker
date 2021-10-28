@@ -29,10 +29,12 @@ public class UserListAdapter extends ArrayAdapter<User> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.admin_user_row_item, parent, false);
         }
-        TextView nameText = (TextView) convertView.findViewById(R.id.nameText);
+        TextView firstNameText = (TextView) convertView.findViewById(R.id.firstNameText);
+        TextView lastNameText = (TextView) convertView.findViewById(R.id.lastNameText);
         TextView emailText = (TextView) convertView.findViewById(R.id.emailText);
 
-        nameText.setText(user.firstName + " " + user.lastName);
+        firstNameText.setText(user.firstName);
+        lastNameText.setText(user.lastName);
         emailText.setText(user.email);
 
         return convertView;

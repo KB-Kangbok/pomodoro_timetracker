@@ -7,12 +7,24 @@
     android:padding="5dp">
 
     <TextView
-        android:id="@+id/nameText"
+        android:id="@+id/firstNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Full Name"
+        android:text="First Name"
         android:textSize="18dp"
         android:layout_alignParentTop="true">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/lastNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name"
+        android:textSize="18dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/firstNameText"
+        android:layout_marginLeft="5dp">
 
     </TextView>
 
@@ -22,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="Email"
         android:textSize="16dp"
-        android:layout_below="@+id/nameText">
+        android:layout_below="@+id/firstNameText">
 
     </TextView>
 
@@ -31,7 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:onClick="deleteUser">
     </Button>
 
     <Button
@@ -40,7 +53,8 @@
         android:layout_height="wrap_content"
         android:text="Edit"
         android:layout_toLeftOf="@+id/deleteUser"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:onClick="editUser">
     </Button>
 
 </RelativeLayout>
