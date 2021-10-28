@@ -1,11 +1,7 @@
 package com.example.tejasvedantham.pttmobile2;
 
-<<<<<<< HEAD
 import static com.example.tejasvedantham.pttmobile2.LoginActivity.userSession;
-
-=======
 import android.content.Intent;
->>>>>>> e0f4f029acd9011c220a712ca0173601ff85a286
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

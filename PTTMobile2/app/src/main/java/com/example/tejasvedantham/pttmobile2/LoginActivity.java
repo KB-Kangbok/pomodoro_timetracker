@@ -63,8 +63,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url="http://172.16.33.67:8080" +"/users";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,url,null,
+        String url = "http://172.16.33.67:8080" + "/users";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                },  new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonArrayRequest);
+    }
 
 
 }
