@@ -1,7 +1,11 @@
 package com.example.tejasvedantham.pttmobile2;
 
+<<<<<<< HEAD
 import static com.example.tejasvedantham.pttmobile2.LoginActivity.userSession;
 
+=======
+import android.content.Intent;
+>>>>>>> e0f4f029acd9011c220a712ca0173601ff85a286
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,11 +24,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserHomeActivity extends AppCompatActivity {
-
     private static final String LOG_TAG = UserHomeActivity.class.getSimpleName();
     private static final String CONFIRM_MSG = "The project has time already logged to it. Do you still want to delete it?";
 
     private ListView projectListView;
+    private ArrayList<Project> projectList;
+
+    private Button createProjectPageButton;
 
     private BackendConnections backendConnections;
 
@@ -42,26 +48,46 @@ public class UserHomeActivity extends AppCompatActivity {
         ProjectListAdapter adapter = new ProjectListAdapter(this, projectList);
 
         //TODO: Add projects to projectList and update adapter
-        String url = String.format("/users/%s/projects", userSession.getUserId());
-        backendConnections.ExecuteHTTPRequest(url, Request.Method.GET, null, new BackendConnections.VolleyCallback() {
-
+        createProjectPageButton = (Button) findViewById(R.id.createUserButton);
+        createProjectPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(JSONObject response) throws JSONException {
-                JSONArray projects = new JSONArray(response);
-                ArrayList<Project> result = new ArrayList<>();
-                for (int i = 0; i < projects.length(); ++i) {
-                    projectList.add((Project) projects.get(i));
+            public void onClick(View v) {
+                startActivity(new Intent(UserHomeActivity.this, CreateUserActivity.class));
+            }
+        });
+
+        projectListView = (ListView) findViewById(R.id.admin_user_list);
+
+        // Fetch list of user to generate list
+        backendConnections.ExecuteHTTPRequest("users/" + "/projects/", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.d(LOG_TAG, "GET /users/" + "/projects RES " + response);
+
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String projectname = jsonObject.getString("projectname");
+
+                        Project project = new Project(projectname);
+                        projectList.add(project);
+
+                    }
+
+                    ProjectListAdapter adapter = new ProjectListAdapter(UserHomeActivity.this, projectList);
+                    projectListView.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-                ProjectListAdapter adapter = new ProjectListAdapter(getApplicationContext(), projectList);
-                projectListView.setAdapter(adapter);
             }
 
             @Override
             public void onError(VolleyError error) {
-                Log.d(LOG_TAG, String.format("GET %s FAILED", url));
+                Log.d(LOG_TAG, "GET /users REQ FAILED");
             }
-
         });
     }
 
