@@ -53,11 +53,14 @@ public class CreateUserActivity extends AppCompatActivity {
         backendConnections.ExecuteHTTPRequest("/users", Request.Method.POST, postData, new BackendConnections.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
+                //TODO: show success message
                 Log.d(LOG_TAG,"POST /users RES " + response);
+
             }
 
             @Override
             public void onError(VolleyError error) {
+                //TODO: use case when user already exists
                 Log.d(LOG_TAG, "POST /users REQ FAILED");
             }
         });

@@ -78,15 +78,52 @@ public class AdminHomeActivity extends AppCompatActivity {
         });
     }
 
-    public void DeleteUser(String userId){
+    public void DeleteUserClick(String userId){
+        // check if user has any project
+
+
+        backendConnections.ExecuteHTTPRequest("/users/" + userId + "/projects", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+
+                Log.d(LOG_TAG,"GET /users/"+ userId + "/projects" + ",RES " + response);
+
+                try {
+                    if(response.getString("projectname") != null){
+                        //TODO: show confirm dialog, the button onclick triggers DeleteUserConfirm
+                    } else {
+                        DeleteUserConfirm(userId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                //TODO: case when user was already deleted
+                Log.d(LOG_TAG, "GET /users/"+ userId + "/projects" + ",REQ FAILED");
+            }
+        });
+
+
+
+
+
+    }
+
+    public void DeleteUserConfirm(String userId){
         backendConnections.ExecuteHTTPRequest("/users/" + userId, Request.Method.DELETE, null, new BackendConnections.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
+
                 Log.d(LOG_TAG,"DELETE /users/"+ userId + ",RES " + response);
             }
 
             @Override
             public void onError(VolleyError error) {
+                //TODO: case when user was already deleted
                 Log.d(LOG_TAG, "DELETE /users/"+ userId + ",REQ FAILED");
             }
         });

@@ -44,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         String url = "/users";
         String email = usernameField.getText().toString();
 
-        if (email.equals("administrator")) {
+        // “admin" was specified in use cases
+        if (email.equals("admin")) {
             startActivity(new Intent(getApplicationContext(), AdminHomeActivity.class));
         }
 
