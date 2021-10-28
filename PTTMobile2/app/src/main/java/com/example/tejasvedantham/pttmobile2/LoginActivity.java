@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         // “admin" was specified in use cases
         if (email.equals("admin")) {
             startActivity(new Intent(getApplicationContext(), AdminHomeActivity.class));
+            return;
         }
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url="http://172.16.33.67:8080" +"/users";
