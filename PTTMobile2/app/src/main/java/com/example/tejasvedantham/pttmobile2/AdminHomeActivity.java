@@ -68,10 +68,8 @@ public class AdminHomeActivity extends AppCompatActivity {
 
                     }
 
-                    UserListAdapter adapter = new UserListAdapter(this, userList);
+                    UserListAdapter adapter = new UserListAdapter(AdminHomeActivity.this, userList);
                     userListView.setAdapter(adapter);
-                    userListView.setOnItemClickListener(this);
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
