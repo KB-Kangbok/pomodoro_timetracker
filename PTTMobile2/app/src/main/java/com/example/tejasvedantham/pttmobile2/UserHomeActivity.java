@@ -55,10 +55,11 @@ public class UserHomeActivity extends AppCompatActivity {
         projectListView = (ListView) findViewById(R.id.admin_user_list);
 
         // Fetch list of user to generate list
-        backendConnections.ExecuteHTTPRequest("users/" + "/projects/", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
+        String url = String.format("/users/%s/projects", userSession.getUserId());
+        backendConnections.ExecuteHTTPRequest(url, Request.Method.GET, null, new BackendConnections.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d(LOG_TAG, "GET /users/" + "/projects RES " + response);
+                Log.d(LOG_TAG, String.format("GET $s RES %s", url, response));
 
                 try {
                     JSONArray jsonArray = new JSONArray(response);
@@ -82,7 +83,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
             @Override
             public void onError(VolleyError error) {
-                Log.d(LOG_TAG, "GET /users REQ FAILED");
+                Log.d(LOG_TAG, String.format("GET %s REQ FAILED", url));
             }
         });
     }
