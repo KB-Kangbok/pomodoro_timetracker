@@ -79,6 +79,7 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(LOG_TAG, "POST /users RES " + response);
+                startActivity(new Intent(getApplicationContext(), AdminHomeActivity.class));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -125,6 +126,7 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 //TODO: show success message
+
                 Log.d(LOG_TAG,"PUT /users/" + userId + ", RES " + response);
 
             }
