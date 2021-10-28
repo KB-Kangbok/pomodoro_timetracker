@@ -48,26 +48,24 @@ public class UserHomeActivity extends AppCompatActivity {
         projectListView = (ListView) findViewById(R.id.admin_user_list);
 
         // Fetch list of user to generate list
-        backendConnections.ExecuteHTTPRequest("/projects/", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
+        backendConnections.ExecuteHTTPRequest("users/" + "/projects/", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d(LOG_TAG, "GET /users RES " + response);
+                Log.d(LOG_TAG, "GET /users/" + "/projects RES " + response);
 
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String email = jsonObject.getString("email");
-                        String firstName = jsonObject.getString("firstName");
-                        String lastName = jsonObject.getString("lastName");
+                        String projectname = jsonObject.getString("projectname");
 
-                        User user = new User(firstName, lastName, email);
-                        userList.add(user);
+                        Project project = new Project(projectname);
+                        projectList.add(project);
 
                     }
 
-                    UserListAdapter adapter = new UserListAdapter(AdminHomeActivity.this, userList);
-                    userListView.setAdapter(adapter);
+                    ProjectListAdapter adapter = new ProjectListAdapter(UserHomeActivity.this, projectList);
+                    projectListView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
