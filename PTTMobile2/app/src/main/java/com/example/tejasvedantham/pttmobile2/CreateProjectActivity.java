@@ -10,7 +10,11 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +26,6 @@ public class CreateProjectActivity extends AppCompatActivity {
 
     private String userId; // FIXME: how to get user id?
     private EditText projectNameField;
-    private String urlFormat = "/users/%s/projects"; // /users/{userId}/projects
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +46,25 @@ public class CreateProjectActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String url = String.format(urlFormat, userId);
 
-        backendConnections.ExecuteHTTPRequest(url, Request.Method.POST, postData, new BackendConnections.VolleyCallback() {
+        Log.d(LOG_TAG, "create project: " + postData.toString());
 
+        String url = BackendConnections.baseUrl + String.format("/users/%s/projects", userId);
+        Log.d(LOG_TAG, "to url: " + url);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onResponse(JSONObject response) {
                 Log.d(LOG_TAG, String.format("POST %s RES %s", url, response));
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(VolleyError error) {
+            public void onErrorResponse(VolleyError error) {
                 Log.d(LOG_TAG, String.format("POST %s REQ FAILED", url));
             }
         });
+        requestQueue.add(jsonObjectRequest);
+
     }
 }

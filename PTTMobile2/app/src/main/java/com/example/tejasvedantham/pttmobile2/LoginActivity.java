@@ -63,11 +63,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = "http://localhost:8080" + "/users";
+        String url = backendConnections.baseUrl + "/users";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
+                        Log.d(LOG_TAG, String.format("GET %s RES %s", url, jsonArray.toString()));
                         try {
                             JSONArray users = jsonArray;
                             boolean userFound = false;
@@ -82,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (!userFound) {
                                 Log.d("NO USER", "no user");
                                 Toast toast = Toast.makeText(getBaseContext(), "No such user", Toast.LENGTH_LONG);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
                             }
 

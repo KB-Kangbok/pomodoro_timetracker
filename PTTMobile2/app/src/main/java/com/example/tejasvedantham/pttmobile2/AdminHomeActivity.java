@@ -2,6 +2,7 @@ package com.example.tejasvedantham.pttmobile2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.BaseKeyListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -57,7 +58,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url="http://172.16.33.67:8080" +"/users";
+        String url= BackendConnections.baseUrl +"/users";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,url,null,
                 new Response.Listener<JSONArray>() {
                     @Override

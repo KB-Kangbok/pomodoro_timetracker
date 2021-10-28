@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -69,22 +71,22 @@ public class CreateUserActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.d(LOG_TAG, "create user: " + postData.toString());
 
-        backendConnections.ExecuteHTTPRequest("/users", Request.Method.POST, postData, new BackendConnections.VolleyCallback() {
+        String url = BackendConnections.baseUrl + "/users";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
             @Override
-            public void onSuccess(JSONObject response) {
-                //TODO: show success message
-                Log.d(LOG_TAG,"POST /users RES " + response);
-
+            public void onResponse(JSONObject response) {
+                Log.d(LOG_TAG, "POST /users RES " + response);
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(VolleyError error) {
-                //TODO: use case when user already exists
+            public void onErrorResponse(VolleyError error) {
                 Log.d(LOG_TAG, "POST /users REQ FAILED");
             }
         });
-
+        requestQueue.add(jsonObjectRequest);
     }
 
     String userId = "";
