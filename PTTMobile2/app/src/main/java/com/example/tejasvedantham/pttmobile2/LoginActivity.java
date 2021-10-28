@@ -2,12 +2,15 @@ package com.example.tejasvedantham.pttmobile2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -62,14 +65,22 @@ public class LoginActivity extends AppCompatActivity {
 
                         try {
                             JSONArray users = jsonArray;
+                            boolean userFound = false;
                             for (int i = 0; i < users.length(); ++i) {
                                 JSONObject user = (JSONObject) users.get(i);
                                 if (user.get("email").equals(email)) {
                                     userSession.setUserId(user.get("id").toString());
-
+                                    userFound = true;
                                     startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
                                 }
                             }
+                            if (!userFound) {
+                                Log.d("NO USER", "no user");
+                                Toast toast = Toast.makeText(getBaseContext(), "No such user", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -122,4 +133,6 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
+
 }
