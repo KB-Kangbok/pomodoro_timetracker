@@ -44,11 +44,11 @@ public class UserHomeActivity extends AppCompatActivity {
         ProjectListAdapter adapter = new ProjectListAdapter(this, projectList);
 
         //TODO: Add projects to projectList and update adapter
-        createProjectPageButton = (Button) findViewById(R.id.createUserButton);
+        createProjectPageButton = (Button) findViewById(R.id.createProject);
         createProjectPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserHomeActivity.this, CreateUserActivity.class));
+                startActivity(new Intent(UserHomeActivity.this, CreateProjectActivity.class));
             }
         });
 
