@@ -52,8 +52,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         });
 
         userListView = (ListView) findViewById(R.id.admin_user_list);
-        ArrayList<User> allUsers = new ArrayList<User>();
-        UserListAdapter adapter = new UserListAdapter(this, allUsers);
 
         backendConnections = new BackendConnections(this);
         backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
