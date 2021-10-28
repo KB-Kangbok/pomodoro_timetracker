@@ -45,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = usernameField.getText().toString();
 
         if (email.equals("administrator")) {
-            Intent intent = new Intent(getApplicationContext(), AdminHomeActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), AdminHomeActivity.class));
         }
 
         backendConnections.ExecuteHTTPRequest(url, Request.Method.GET, null, new BackendConnections.VolleyCallback() {
@@ -59,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject user = (JSONObject) users.get(i);
                     if (user.get("email").equals(email)) {
                         userSession.setUserId(user.get("id").toString());
+
+                        startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
                     }
                 }
                 Utils.displayExceptionMessage(getApplicationContext(), "Invalid email");

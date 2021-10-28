@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Georgia Tech/CS 6301 Adv Software Engineering/Project/6301Fall21PTTPrj2/PTTMobile2/app/src/main/res/layout/activitiy_user_home.xml" value="0.28125" />
+        <entry key="..\:/Georgia Tech/CS 6301 Adv Software Engineering/Project/6301Fall21PTTPrj2/PTTMobile2/app/src/main/res/layout/activity_admin_home.xml" value="0.2653985507246377" />
+        <entry key="..\:/Georgia Tech/CS 6301 Adv Software Engineering/Project/6301Fall21PTTPrj2/PTTMobile2/app/src/main/res/layout/activity_create_user.xml" value="0.2653985507246377" />
+        <entry key="..\:/Georgia Tech/CS 6301 Adv Software Engineering/Project/6301Fall21PTTPrj2/PTTMobile2/app/src/main/res/layout/activity_login.xml" value="0.28125" />
         <entry key="app/src/main/res/layout/activitiy_user_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_admin_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_create_project.xml" value="0.24537037037037038" />
