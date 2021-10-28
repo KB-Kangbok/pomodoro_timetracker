@@ -2,6 +2,7 @@ package com.example.tejasvedantham.pttmobile2;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BackendConnections {
-    public static String baseUrl = "https://130.207.122.17/gazelle.cc.gatech.edu:9002/ptt";
+    public static String baseUrl = "http://172.16.33.67:8080";
     final String contentType = "application/json; charset=utf-8";
 
     Context context;
@@ -47,6 +48,7 @@ public class BackendConnections {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestType, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.d("name", "response" );
                 try {
                     callback.onSuccess(response);
                 } catch (JSONException e) {
@@ -56,6 +58,7 @@ public class BackendConnections {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("namee", error.toString());
                 error.printStackTrace();
                 callback.onError(error);
             }
