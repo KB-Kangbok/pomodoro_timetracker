@@ -2,6 +2,7 @@ package com.example.tejasvedantham.pttmobile2;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -9,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -21,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BackendConnections {
-    public static String baseUrl = "https://130.207.122.17/gazelle.cc.gatech.edu:9002/ptt";
+//    public static String baseUrl = "https://130.207.122.17/gazelle.cc.gatech.edu:9002/ptt";
+    public static String baseUrl = "http://10.2.130.50:8080";
     final String contentType = "application/json; charset=utf-8";
 
     Context context;
@@ -78,7 +81,6 @@ public class BackendConnections {
         });
         requestQueue.add(jsonObjectRequest);
     }
-
 
     public interface VolleyCallback {
         public void onSuccess(JSONObject response) throws JSONException;
