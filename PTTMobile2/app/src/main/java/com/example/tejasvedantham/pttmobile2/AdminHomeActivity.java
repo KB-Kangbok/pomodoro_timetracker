@@ -19,12 +19,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminHomeActivity extends AppCompatActivity {
     private static final String LOG_TAG = AdminHomeActivity.class.getSimpleName();
     private BackendConnections backendConnections;
 
     private ListView userListView;
+    private ArrayList<User> userList;
 
     private Button createUserPageButton;
 
@@ -63,9 +65,13 @@ public class AdminHomeActivity extends AppCompatActivity {
                         String firstName = jsonObject.getString("firstName");
                         String lastName = jsonObject.getString("lastName");
 
+                        User user = new User(firstName, lastName, email);
+                        userList.add(user);
+
                     }
 
-                    //TODO: Once we get all users, we need to add them to allUsers and update adapter
+                    UserListAdapter adapter = new UserListAdapter(AdminHomeActivity.this, userList);
+                    userListView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
