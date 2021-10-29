@@ -1,6 +1,8 @@
 package com.example.tejasvedantham.pttmobile2;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +78,18 @@ public class UserListAdapter extends ArrayAdapter<User> {
             @Override
             public void onResponse(JSONArray response) {
                 if (response.length() > 0) {
-                    Utils.displayExceptionMessage(getContext(), CONFIRM_MSG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    DialogInterface.OnClickListener listener  = (dialog, confirm) -> {
+                        switch (confirm){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                deleteUserConfirm(userId);
+                                break;
+                        }
+                    };
+                    builder.setMessage("This user has projects as associated with it. Are you sure you want to delete?");
+                    builder.setPositiveButton("Yes", listener);
+                    builder.setNegativeButton("No", listener);
+                    builder.show();
                 } else {
                     deleteUserConfirm(userId);
                 }
@@ -90,8 +103,8 @@ public class UserListAdapter extends ArrayAdapter<User> {
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void deleteUserConfirm(String projectId) {
-        String url = BackendConnections.baseUrl + String.format("/users/%s", userSession.getUserId(), projectId);
+    private void deleteUserConfirm(String userId) {
+        String url = BackendConnections.baseUrl + String.format("/users/%s", userId);
         Log.d(LOG_TAG, "delete user url: " + url);
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());

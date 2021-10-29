@@ -2,8 +2,10 @@ package com.example.tejasvedantham.pttmobile2;
 
 import static com.example.tejasvedantham.pttmobile2.LoginActivity.userSession;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +71,19 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             @Override
             public void onResponse(JSONArray response) {
                 if (response.length() > 0) {
-                    Utils.displayExceptionMessage(getContext(), CONFIRM_MSG);
+//                    Utils.displayExceptionMessage(getContext(), CONFIRM_MSG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    DialogInterface.OnClickListener listener  = (dialog, confirm) -> {
+                        switch (confirm){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                deleteProjectConfirm(projectId);
+                                break;
+                        }
+                    };
+                    builder.setMessage("This user has projects as associated with it. Are you sure you want to delete?");
+                    builder.setPositiveButton("Yes", listener);
+                    builder.setNegativeButton("No", listener);
+                    builder.show();
                 } else {
                     deleteProjectConfirm(projectId);
                 }
