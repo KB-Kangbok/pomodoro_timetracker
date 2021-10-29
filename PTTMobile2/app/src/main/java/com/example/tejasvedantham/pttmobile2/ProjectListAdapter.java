@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,12 +30,13 @@ import java.util.ArrayList;
 
 public class ProjectListAdapter extends ArrayAdapter<Project> {
 
+    private Context context;
     private static final String LOG_TAG = ProjectListAdapter.class.getSimpleName();
     private static final String CONFIRM_MSG = "The project has time already logged to it. Do you still want to delete it?";
 
     public ProjectListAdapter(Context context, ArrayList<Project> data) {
         super(context, 0, data);
-
+        this.context = context;
     }
 
     @Override
@@ -114,5 +116,8 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             }
         });
         requestQueue.add(jsonObjectRequest);
+
+        Intent intent = new Intent(context.getApplicationContext(), UserHomeActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -133,6 +133,9 @@ public class UserListAdapter extends ArrayAdapter<User> {
             }
         });
         requestQueue.add(jsonObjectRequest);
+
+        Intent intent = new Intent(context.getApplicationContext(), AdminHomeActivity.class);
+        context.startActivity(intent);
     }
 
     private void editUser(String userId){
