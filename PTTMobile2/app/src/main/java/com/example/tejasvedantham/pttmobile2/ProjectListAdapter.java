@@ -80,7 +80,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
                                 break;
                         }
                     };
-                    builder.setMessage("This user has projects as associated with it. Are you sure you want to delete?");
+                    builder.setMessage("The project has time already logged to it. Do you still want to delete it?");
                     builder.setPositiveButton("Yes", listener);
                     builder.setNegativeButton("No", listener);
                     builder.show();
