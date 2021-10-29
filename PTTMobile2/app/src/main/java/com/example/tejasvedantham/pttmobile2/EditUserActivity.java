@@ -11,7 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,27 +67,27 @@ public class EditUserActivity extends AppCompatActivity {
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put("firstName", firstNameEdit.getText().toString());
-            postData.put("lastName", lastNameEdit.getText().toString());
+            postData.put("firstName", newFirstName);
+            postData.put("lastName", newLastName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        backendConnections.ExecuteHTTPRequest("/users/" + userId, Request.Method.PUT, postData, new BackendConnections.VolleyCallback() {
+        String url = BackendConnections.baseUrl + "/users/" + userId;
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, postData, new Response.Listener<JSONObject>() {
             @Override
-            public void onSuccess(JSONObject response) {
-                //TODO: show success message
-
-                Log.d(LOG_TAG,"PUT /users/" + userId + ", RES " + response);
-
+            public void onResponse(JSONObject response) {
+                Log.d(LOG_TAG, "POST /users RES " + response);
+                startActivity(new Intent(getApplicationContext(), AdminHomeActivity.class));
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(VolleyError error) {
-                //TODO: use case when user already exists, an error dialog
-                Log.d(LOG_TAG, "PUT /users/" + userId + ", REQ FAILED");
+            public void onErrorResponse(VolleyError error) {
+                Log.d(LOG_TAG, "POST /users REQ FAILED");
             }
         });
+        requestQueue.add(jsonObjectRequest);
 
         Intent intent = new Intent(getApplicationContext(), AdminHomeActivity.class);
         startActivity(intent);
