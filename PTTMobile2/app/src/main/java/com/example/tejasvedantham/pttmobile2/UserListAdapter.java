@@ -66,7 +66,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
 
-                editUser(user.id);
+                editUser(user);
             }
         });
 
@@ -138,9 +138,14 @@ public class UserListAdapter extends ArrayAdapter<User> {
         context.startActivity(intent);
     }
 
-    private void editUser(String userId){
+    private void editUser(User user){
         Intent intent = new Intent(context.getApplicationContext(), EditUserActivity.class);
-        intent.putExtra("userId", userId);
+
+        intent.putExtra("firstName", user.firstName);
+        intent.putExtra("lastName", user.lastName);
+        intent.putExtra("email", user.email);
+        intent.putExtra("userId", user.id);
+
         context.startActivity(intent);
 
     }

@@ -86,7 +86,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_toLeftOf="@+id/deleteUser"
-        android:onClick="editUser"
         android:text="Edit"></Button>
 
 </RelativeLayout>
