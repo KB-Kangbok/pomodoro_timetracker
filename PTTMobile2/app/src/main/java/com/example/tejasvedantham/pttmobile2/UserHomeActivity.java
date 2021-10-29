@@ -57,6 +57,10 @@ public class UserHomeActivity extends AppCompatActivity {
             }
         });
 
+        populateProjectList();
+    }
+
+    public void populateProjectList(){
         projectListView = (ListView) findViewById(R.id.project_list);
         Log.d("user", userSession.getUserId());
         // Fetch list of user to generate list
@@ -70,17 +74,17 @@ public class UserHomeActivity extends AppCompatActivity {
 
                         try {
                             for (int i = 0; i < jsonArray.length(); i++) { ;
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String projectname = jsonObject.getString("projectname");
-                            String id = jsonObject.getString("id");
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                String projectname = jsonObject.getString("projectname");
+                                String id = jsonObject.getString("id");
 
-                            Project project = new Project(projectname, id);
-                            projectList.add(project);
+                                Project project = new Project(projectname, id);
+                                projectList.add(project);
 
-                        }
+                            }
 
-                        ProjectListAdapter adapter = new ProjectListAdapter(UserHomeActivity.this, projectList);
-                        projectListView.setAdapter(adapter);
+                            ProjectListAdapter adapter = new ProjectListAdapter(UserHomeActivity.this, projectList);
+                            projectListView.setAdapter(adapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -108,6 +112,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
             }
         });
-        requestQueue.add(jsonArrayRequest);}
+        requestQueue.add(jsonArrayRequest);
+    }
 
 }

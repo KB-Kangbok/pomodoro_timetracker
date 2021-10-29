@@ -74,7 +74,6 @@ public class EditUserActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 //TODO: show success message
-
                 Log.d(LOG_TAG,"PUT /users/" + userId + ", RES " + response);
 
             }

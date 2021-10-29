@@ -52,6 +52,80 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
+        populateUserList();
+
+
+
+    }
+
+    public void deleteUser(View view, String userId){
+        // check if user has any project
+
+
+        backendConnections.ExecuteHTTPRequest("/users/" + userId + "/projects", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+
+                Log.d(LOG_TAG,"GET /users/"+ userId + "/projects" + ",RES " + response);
+
+                try {
+                    if(response.getString("projectname") != null){
+                        //TODO: show confirm dialog, the button onclick triggers DeleteUserConfirm
+                    } else {
+                        DeleteUserConfirm(userId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                //TODO: case when user was already deleted
+                Log.d(LOG_TAG, "GET /users/"+ userId + "/projects" + ",REQ FAILED");
+            }
+        });
+
+    }
+
+    public void DeleteUserConfirm(String userId){
+        backendConnections.ExecuteHTTPRequest("/users/" + userId, Request.Method.DELETE, null, new BackendConnections.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+
+                Log.d(LOG_TAG,"DELETE /users/"+ userId + ",RES " + response);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                //TODO: case when user was already deleted
+                Log.d(LOG_TAG, "DELETE /users/"+ userId + ",REQ FAILED");
+            }
+        });
+
+        populateUserList();
+        startActivity(this.getIntent());
+    }
+
+    public void editUser(View view) {
+
+        RelativeLayout parentRow = (RelativeLayout) view.getParent();
+
+        String firstName = ((TextView) parentRow.findViewById(R.id.firstNameText)).getText().toString();
+        String lastName = ((TextView) parentRow.findViewById(R.id.lastNameText)).getText().toString();;
+        String email = ((TextView) parentRow.findViewById(R.id.emailText)).getText().toString();;
+
+        Intent intent = new Intent(getApplicationContext(), EditUserActivity.class);
+        intent.putExtra("firstName", firstName);
+        intent.putExtra("lastName", lastName);
+        intent.putExtra("email", email);
+
+        populateUserList();
+        startActivity(intent);
+    }
+
+    public void populateUserList(){
         userListView = (ListView) findViewById(R.id.admin_user_list);
 
         backendConnections = new BackendConnections(this);
@@ -106,106 +180,5 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonArrayRequest);
-
-        // Fetch list of user to generate list
-//        backendConnections.ExecuteHTTPRequest("/users", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
-//            @Override
-//            public void onSuccess(JSONObject response) {
-//                Log.d(LOG_TAG, "GET /users RES " + response);
-//
-//                try {
-//                    JSONArray jsonArray = new JSONArray(response);
-//                    for (int i = 0; i < jsonArray.length(); i++) {
-//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                        String email = jsonObject.getString("email");
-//                        String firstName = jsonObject.getString("firstName");
-//                        String lastName = jsonObject.getString("lastName");
-//
-//                        User user = new User(firstName, lastName, email);
-//                        userList.add(user);
-//
-//                    }
-//
-//                    UserListAdapter adapter = new UserListAdapter(AdminHomeActivity.this, userList);
-//                    userListView.setAdapter(adapter);
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(VolleyError error) {
-//                Log.d(LOG_TAG, "GET /users REQ FAILED");
-//            }
-//        });
-    }
-
-    public void deleteUser(View view, String userId){
-        // check if user has any project
-
-
-        backendConnections.ExecuteHTTPRequest("/users/" + userId + "/projects", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
-            @Override
-            public void onSuccess(JSONObject response) {
-
-                Log.d(LOG_TAG,"GET /users/"+ userId + "/projects" + ",RES " + response);
-
-                try {
-                    if(response.getString("projectname") != null){
-                        //TODO: show confirm dialog, the button onclick triggers DeleteUserConfirm
-                    } else {
-                        DeleteUserConfirm(userId);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                //TODO: case when user was already deleted
-                Log.d(LOG_TAG, "GET /users/"+ userId + "/projects" + ",REQ FAILED");
-            }
-        });
-
-
-
-
-
-    }
-
-    public void DeleteUserConfirm(String userId){
-        backendConnections.ExecuteHTTPRequest("/users/" + userId, Request.Method.DELETE, null, new BackendConnections.VolleyCallback() {
-            @Override
-            public void onSuccess(JSONObject response) {
-
-                Log.d(LOG_TAG,"DELETE /users/"+ userId + ",RES " + response);
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                //TODO: case when user was already deleted
-                Log.d(LOG_TAG, "DELETE /users/"+ userId + ",REQ FAILED");
-            }
-        });
-    }
-
-    public void editUser(View view) {
-
-        RelativeLayout parentRow = (RelativeLayout) view.getParent();
-
-        String firstName = ((TextView) parentRow.findViewById(R.id.firstNameText)).getText().toString();
-        String lastName = ((TextView) parentRow.findViewById(R.id.lastNameText)).getText().toString();;
-        String email = ((TextView) parentRow.findViewById(R.id.emailText)).getText().toString();;
-
-        Intent intent = new Intent(getApplicationContext(), EditUserActivity.class);
-        intent.putExtra("firstName", firstName);
-        intent.putExtra("lastName", lastName);
-        intent.putExtra("email", email);
-
-        startActivity(intent);
     }
 }
