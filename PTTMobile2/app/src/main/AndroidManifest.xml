@@ -40,6 +40,10 @@
             android:name="com.example.tejasvedantham.pttmobile2.UserHomeActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.EditUserActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
