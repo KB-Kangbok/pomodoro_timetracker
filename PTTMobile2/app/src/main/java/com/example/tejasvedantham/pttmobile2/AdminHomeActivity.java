@@ -70,8 +70,8 @@ public class AdminHomeActivity extends AppCompatActivity {
                                 String email = jsonObject.getString("email");
                                 String firstName = jsonObject.getString("firstName");
                                 String lastName = jsonObject.getString("lastName");
-
-                                User user = new User(firstName, lastName, email);
+                                String id = jsonObject.getString("id");
+                                User user = new User(firstName, lastName, email, id);
                                 userList.add(user);
 
                             }
