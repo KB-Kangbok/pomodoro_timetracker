@@ -201,7 +201,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         String lastName = ((TextView) parentRow.findViewById(R.id.lastNameText)).getText().toString();;
         String email = ((TextView) parentRow.findViewById(R.id.emailText)).getText().toString();;
 
-        Intent intent = new Intent(getApplicationContext(), CreateUserActivity.class);
+        Intent intent = new Intent(getApplicationContext(), EditUserActivity.class);
         intent.putExtra("firstName", firstName);
         intent.putExtra("lastName", lastName);
         intent.putExtra("email", email);
