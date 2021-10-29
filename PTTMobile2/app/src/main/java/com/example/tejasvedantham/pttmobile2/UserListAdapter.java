@@ -3,6 +3,7 @@ package com.example.tejasvedantham.pttmobile2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,14 @@ import static com.example.tejasvedantham.pttmobile2.LoginActivity.userSession;
 
 public class UserListAdapter extends ArrayAdapter<User> {
 
+    private Context context;
+
     private static final String LOG_TAG = UserListAdapter.class.getSimpleName();
     private static final String CONFIRM_MSG = "The user has projects. Do you still want to delete it?";
 
     public UserListAdapter(Context context, ArrayList<User> data) {
         super(context, 0, data);
+        this.context = context;
 
     }
 
@@ -56,6 +60,15 @@ public class UserListAdapter extends ArrayAdapter<User> {
         firstNameText.setText(user.firstName);
         lastNameText.setText(user.lastName);
         emailText.setText(user.email);
+
+        Button editProjectButton = (Button) convertView.findViewById(R.id.editUser);
+        editProjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                editUser(user.id);
+            }
+        });
 
         Button deleteUser = (Button) convertView.findViewById(R.id.deleteUser);
         deleteUser.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +133,13 @@ public class UserListAdapter extends ArrayAdapter<User> {
             }
         });
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private void editUser(String userId){
+        Intent intent = new Intent(context.getApplicationContext(), EditUserActivity.class);
+        intent.putExtra("userId", userId);
+        context.startActivity(intent);
+
     }
 
 }

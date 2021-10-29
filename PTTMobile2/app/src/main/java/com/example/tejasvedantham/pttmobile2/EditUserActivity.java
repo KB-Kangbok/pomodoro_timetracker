@@ -59,25 +59,8 @@ public class EditUserActivity extends AppCompatActivity {
 
         //TODO: Submit edited user info here using the two variables above
 
-        backendConnections.ExecuteHTTPRequest("/users", Request.Method.GET, null, new BackendConnections.VolleyCallback() {
-            @Override
-            public void onSuccess(JSONObject response) throws JSONException {
-                Log.d(LOG_TAG, String.format("GET %s RES %s", "/users", response));
-                // TODO: filter the list of all users using the email specified by this user
-                JSONArray users = response.getJSONArray("users");
-                for (int i = 0; i < users.length(); ++i) {
-                    JSONObject user = (JSONObject) users.get(i);
-                    if (user.get("email").equals(emailEdit.getText().toString())) {
-                        userId = "" + user.get("Id").toString();
-                    }
-                }
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                Log.d(LOG_TAG, String.format("GET %s REQ FAILED", "/users"));
-            }
-        });
+        Bundle extras = getIntent().getExtras();
+        userId = extras.getString("userId");
 
         JSONObject postData = new JSONObject();
         try {
