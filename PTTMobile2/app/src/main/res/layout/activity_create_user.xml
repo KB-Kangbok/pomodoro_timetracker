@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@id/userFirstName"
+        android:text="First Name"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="19dp"
+        android:text="Last Name"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView9"
+
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="19dp"
+        android:text="Email"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create User"
+        android:textSize="48dp"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/userFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="First Name"
+        android:layout_centerInParent="true">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/userLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userFirstName"
+        android:layout_centerHorizontal="true"
+        android:hint="Last Name">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userLastName"
+        android:layout_centerHorizontal="true"
+        android:hint="Email Address">
+
+    </EditText>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create User"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="createUser"
+        android:clickable="true">
+
+    </Button>
+
+</RelativeLayout>
