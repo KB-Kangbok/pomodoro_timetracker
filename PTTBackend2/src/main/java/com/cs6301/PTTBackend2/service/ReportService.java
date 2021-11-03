@@ -1,6 +1,7 @@
 package com.cs6301.PTTBackend2.service;
 
 import com.cs6301.PTTBackend2.entity.Session;
+import com.cs6301.PTTBackend2.exception.InvalidRequestBodyException;
 import com.cs6301.PTTBackend2.exception.ResourceNotFoundException;
 import com.cs6301.PTTBackend2.model.Report;
 import com.cs6301.PTTBackend2.model.ReportSession;
@@ -22,20 +23,20 @@ public class ReportService {
     @Autowired
     private SessionRepository sessionRepository;
 
-    public Report getReport(String pathUserid, String pathProjectid, String pathStartingtime, String pathEndingtime) {
+    public Report getReport(String pathUserid, String pathProjectid, String pathStartingtime, String pathEndingtime, Boolean includeCompletedPomodoros, Boolean includeTotalHoursWorkedOnProject) {
         Integer userid = Integer.parseInt(pathUserid);
         Integer projectid = Integer.parseInt(pathProjectid);
         Timestamp startingTime = DateTimeConverter.toSQLTimestampUTC(pathStartingtime);
         Timestamp endingTime = DateTimeConverter.toSQLTimestampUTC(pathEndingtime);
         if (projectRepository.existsProjectByUseridAndId(userid, projectid)) {
             List<Session> sessionList = sessionRepository.getSessionReports(userid, projectid, startingTime, endingTime);
-            return generateReportFromSessionList(sessionList);
+            return generateReportFromSessionList(sessionList, includeCompletedPomodoros, includeTotalHoursWorkedOnProject);
         } else {
             throw new ResourceNotFoundException("User, Project Not Found");
         }
     }
 
-    private Report generateReportFromSessionList(List<Session> sessionList) {
+    private Report generateReportFromSessionList(List<Session> sessionList, Boolean includeCompletedPomodoros, Boolean includeTotalHoursWorkedOnProject) {
         List<Integer> counterList = new ArrayList<>();
         List<Double> hoursWorkedOnProjectList = new ArrayList<>();
         List<ReportSession> reportSessionList = new ArrayList<>();
@@ -45,7 +46,9 @@ public class ReportService {
             reportSessionList.add(reportSession);
             hoursWorkedOnProjectList.add(reportSession.getHoursWorked());
         });
-        return new Report(reportSessionList, sumFromIntegerList(counterList), sumFromDoubleList(hoursWorkedOnProjectList));
+        Double totalHoursWorkedOnProject = (includeTotalHoursWorkedOnProject != null && includeTotalHoursWorkedOnProject) ? sumFromDoubleList(hoursWorkedOnProjectList) : null;
+        Integer completedPomodoros = (includeCompletedPomodoros != null && includeCompletedPomodoros) ? sumFromIntegerList(counterList) : null;
+        return new Report(reportSessionList, completedPomodoros, totalHoursWorkedOnProject);
     }
 
     private ReportSession generateReportSessionFromSession(Session session) {
@@ -64,4 +67,5 @@ public class ReportService {
         double durationMS = (double) (endTime.getTime() - startTime.getTime());
         return durationMS / 3.6E+6;
     }
+
 }

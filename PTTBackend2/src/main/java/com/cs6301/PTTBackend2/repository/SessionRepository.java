@@ -15,6 +15,9 @@ public interface SessionRepository extends CrudRepository<Session, Integer> {
 
     Session findSessionById(Integer sessionid);
 
-    @Query(value = "SELECT * FROM session s WHERE s.userid = ?1 AND s.projectid = ?2 AND ((starttime < ?4 AND starttime > ?3) OR (endtime > ?3 AND endtime < ?4))", nativeQuery = true)
+    @Query(value = "SELECT * FROM session s WHERE s.userid = ?1 AND ((starttime < ?3 AND starttime >= ?2) OR (endtime > ?2 AND endtime <= ?3))", nativeQuery = true)
+    List<Session> getOverlappingSessions(Integer userid, Timestamp startingTime, Timestamp endingTime);
+
+    @Query(value = "SELECT * FROM session s WHERE s.userid = ?1 AND s.projectid = ?2 AND ((starttime < ?4 AND starttime >= ?3) OR (endtime > ?3 AND endtime <= ?4))", nativeQuery = true)
     List<Session> getSessionReports(Integer userid, Integer projectid, Timestamp startingTime, Timestamp endingTime);
 }

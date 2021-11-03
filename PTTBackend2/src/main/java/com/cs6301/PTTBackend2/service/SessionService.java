@@ -65,7 +65,7 @@ public class SessionService {
     }
 
     private Session generateSessionFromSessionHttp(Integer userid, Integer projectid, Integer sessionid, SessionHttp sessionHttp) {
-        if (validateSessionHttp(sessionHttp)) {
+        if (validateSessionHttp(userid, sessionHttp)) {
             if (sessionRepository.existsSessionByUseridAndProjectidAndId(userid, projectid, sessionid)) {
                 Session updatedSession = sessionRepository.findSessionById(sessionid);
                 updatedSession.setStartTime(DateTimeConverter.toSQLTimestampUTC(sessionHttp.getStartTime()));
@@ -82,7 +82,7 @@ public class SessionService {
     }
 
     private Session generateSessionFromSessionHttp(Integer userid, Integer projectid, SessionHttp sessionHttp) {
-        if (validateSessionHttp(sessionHttp)) {
+        if (validateSessionHttp(userid, sessionHttp)) {
             if (projectRepository.existsProjectByUseridAndId(userid, projectid)) {
                 return generateSessionFromSessionHttpHelper(userid, projectid, sessionHttp);
             } else {
@@ -93,14 +93,13 @@ public class SessionService {
         }
     }
 
-    private boolean validateSessionHttp(SessionHttp sessionHttp) {
-        if (sessionHttp.getCounter() < 0) {
-            return false;
-        }
+    private boolean validateSessionHttp(Integer userid, SessionHttp sessionHttp) {
         try {
             Timestamp startTimeUTC = DateTimeConverter.toSQLTimestampUTC(sessionHttp.getStartTime());
             Timestamp endTimeUTC = DateTimeConverter.toSQLTimestampUTC(sessionHttp.getEndTime());
-            return startTimeUTC.before(endTimeUTC);
+            long diffMilisec = endTimeUTC.getTime() - startTimeUTC.getTime();
+            List<Session> sessionList = sessionRepository.getOverlappingSessions(userid, startTimeUTC, endTimeUTC);
+            return sessionHttp.getCounter() >= 0 && startTimeUTC.before(endTimeUTC) && diffMilisec >= sessionHttp.getCounter() * 30 * 60 * 1000 && sessionList.size() == 0;
         } catch (Exception e) {
             return false;
         }
