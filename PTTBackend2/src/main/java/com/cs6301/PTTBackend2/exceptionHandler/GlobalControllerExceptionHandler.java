@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.cs6301.PTTBackend2.exception.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
@@ -34,6 +35,12 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler({NumberFormatException.class})
     public ResponseEntity<String> handleInvalidRequestParameter(RuntimeException runtimeException) {
         return new ResponseEntity<>("Invalid Path ID", HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<String> handleInvalidQueryParameter(RuntimeException runtimeException) {
+        return new ResponseEntity<>("Invalid Query Parameter(s)", HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
