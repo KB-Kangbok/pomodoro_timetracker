@@ -5,6 +5,10 @@ plugins {
 android {
     compileSdk 30
 
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "com.example.tejasvedantham.homepageactivity"
         minSdk 21
