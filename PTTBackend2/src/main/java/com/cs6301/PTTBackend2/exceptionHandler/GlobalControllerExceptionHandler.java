@@ -38,7 +38,7 @@ public class GlobalControllerExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, IllegalArgumentException.class})
     public ResponseEntity<String> handleInvalidQueryParameter(RuntimeException runtimeException) {
         return new ResponseEntity<>("Invalid Query Parameter(s)", HttpStatus.BAD_REQUEST);
     }
