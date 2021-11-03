@@ -50,4 +50,10 @@ public class UserController {
         User deletedUser = userService.deleteUserById(pathUserid);
         return new ResponseEntity<>(deletedUser, HttpStatus.OK);
    }
+
+    @DeleteMapping(path="")
+    public ResponseEntity<List<User>> deleteAllUsers() {
+        List<User> deletedUser = userService.deleteAllUsers();
+        return new ResponseEntity<List<User>>(deletedUser, HttpStatus.OK);
+    }
 }

@@ -7,6 +7,8 @@ import com.cs6301.PTTBackend2.repository.UserRepository;
 import com.cs6301.PTTBackend2.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @Service
@@ -36,6 +38,16 @@ public class UserService {
         } else {
             throw new ResourceNotFoundException("User Not Found");
         }
+    }
+
+    public List<User> deleteAllUsers() {
+        List<User> userList = userRepository.findAll();
+        try{
+            userRepository.deleteAll();
+        }catch (Exception e){
+            throw e;
+        }
+        return userList;
     }
 
     public User updateUser(User newUser, String pathUserid) {
