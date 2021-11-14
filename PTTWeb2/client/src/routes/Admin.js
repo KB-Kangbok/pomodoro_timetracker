@@ -52,14 +52,25 @@ function Admin() {
   };
 
   const handleCreate = async () => {
-    await axios.post(`${apiUrl}/users`, {
+    if (inputFnameNew === "" || inputLnameNew === "" || inputEmailNew === "") {
+      alert("Please fill in all the fields!");
+      return;
+    }
+    const res = await axios.post(`${apiUrl}/users`, {
       firstName: inputFnameNew,
       lastName: inputLnameNew,
       email: inputEmailNew,
     });
-    setInputFnameNew("");
-    setInputLnameNew("");
-    setInputEmailNew("");
+    if (res.status === 201) {
+      alert('User "' + res.data.email + '" is successfully created.');
+      setInputFnameNew("");
+      setInputLnameNew("");
+      setInputEmailNew("");
+    } else if (res.status === 409) {
+      alert(`User with email ${inputEmailNew} already exists!`);
+    } else {
+      alert(`Create user failed with ${res.status} code`);
+    }
     setUpdate(true);
   };
 
@@ -87,13 +98,25 @@ function Admin() {
   };
 
   const handleUpdate = async () => {
-    await axios.put(`${apiUrl}/users/${selectedEditUser.id}`, {
+    if (inputFnameNew === "" || inputLnameNew === "") {
+      alert("Firstname or lastname cannot be empty!");
+      return;
+    }
+
+    const res = await axios.put(`${apiUrl}/users/${selectedEditUser.id}`, {
       firstName: inputFnameEdit,
       lastName: inputLnameEdit,
       email: selectedEditUser.email,
     });
-    setInputFnameEdit("");
-    setInputLnameEdit("");
+
+    if (res.status === 200) {
+      alert('User "' + res.data.email + '" is successfully edited.');
+      setInputFnameEdit("");
+      setInputLnameEdit("");
+    } else {
+      alert(`Edit user failed with ${res.status} code`);
+    }
+
     setUpdate(true);
   };
 
@@ -124,15 +147,17 @@ function Admin() {
 
   return (
     <div style={{ margin: 20 }}>
-        <Typography component="h6" align="right">Hi, Admin</Typography>
-        <Typography variant="inherit" component="h1" style={{marginTop: -20 }}>
-          Manage Users
-        </Typography>
+      <Typography component="h6" align="right">
+        Hi, Admin
+      </Typography>
+      <Typography variant="inherit" component="h1" style={{ marginTop: -20 }}>
+        Manage Users
+      </Typography>
 
       <Grid container direction="row" justifyContent="center">
         <Grid item style={{ marginRight: 50 }}>
           <h2>Add User</h2>
-          <FormControl sx={{ width: 200 }} >
+          <FormControl sx={{ width: 200 }}>
             <TextField
               required
               id="outlined-basic"
@@ -168,7 +193,7 @@ function Admin() {
 
         <Grid item style={{ marginRight: 50 }}>
           <h2>Edit User</h2>
-          <FormControl sx={{width: 200 }}>
+          <FormControl sx={{ width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
               value={selectedEditUser}
