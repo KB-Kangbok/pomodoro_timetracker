@@ -185,7 +185,7 @@ function Admin() {
               value={inputEmailNew}
               margin="dense"
             />
-            <Button variant="contained" onClick={handleCreate}>
+            <Button id="create-user-btn" variant="contained" onClick={handleCreate}>
               Create
             </Button>
           </FormControl>
@@ -244,7 +244,7 @@ function Admin() {
                 </MenuItem>
               ))}
             </Select>
-            <Button variant="contained" onClick={handleDelete}>
+            <Button id="delete-user-btn" variant="contained" onClick={handleDelete}>
               Delete
             </Button>
           </FormControl>
