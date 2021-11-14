@@ -160,7 +160,7 @@ function Admin() {
           <FormControl sx={{ width: 200 }}>
             <TextField
               required
-              id="outlined-basic"
+              id="fname-input"
               label="First Name"
               variant="outlined"
               onChange={handleInputFnameNew}
@@ -169,7 +169,7 @@ function Admin() {
             />
             <TextField
               required
-              id="outlined-basic"
+              id="lname-input"
               label="Last Name"
               variant="outlined"
               onChange={handleInputLnameNew}
@@ -178,7 +178,7 @@ function Admin() {
             />
             <TextField
               required
-              id="outlined-basic"
+              id="email-input"
               label="Email"
               variant="outlined"
               onChange={handleInputEmailNew}
