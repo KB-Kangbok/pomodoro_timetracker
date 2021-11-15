@@ -32,7 +32,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
 
     private Context context;
     private static final String LOG_TAG = ProjectListAdapter.class.getSimpleName();
-    private static final String CONFIRM_MSG = "The project has time already logged to it. Do you still want to delete it?";
+    public static final String CONFIRM_MSG = "The project has time already logged to it. Do you still want to delete it?";
 
     public ProjectListAdapter(Context context, ArrayList<Project> data) {
         super(context, 0, data);
@@ -82,7 +82,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
                                 break;
                         }
                     };
-                    builder.setMessage("The project has time already logged to it. Do you still want to delete it?");
+                    builder.setMessage(CONFIRM_MSG);
                     builder.setPositiveButton("Yes", listener);
                     builder.setNegativeButton("No", listener);
                     builder.show();
