@@ -56,20 +56,24 @@ function Admin() {
       alert("Please fill in all the fields!");
       return;
     }
-    const res = await axios.post(`${apiUrl}/users`, {
-      firstName: inputFnameNew,
-      lastName: inputLnameNew,
-      email: inputEmailNew,
-    });
-    if (res.status === 201) {
-      alert('User "' + res.data.email + '" is successfully created.');
-      setInputFnameNew("");
-      setInputLnameNew("");
-      setInputEmailNew("");
-    } else if (res.status === 409) {
-      alert(`User with email ${inputEmailNew} already exists!`);
-    } else {
-      alert(`Create user failed with ${res.status} code`);
+    try {
+      const res = await axios.post(`${apiUrl}/users`, {
+        firstName: inputFnameNew,
+        lastName: inputLnameNew,
+        email: inputEmailNew,
+      });
+      if (res.status === 201) {
+        alert('User "' + res.data.email + '" is successfully created.');
+        setInputFnameNew("");
+        setInputLnameNew("");
+        setInputEmailNew("");
+      }
+    } catch (e) {
+        if (e.response.status === 409) {
+          alert(`User with email ${inputEmailNew} already exists!`);
+        } else {
+          alert(`Create user failed with ${e.status} code`);
+        }
     }
     setUpdate(true);
   };
@@ -102,21 +106,20 @@ function Admin() {
       alert("Firstname or lastname cannot be empty!");
       return;
     }
-
-    const res = await axios.put(`${apiUrl}/users/${selectedEditUser.id}`, {
-      firstName: inputFnameEdit,
-      lastName: inputLnameEdit,
-      email: selectedEditUser.email,
-    });
-
-    if (res.status === 200) {
-      alert('User "' + res.data.email + '" is successfully edited.');
-      setInputFnameEdit("");
-      setInputLnameEdit("");
-    } else {
-      alert(`Edit user failed with ${res.status} code`);
+    try {
+      const res = await axios.put(`${apiUrl}/users/${selectedEditUser.id}`, {
+        firstName: inputFnameEdit,
+        lastName: inputLnameEdit,
+        email: selectedEditUser.email,
+      });
+      if (res.status === 200) {
+        alert('User "' + res.data.email + '" is successfully edited.');
+        setInputFnameEdit("");
+        setInputLnameEdit("");
+      }
+    } catch (e) {
+      alert(`Edit user failed with ${e.response.status} code`);
     }
-
     setUpdate(true);
   };
 
@@ -231,9 +234,10 @@ function Admin() {
 
         <Grid item>
           <h2>Delete User</h2>
-          <FormControl sx={{ width: 200 }}>
+          <FormControl  sx={{ width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
+                id="delete-email-select"
               value={selectedDelUser}
               onChange={handleDelSelect}
               input={<OutlinedInput label="Name" />}

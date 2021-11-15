@@ -90,12 +90,18 @@ export default function User({
   };
 
   const handleCreate = async () => {
-    const res = await axios.post(`${apiUrl}/users/${id}/projects`, {
-      projectname: input,
-    });
-    console.log(res.data.id);
-    setInput("");
-    setUpdate(true);
+    try {
+      const res = await axios.post(`${apiUrl}/users/${id}/projects`, {
+        projectname: input,
+      });
+      console.log(res.data.id);
+      setInput("");
+      setUpdate(true);
+    } catch (e) {
+      if (e.response.status === 409) {
+        alert(`Project ${input} already exists!`);
+      }
+    }
   };
 
   const gridStyle = {
@@ -115,6 +121,7 @@ export default function User({
         <FormControl sx={{ width: 200 }}>
           <InputLabel>Project</InputLabel>
           <Select
+              id="existing-projects-select"
             value={selectedProject}
             onChange={handleSelect}
             input={<OutlinedInput label="Name" />}
@@ -132,13 +139,13 @@ export default function User({
 
         <FormControl style={{ marginLeft: 30 }}>
           <TextField
-            id="outlined-basic"
+            id="project-input"
             label="New Project"
             variant="outlined"
             onChange={handleInput}
             value={input}
           />
-          <Button variant="contained" onClick={handleCreate}>
+          <Button id="project-create-btn" variant="contained" onClick={handleCreate}>
             Create
           </Button>
         </FormControl>
