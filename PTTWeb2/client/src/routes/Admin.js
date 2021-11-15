@@ -199,6 +199,7 @@ function Admin() {
           <FormControl sx={{ width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
+              id="edit-email-select"
               value={selectedEditUser}
               onChange={handleEditSelect}
               input={<OutlinedInput label="Name" />}
@@ -211,7 +212,7 @@ function Admin() {
               ))}
             </Select>
             <TextField
-              id="outlined-basic"
+              id="edit-fname"
               label="First Name"
               variant="outlined"
               onChange={handleInputFnameEdit}
@@ -219,14 +220,14 @@ function Admin() {
               margin="dense"
             />
             <TextField
-              id="outlined-basic"
+              id="edit-lname"
               label="Last Name"
               variant="outlined"
               onChange={handleInputLnameEdit}
               value={inputLnameEdit}
               margin="dense"
             />
-            <Button variant="contained" onClick={handleUpdate}>
+            <Button id="edit-user-btn" variant="contained" onClick={handleUpdate}>
               Update
             </Button>
           </FormControl>
