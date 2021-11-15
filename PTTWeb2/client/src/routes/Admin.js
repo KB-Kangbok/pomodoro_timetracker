@@ -160,7 +160,7 @@ function Admin() {
           <FormControl sx={{ width: 200 }}>
             <TextField
               required
-              id="outlined-basic"
+              id="fname-input"
               label="First Name"
               variant="outlined"
               onChange={handleInputFnameNew}
@@ -169,7 +169,7 @@ function Admin() {
             />
             <TextField
               required
-              id="outlined-basic"
+              id="lname-input"
               label="Last Name"
               variant="outlined"
               onChange={handleInputLnameNew}
@@ -178,14 +178,14 @@ function Admin() {
             />
             <TextField
               required
-              id="outlined-basic"
+              id="email-input"
               label="Email"
               variant="outlined"
               onChange={handleInputEmailNew}
               value={inputEmailNew}
               margin="dense"
             />
-            <Button variant="contained" onClick={handleCreate}>
+            <Button id="create-user-btn" variant="contained" onClick={handleCreate}>
               Create
             </Button>
           </FormControl>
@@ -244,7 +244,7 @@ function Admin() {
                 </MenuItem>
               ))}
             </Select>
-            <Button variant="contained" onClick={handleDelete}>
+            <Button id="delete-user-btn" variant="contained" onClick={handleDelete}>
               Delete
             </Button>
           </FormControl>
