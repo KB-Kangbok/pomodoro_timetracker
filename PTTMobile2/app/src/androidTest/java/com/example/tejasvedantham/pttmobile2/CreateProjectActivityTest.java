@@ -40,7 +40,7 @@ import static org.hamcrest.Matchers.instanceOf;
 public class CreateProjectActivityTest extends TestCase {
 
     @Rule
-    public ActivityTestRule<CreateProjectActivity> act = new ActivityTestRule<CreateProjectActivity>(CreateProjectActivity.class, false, false);
+    public final static ActivityTestRule<CreateProjectActivity> createProjectActivity = new ActivityTestRule<CreateProjectActivity>(CreateProjectActivity.class, false, false);
 
     private String projectName = "MyProject";
 
@@ -54,7 +54,7 @@ public class CreateProjectActivityTest extends TestCase {
         Intent intent = new Intent();
         intent.putExtra("id", "1");
 
-        act.launchActivity(intent);
+        createProjectActivity.launchActivity(intent);
 
         Espresso.onView(withId(R.id.projectName))
                 .perform(typeText(projectName));
@@ -77,7 +77,7 @@ public class CreateProjectActivityTest extends TestCase {
         Intent intent = new Intent();
         intent.putExtra("id", "1");
 
-        act.launchActivity(intent);
+        createProjectActivity.launchActivity(intent);
 
         Espresso.onView(withId(R.id.projectName))
                 .perform(typeText(projectName));
