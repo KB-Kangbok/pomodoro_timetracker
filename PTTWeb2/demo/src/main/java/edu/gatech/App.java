@@ -16,6 +16,15 @@ public class App
 {
     public static void main( String[] args ) throws Exception
     {
+        String os = System.getProperty("os.name");
+        if (os.startsWith("Mac")) {
+            System.setProperty("webdriver.chrome.driver", "./chromedriver-mac");
+        } else if (os.startsWith("Linux")) {
+            System.setProperty("webdriver.chrome.driver", "./chromedriver-linux");
+        } else {
+            System.setProperty("webdriver.chrome.driver", "./chromedriver-windows");
+        }
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-web-security");
         WebDriver driver = new ChromeDriver(options);
