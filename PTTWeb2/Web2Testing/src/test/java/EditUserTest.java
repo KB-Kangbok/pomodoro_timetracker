@@ -43,6 +43,10 @@ public class EditUserTest {
         editUser(driver, "Olivia", "Marcus", "126@gmail.com");
         Thread.sleep(200);
 
+        deleteUser(driver, "Joe", "Doe", "123@gmail.com");
+        deleteUser(driver, "Mark", "Martin", "124@gmail.com");
+        deleteUser(driver, "Andy", "White", "125@gmail.com");
+        deleteUser(driver, "Olivia", "Marcus", "126@gmail.com");
         //finish
         Thread.sleep(100);
         driver.quit();
@@ -91,6 +95,24 @@ public class EditUserTest {
 
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        Thread.sleep(100);
+    }
+
+    private static void deleteUser(WebDriver driver, String firstname, String lastname, String email_str) throws Exception {
+        //create a user without a project
+        driver.get("http://localhost:3000/#/admin");
+        WebElement drop = driver.findElement(By.id("delete-email-select"));
+        drop.click();
+        Thread.sleep(100);
+        List<WebElement> list = driver.findElements(By.tagName("li"));
+        for (WebElement e : list) {
+            if (e.getText().equals(email_str)) {
+                e.click();
+                break;
+            }
+        }
+        WebElement delete = driver.findElement(By.id("delete-user-btn"));
+        delete.click();
         Thread.sleep(100);
     }
 }
