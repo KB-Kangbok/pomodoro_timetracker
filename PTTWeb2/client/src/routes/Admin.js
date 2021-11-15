@@ -98,7 +98,7 @@ function Admin() {
   };
 
   const handleUpdate = async () => {
-    if (inputFnameNew === "" || inputLnameNew === "") {
+    if (inputFnameEdit === "" || inputLnameEdit === "") {
       alert("Firstname or lastname cannot be empty!");
       return;
     }
