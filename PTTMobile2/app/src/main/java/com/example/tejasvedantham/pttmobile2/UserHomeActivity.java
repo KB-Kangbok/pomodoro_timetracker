@@ -124,4 +124,8 @@ public class UserHomeActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
+    public void createPomodoro(View view) {
+        Intent intent = new Intent(getApplicationContext(), StartPomodoroStep1Activity.class);
+        startActivity(intent);
+    }
 }

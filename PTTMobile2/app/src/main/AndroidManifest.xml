@@ -44,6 +44,14 @@
             android:name="com.example.tejasvedantham.pttmobile2.EditUserActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.StartPomodoroStep1Activity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.StartPomodoroStep2Activity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
