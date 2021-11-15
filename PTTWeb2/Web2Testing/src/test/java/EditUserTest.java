@@ -25,39 +25,27 @@ public class EditUserTest {
 
         // edit user - just first name
         createUser(driver, "John", "Doe", "123@gmail.com");
-        WebElement drop = driver.findElement(By.id("edit-email-select"));
-        drop.click();
+        editUser(driver, "Joe", "Doe", "123@gmail.com");
+        Thread.sleep(200);
+
+        // edit user - just last name
+        createUser(driver, "Mark", "Miller", "124@gmail.com");
+        editUser(driver, "Mark", "Martin", "124@gmail.com");
+        Thread.sleep(200);
+
+        // edit user - both first and last name
+        createUser(driver, "Alex", "Andrews", "125@gmail.com");
+        editUser(driver, "Andy", "White", "125@gmail.com");
+        Thread.sleep(200);
+
+        // edit user - both unchanged
+        createUser(driver, "Olivia", "Marcus", "126@gmail.com");
+        editUser(driver, "Olivia", "Marcus", "126@gmail.com");
+        Thread.sleep(200);
+
+        //finish
         Thread.sleep(100);
-        List<WebElement> list = driver.findElements(By.tagName("li"));
-        for (WebElement e : list) {
-            if (e.getText().equals("123@gmail.com")) {
-                e.click();
-                break;
-            }
-        }
-        WebElement input = driver.findElement(By.id("edit-fname"));
-        input.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
-        // editUser(driver, "Joe", "Doe", "123@gmail.com");
-        // Thread.sleep(200);
-
-        // // edit user - just last name
-        // createUser(driver, "Mark", "Miller", "124@gmail.com");
-        // editUser(driver, "Mark", "Martin", "124@gmail.com");
-        // Thread.sleep(200);
-
-        // // edit user - both first and last name
-        // createUser(driver, "Alex", "Andrews", "125@gmail.com");
-        // editUser(driver, "Andy", "White", "125@gmail.com");
-        // Thread.sleep(200);
-
-        // // edit user - both unchanged
-        // createUser(driver, "Olivia", "Marcus", "126@gmail.com");
-        // editUser(driver, "Olivia", "Marcus", "126@gmail.com");
-        // Thread.sleep(200);
-
-        // //finish
-        // Thread.sleep(100);
-        // driver.quit();
+        driver.quit();
     }
 
     private static void createUser(WebDriver driver, String firstname, String lastname, String email_str) throws Exception {
@@ -89,11 +77,13 @@ public class EditUserTest {
                 break;
             }
         }
-
+        
         WebElement fname = driver.findElement(By.id("edit-fname"));
+        fname.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+        fname.sendKeys(firstname);
         WebElement lname = driver.findElement(By.id("edit-lname"));
-        fname.clear();
-        lname.clear();
+        lname.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+        lname.sendKeys(lastname);
 
         WebElement edit = driver.findElement(By.id("edit-user-btn"));
         edit.click();
