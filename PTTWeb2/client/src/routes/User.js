@@ -104,6 +104,25 @@ export default function User({
     }
   };
 
+  const handleSession = async () => {
+    try {
+      const res = await axios.post(
+        `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`,
+        {
+          startTime: "2019-02-18T20:00Z",
+          endTime: "2019-02-18T21:00Z",
+          counter: 0,
+        }
+      );
+      console.log(res.data.id);
+      setSelectedProject({});
+      setUpdate(true);
+    } catch (e) {
+      if (e.response.status === 404) {
+        alert(`Bad request`);
+      }
+    }
+  };
   const gridStyle = {
     padding: 20,
     height: "60vh",
@@ -114,14 +133,14 @@ export default function User({
   return (
     <div style={{ margin: 20 }}>
       <Typography component="h6" align="right">{`Hi, ${firstName}`}</Typography>
-      <Typography variant="inherit" component="h1" style={{marginTop: -20 }}>
+      <Typography variant="inherit" component="h1" style={{ marginTop: -20 }}>
         Manage Projects
       </Typography>
       <Grid style={gridStyle}>
         <FormControl sx={{ width: 200 }}>
           <InputLabel>Project</InputLabel>
           <Select
-              id="existing-projects-select"
+            id="existing-projects-select"
             value={selectedProject}
             onChange={handleSelect}
             input={<OutlinedInput label="Name" />}
@@ -132,7 +151,11 @@ export default function User({
               </MenuItem>
             ))}
           </Select>
-          <Button variant="contained" onClick={handleDelete}>
+          <Button
+            id="delete-project-btn"
+            variant="contained"
+            onClick={handleDelete}
+          >
             Delete
           </Button>
         </FormControl>
@@ -145,10 +168,21 @@ export default function User({
             onChange={handleInput}
             value={input}
           />
-          <Button id="project-create-btn" variant="contained" onClick={handleCreate}>
+          <Button
+            id="project-create-btn"
+            variant="contained"
+            onClick={handleCreate}
+          >
             Create
           </Button>
         </FormControl>
+        <Button
+          id="create-session-btn"
+          variant="contained"
+          onClick={handleSession}
+        >
+          Temporary create session
+        </Button>
 
         <Dialog
           open={hasSessions}
@@ -167,8 +201,10 @@ export default function User({
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={deleteProject}>Delete</Button>
-            <Button onClick={handleClose} autoFocus>
+            <Button id="dialog-accept" onClick={deleteProject}>
+              Delete
+            </Button>
+            <Button id="dialog-cancel" onClick={handleClose} autoFocus>
               Cancel
             </Button>
           </DialogActions>
