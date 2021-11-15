@@ -34,12 +34,13 @@ public class EditUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
-
+//        Log.d("edit", getIntent().getExtras().toString());
         firstNameEdit = (EditText) findViewById(R.id.userFirstNameEdit);
         lastNameEdit= (EditText) findViewById(R.id.userLastNameEdit);
         emailEdit = (TextView) findViewById(R.id.userEmailEdit);
 
         Bundle extras = getIntent().getExtras();
+//        Log.d("edit user", extras.getString("firstName"));
         if (extras != null) {
             String firstName = extras.getString("firstName");
             String lastName = extras.getString("lastName");

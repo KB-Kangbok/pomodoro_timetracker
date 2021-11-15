@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,7 +44,11 @@ public class CreateProjectActivity extends AppCompatActivity {
 
         projectNameField = (EditText) findViewById(R.id.projectName);
 
-        userId = userSession.getUserId();
+//        userId = userSession.getUserId();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("id");
+        }
         backendConnections = new BackendConnections(this);
         backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
     }
@@ -66,12 +71,19 @@ public class CreateProjectActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(LOG_TAG, String.format("POST %s RES %s", url, response));
-                startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+                Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                intent.putExtra("id", userId);
+                startActivity(intent);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(LOG_TAG, String.format("POST %s REQ FAILED", url));
+                if (error.networkResponse.statusCode == 409) {
+                    Toast toast = Toast.makeText(getBaseContext(), "Project Name Already Taken", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
         requestQueue.add(jsonObjectRequest);
