@@ -34,6 +34,7 @@ public class UserHomeActivity extends AppCompatActivity {
     private Button createProjectPageButton;
 
     private BackendConnections backendConnections;
+    private String userId;
 
 
     @Override
@@ -46,14 +47,22 @@ public class UserHomeActivity extends AppCompatActivity {
 
         projectListView = (ListView) findViewById(R.id.project_list);
         ArrayList<Project> projectList = new ArrayList<>();
-        ProjectListAdapter adapter = new ProjectListAdapter(this, projectList);
+        ProjectListAdapter adapter = new ProjectListAdapter(this, projectList, userId);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("id");
+        }
 
         //TODO: Add projects to projectList and update adapter
         createProjectPageButton = (Button) findViewById(R.id.createProject);
         createProjectPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserHomeActivity.this, CreateProjectActivity.class));
+                Intent intent = new Intent(getApplicationContext(), CreateProjectActivity.class);
+                intent.putExtra("id", userSession.getUserId());
+                startActivity(intent);
+//                startActivity(new Intent(UserHomeActivity.this, CreateProjectActivity.class));
             }
         });
 
@@ -62,10 +71,10 @@ public class UserHomeActivity extends AppCompatActivity {
 
     public void populateProjectList(){
         projectListView = (ListView) findViewById(R.id.project_list);
-        Log.d("user", userSession.getUserId());
+        Log.d("user", userId);
         // Fetch list of user to generate list
-        String url = String.format(BackendConnections.baseUrl + "/users/%s/projects", userSession.getUserId());
-        Log.d("user", userSession.getUserId());
+        String url = String.format(BackendConnections.baseUrl + "/users/%s/projects", userId);
+        Log.d("user", userId);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,url,null,
                 new Response.Listener<JSONArray>() {
@@ -83,7 +92,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
                             }
 
-                            ProjectListAdapter adapter = new ProjectListAdapter(UserHomeActivity.this, projectList);
+                            ProjectListAdapter adapter = new ProjectListAdapter(UserHomeActivity.this, projectList, userId);
                             projectListView.setAdapter(adapter);
 
                         } catch (JSONException e) {

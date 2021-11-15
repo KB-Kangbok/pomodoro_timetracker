@@ -77,7 +77,9 @@ public class LoginActivity extends AppCompatActivity {
                                 if (user.get("email").equals(email)) {
                                     userSession.setUserId(user.get("id").toString());
                                     userFound = true;
-                                    startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+                                    Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                                    intent.putExtra("id", userSession.getUserId());
+                                    startActivity(intent);
                                 }
                             }
                             if (!userFound) {
