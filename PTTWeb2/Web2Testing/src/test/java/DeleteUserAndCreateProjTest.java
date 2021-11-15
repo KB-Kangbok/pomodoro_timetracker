@@ -1,3 +1,5 @@
+package test.java;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +16,7 @@ import java.util.function.Function;
 
 public class DeleteUserAndCreateProjTest {
     public static void main(String[] args) throws Exception {
-        System.setProperty("webdriver.chrome.driver", "./Web2Testing/chromedriver-windows");
+        System.setProperty("webdriver.chrome.driver", "/chromedriver-linux");
 
         ChromeOptions options = new ChromeOptions();
 //        options.addArguments("--disable-web-security"); // don't enforce the same-origin policy
