@@ -17,9 +17,9 @@ public class DeleteUserAndCreateProjTest {
         System.setProperty("webdriver.chrome.driver", "./Web2Testing/chromedriver-windows");
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-web-security"); // don't enforce the same-origin policy
-        options.addArguments("--disable-gpu"); // applicable to windows os only
-        options.addArguments("--user-data-dir=C:\\Users\\jzhsi\\chromeTemp"); // applicable to windows os only
+//        options.addArguments("--disable-web-security"); // don't enforce the same-origin policy
+//        options.addArguments("--disable-gpu"); // applicable to windows os only
+//        options.addArguments("--user-data-dir=C:\\Users\\jzhsi\\chromeTemp"); // applicable to windows os only
 
         WebDriver driver = new ChromeDriver(options);
 
