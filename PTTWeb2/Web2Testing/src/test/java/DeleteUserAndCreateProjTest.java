@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+import org.junit.Assert;
 
 import java.util.List;
 import java.util.function.Function;
@@ -32,6 +33,9 @@ public class DeleteUserAndCreateProjTest {
 
         //delete one user without project
         deleteUser(driver, "Joe", "Doe", "123@gmail.com");
+        Thread.sleep(100);
+        checkUserExisting(driver, "123@gmail.com");
+
         Thread.sleep(100);
         //create a project for the user and delete the user
         createProject(driver, "124@gmail.com", "p1");
@@ -84,6 +88,18 @@ public class DeleteUserAndCreateProjTest {
         WebElement delete = driver.findElement(By.id("delete-user-btn"));
         delete.click();
         Thread.sleep(100);
+    }
+
+    private static void checkUserExisting(WebDriver driver, String email_str) throws Exception {
+        //create a user without a project
+        driver.get("http://localhost:3000/#/admin");
+        WebElement drop = driver.findElement(By.id("delete-email-select"));
+        drop.click();
+        Thread.sleep(100);
+        List<WebElement> list = driver.findElements(By.tagName("li"));
+        for (WebElement e : list) {
+            Assert.assertNotEquals(email_str, e.getText());
+        }
     }
 
     private static void deleteUserWithProject(WebDriver driver, String firstname, String lastname, String email_str) throws Exception {
