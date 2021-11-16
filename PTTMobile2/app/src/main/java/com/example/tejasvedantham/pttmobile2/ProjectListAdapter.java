@@ -54,11 +54,21 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         nameProject.setText(project.projectName);
 
         Button deleteProjectButton = (Button) convertView.findViewById(R.id.deleteProject);
+        Button generateReportButton = (Button) convertView.findViewById(R.id.generateReport);
+
         deleteProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(LOG_TAG, "click delete project: " + project.projectName +  " " + project.id);
                 deleteProject(project.id);
+            }
+        });
+
+        generateReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                context.startActivity(intent);
             }
         });
 

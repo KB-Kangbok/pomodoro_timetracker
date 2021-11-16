@@ -10,20 +10,19 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Project Name"
+        android:text="Project Name: "
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold">
+    </TextView>
 
     <TextView
         android:id="@+id/nameProject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/textView6"
         android:text="Project Name"
-        android:textSize="18dp">
+        android:textSize="16dp">
 
     </TextView>
 
@@ -33,6 +32,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:text="Delete">
+
+    </Button>
+
+    <Button
+        android:id="@+id/generateReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report"
+        android:layout_toLeftOf="@+id/deleteProject"
+        android:layout_marginHorizontal="5dp">
 
     </Button>
 </RelativeLayout>

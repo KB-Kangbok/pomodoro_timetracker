@@ -52,6 +52,14 @@
             android:name="com.example.tejasvedantham.pttmobile2.StartPomodoroStep2Activity"
             android:exported="true">
         </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.GenerateReportStep1Activity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.GenerateReportStep2Activity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
