@@ -2,6 +2,7 @@ package com.example.tejasvedantham.pttmobile2;
 
 import static com.example.tejasvedantham.pttmobile2.LoginActivity.userSession;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,28 +50,14 @@ public class CreateProjectActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("id");
         }
-        backendConnections = new BackendConnections(this);
-        backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
     }
 
     public void createProject(View view) {
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("projectname", projectNameField.getText().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Log.d(LOG_TAG, "create project: " + postData.toString());
-        String url = BackendConnections.baseUrl + String.format("/users/%s/projects", userId);
-        Log.d(LOG_TAG, "to url: " + url);
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
-
+        Project project = new Project(projectNameField.getText().toString(), null);
+        createProjectInternal(project, userId, this, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(LOG_TAG, String.format("POST %s RES %s", url, response));
+                Log.d(LOG_TAG, String.format("POST create project RES %s", response));
                 Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
                 intent.putExtra("id", userId);
                 startActivity(intent);
@@ -79,13 +66,29 @@ public class CreateProjectActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(LOG_TAG, String.format("POST %s REQ FAILED", url));
+                Log.d(LOG_TAG, String.format("POST create project REQ FAILED"));
                 if (error.networkResponse.statusCode == 409) {
                     Toast toast = Toast.makeText(getBaseContext(), "Project Name Already Taken", Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
         });
+    }
+
+    public static void createProjectInternal(Project project, String userId, Context context, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("projectname", project.projectName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(LOG_TAG, "create project: " + postData.toString());
+        String url = BackendConnections.baseUrl + String.format("/users/%s/projects", userId);
+        Log.d(LOG_TAG, "to url: " + url);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, listener, errorListener);
         requestQueue.add(jsonObjectRequest);
     }
 }

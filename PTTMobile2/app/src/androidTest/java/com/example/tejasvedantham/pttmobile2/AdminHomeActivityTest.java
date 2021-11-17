@@ -16,7 +16,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static androidx.test.internal.util.Checks.checkNotNull;
+import static com.example.tejasvedantham.pttmobile2.CreateProjectActivity.createProjectInternal;
 import static com.example.tejasvedantham.pttmobile2.CreateProjectActivityTest.createProjectActivity;
+import static com.example.tejasvedantham.pttmobile2.CreateUserActivity.createUserInternal;
 import static com.example.tejasvedantham.pttmobile2.CreateUserActivityTest.createUserActivity;
 import static com.example.tejasvedantham.pttmobile2.UserListAdapter.CONFIRM_MSG;
 
@@ -69,14 +71,18 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
 public class AdminHomeActivityTest extends TestCase {
 
+    private static final String LOG_TAG = AdminHomeActivityTest.class.getSimpleName();
+
     @Rule
     public  ActivityTestRule<AdminHomeActivity> adminHomeActivity = new ActivityTestRule<>(AdminHomeActivity.class, false, false);
 
-    private static ArrayList<User> testUserList = new ArrayList<>();
+    private ArrayList<User> testUserList = new ArrayList<>();
+    public ArrayList<User> createdUserList = new ArrayList<>();
     private Intent intent;
 
     private void removeAllCurrent() {
@@ -94,7 +100,6 @@ public class AdminHomeActivityTest extends TestCase {
                                 JSONObject user = (JSONObject) users.get(i);
                                 String id = (user.get("id").toString());
                                 deleteUser(id);
-
                             }
 
                         } catch (JSONException e) {
@@ -128,26 +133,28 @@ public class AdminHomeActivityTest extends TestCase {
             }
         });
         requestQueue.add(jsonObjectRequest);
-
     }
 
+    @Before
     public void setUp() throws Exception {
         super.setUp();
+        Intents.init();
+        intent = new Intent();
+
         removeAllCurrent();
+        TimeUnit.SECONDS.sleep(3);
+
         testUserList.add(new User("Saira", "Poonnen", "saira.poonnen@gatech.edu", null));
         testUserList.add(new User("Minyi", "Lu", "minyi.lu@gatech.edu", null));
         testUserList.add(new User("Tejas", "Vedantham", "tejas.vedantham@gatech.edu", null));
         testUserList.add(new User("Yuyi", "Qu", "yuyi.qu@gatech.edu", null));
-
-        Intents.init();
-        intent = new Intent();
-
-        setupUsers();
     }
 
+    @After
     public void tearDown() throws Exception {
         Intents.release();
     }
+
     @Test
     public void TestCreateButton() {
         // Type text and then press the button.
@@ -302,36 +309,62 @@ public class AdminHomeActivityTest extends TestCase {
     }
 
     @Test
-    public void testDeleteUserWithoutProjects() {
+    public void testDeleteUserWithoutProjects() throws InterruptedException {
+        setupUsers();
+        TimeUnit.SECONDS.sleep(3);
+        assert(createdUserList.size() > 0);
+
         adminHomeActivity.launchActivity(intent);
         onData(withContent(testUserList.get(0))).inAdapterView(withId(R.id.admin_user_list)).onChildView(withId(R.id.deleteUser)).perform(click());
         onView(withId(R.id.admin_user_list)).check(matches(not(withContent(testUserList.get(0)))));
     }
 
     @Test
-    public void testDeleteUserWithProjects() {
-        setupProjects();
+    public void testDeleteUserWithProjects() throws InterruptedException {
+        setupUsers();
+        TimeUnit.SECONDS.sleep(3);
+        assert(createdUserList.size() > 0);
+
+        int userIndexToTest = 0;
+        setupProjects(createdUserList.get(userIndexToTest).id);
+
         adminHomeActivity.launchActivity(intent);
-        onData(withContent(testUserList.get(4))).inAdapterView(withId(R.id.admin_user_list)).onChildView(withId(R.id.deleteUser)).perform(click());
+        onData(withContent(createdUserList.get(userIndexToTest))).inAdapterView(withId(R.id.admin_user_list)).onChildView(withId(R.id.deleteUser)).perform(click());
         onView(withText(CONFIRM_MSG)).check(matches(isDisplayed()));
     }
 
     private void setupUsers() {
         for (User user : testUserList) {
-            createUserActivity.launchActivity(intent);
-            onView(withId(R.id.userFirstName)).perform(typeText(user.firstName));
-            onView(withId(R.id.userLastName)).perform(typeText(user.lastName));
-            onView(withId(R.id.userEmail)).perform(typeText(user.email));
-            onView(withId(R.id.createUserButton)).perform(click());
+            createUserInternal(user, getApplicationContext(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        createdUserList.add(new User(response.get("firstName").toString(), response.get("lastName").toString(), response.get("email").toString(), response.get("id").toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
         }
     }
 
-    private void setupProjects() {
-        Intent userIntent = new Intent();
-        userIntent.putExtra("id", "4"); // FIXME: how to know the id of the user I created before?
-        createProjectActivity.launchActivity(userIntent);
-        onView(withId(R.id.projectName)).perform(typeText("myProject1"));
-        onView(withId(R.id.createProjectButton)).perform(click());
+    private void setupProjects(String userId) {
+        createProjectInternal(new Project("myProject1", null), userId, getApplicationContext(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
     }
 
     private static Matcher<Object> withContent(final User content) {
