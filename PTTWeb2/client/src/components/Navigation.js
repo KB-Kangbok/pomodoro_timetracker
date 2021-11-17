@@ -27,6 +27,7 @@ function Navigation({ isLogin, setIsLogin }) {
           <div style={{ marginLeft: "auto" }}>
             {isLogin ? (
               <Link
+                id="log-out"
                 style={linkStyle}
                 component="button"
                 variant="subtitle1"
