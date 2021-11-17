@@ -126,11 +126,11 @@ public class EditUserActivityTest {
                 .inAdapterView(withId(R.id.admin_user_list))
                 .atPosition(0)
                 .onChildView(withId(R.id.editUser))
-                .check(matches(isDisplayed()))
                 .perform(click());
 
         intended(hasComponent(EditUserActivity.class.getName()));
         deleteDummyUser();
+        Intents.release();
 
     }
 
