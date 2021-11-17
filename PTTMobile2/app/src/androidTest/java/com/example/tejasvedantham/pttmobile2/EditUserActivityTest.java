@@ -24,29 +24,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class UserStory2Test {
+public class EditUserActivityTest {
 
     @Rule
     public ActivityTestRule<LoginActivity> loginIntentRule =
             new ActivityTestRule<>(LoginActivity.class);
-
-    @Test
-    public void TestAdminLogin() {
-        // Type text and then press the button.
-        onView(withId(R.id.usernameField))
-                .perform(typeText("admin"), closeSoftKeyboard());
-        onView(withId(R.id.loginButton)).perform(click());
-
-        // Check activity change
-        intended(hasComponent(AdminHomeActivity.class.getName()));
-    }
-}
-
-@RunWith(AndroidJUnit4.class)
-class UserStory2TestEditUserButton {
-
-    public ActivityTestRule<AdminHomeActivity> adminIntentRule =
-            new ActivityTestRule<>(AdminHomeActivity.class);
 
     @Test
     public void TestEditButton() {
@@ -60,13 +42,6 @@ class UserStory2TestEditUserButton {
 
         intended(hasComponent(EditUserActivity.class.getName()));
     }
-}
-
-@RunWith(AndroidJUnit4.class)
-class UserStory2TestEditUserPage {
-
-    public ActivityTestRule<EditUserActivity> adminIntentRule =
-            new ActivityTestRule<>(EditUserActivity.class);
 
     @Test
     public void TestEdit() {
@@ -80,3 +55,5 @@ class UserStory2TestEditUserPage {
         intended(hasComponent(AdminHomeActivity.class.getName()));
     }
 }
+
+

@@ -98,22 +98,22 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        jsonArrayRequest.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 5000;
-            }
-
-            @Override
-            public int getCurrentRetryCount() {
-                return 5000;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });
+//        jsonArrayRequest.setRetryPolicy(new RetryPolicy() {
+//            @Override
+//            public int getCurrentTimeout() {
+//                return 5000;
+//            }
+//
+//            @Override
+//            public int getCurrentRetryCount() {
+//                return 5000;
+//            }
+//
+//            @Override
+//            public void retry(VolleyError error) throws VolleyError {
+//
+//            }
+//        });
         requestQueue.add(jsonArrayRequest);
     }
 

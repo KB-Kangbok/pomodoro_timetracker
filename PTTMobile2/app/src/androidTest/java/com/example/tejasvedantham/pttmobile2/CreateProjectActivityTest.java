@@ -4,9 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.test.InstrumentationRegistry;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.Toast;
 
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import junit.framework.TestCase;
 
@@ -16,6 +26,7 @@ import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.rule.ActivityTestRule;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -24,8 +35,13 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.Random;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -48,11 +64,23 @@ public class CreateProjectActivityTest extends TestCase {
         super.setUp();
         Intents.init();
     }
-
+    public String id = "";
     @Test
     public void testProjectNameSuccess() {
+        removeAllCurrent();
+        createDummyUser();
+
+        try
+        {
+            Thread.sleep(1800);
+        }
+        catch(InterruptedException e)
+        {
+
+        }
+
         Intent intent = new Intent();
-        intent.putExtra("id", "1");
+        intent.putExtra("id", id);
 
         createProjectActivity.launchActivity(intent);
 
@@ -74,17 +102,35 @@ public class CreateProjectActivityTest extends TestCase {
 
     @Test
     public void testProjectNameTaken() {
+        removeAllCurrent();
+        createDummyUser();
+        try
+        {
+            Thread.sleep(1800);
+        }
+        catch(InterruptedException e) {
+
+        }
+        createDummyProject(id);
+
+        try
+        {
+            Thread.sleep(1800);
+        }
+        catch(InterruptedException e) {
+
+        }
+
         Intent intent = new Intent();
-        intent.putExtra("id", "1");
+        intent.putExtra("id", id);
 
         createProjectActivity.launchActivity(intent);
+
 
         Espresso.onView(withId(R.id.projectName))
                 .perform(typeText(projectName));
         Espresso.closeSoftKeyboard();
-
         Espresso.onView(withId(R.id.createProjectButton)).perform(click());
-
         onView(withText("Project Name Already Taken")).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
 
 
@@ -95,6 +141,110 @@ public class CreateProjectActivityTest extends TestCase {
 
     public void tearDown() throws Exception {
         Intents.release();
+    }
+
+    private void createDummyProject(String id) {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("projectname", projectName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        Log.d(LOG_TAG, "create project: " + postData.toString());
+        String url = BackendConnections.baseUrl + String.format("/users/%s/projects", id);
+//        Log.d(LOG_TAG, "to url: " + url);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("POST", String.format("POST %s RES %s", url, response));
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", String.format("POST %s REQ FAILED", url));
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void createDummyUser() {
+
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("firstName", "Minyi");
+            postData.put("lastName", "Lu");
+
+            postData.put("email", generateEmail());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        Log.d(LOG_TAG, "create user: " + postData.toString());
+
+        String url = BackendConnections.baseUrl + "/users";
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                Log.d("yes", "POST /users RES " + response);
+//                myMethod(response.toString()).
+
+                try {
+
+
+                    id =  response.get("id").toString();
+                    Log.d("ID", id);
+//                    System.out.println(id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("errored");
+                Log.d("not", "POST /users REQ FAILED");
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
+    private void deleteDummyUser() {
+
+        String url = BackendConnections.baseUrl + String.format("/users/%s", id);
+//        Log.d(LOG_TAG, "delete user url: " + url);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+//                Log.d(LOG_TAG, String.format("DELETE %s RES %s", url, response.toString()));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Log.d(LOG_TAG, String.format("DELETE %s FAILED", url));
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
+
+
+    private String generateEmail() {
+        String email = "";
+        Random r = new Random();
+        for (int i = 0; i < 50; i++) {
+            email = email + r.nextInt(10);
+        }
+        return email;
     }
 //   Retrieved from http://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
     public class ToastMatcher extends TypeSafeMatcher<Root> {
@@ -116,4 +266,55 @@ public class CreateProjectActivityTest extends TestCase {
         }
 
     }
-}
+    private void removeAllCurrent() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        String url = BackendConnections.baseUrl + "/users";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        Log.d("get", String.format("GET %s RES %s", url, jsonArray.toString()));
+                        try {
+                            JSONArray users = jsonArray;
+                            boolean userFound = false;
+                            for (int i = 0; i < users.length(); ++i) {
+                                JSONObject user = (JSONObject) users.get(i);
+                                String id = (user.get("id").toString());
+                                deleteUser(id);
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void deleteUser(String id) {
+
+        String url = BackendConnections.baseUrl + String.format("/users/%s", id);
+//        Log.d(LOG_TAG, "delete user url: " + url);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("DELETE", String.format("DELETE %s RES %s", url, response.toString()));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Log.d(LOG_TAG, String.format("DELETE %s FAILED", url));
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    }

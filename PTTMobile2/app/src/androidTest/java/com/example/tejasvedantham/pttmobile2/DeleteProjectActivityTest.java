@@ -37,39 +37,39 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class CreateProjectActivityTest extends TestCase {
+public class DeleteProjectActivityTest extends TestCase {
 
-    @Rule
-    public ActivityTestRule<CreateProjectActivity> act = new ActivityTestRule<CreateProjectActivity>(UserHomeActivity.class, false, false);
-
-    private String projectName = "MyProject";
-
-    public void setUp() throws Exception {
-        super.setUp();
-        Intents.init();
-    }
-
-    @Test
-    public void testDeleteProject() {
-        Intent intent = new Intent();
-        intent.putExtra("id", "1");
-
-        act.launchActivity(intent);
-
-        intended(hasComponent(UserHomeActivity.class.getName()));
-
-        onData(anything())
-                .inAdapterView(withId(R.id.project_list))
-                .atPosition(0)
-                .onChildView(withId(R.id.deleteProject))
-                .check(matches(isDisplayed()))
-                .perform(click());
-
-    }
-
-
-
-    public void tearDown() throws Exception {
-        Intents.release();
-    }
+//    @Rule
+//    public ActivityTestRule<CreateProjectActivity> act = new ActivityTestRule<CreateProjectActivity>(UserHomeActivity.class, false, false);
+//
+//    private String projectName = "MyProject";
+//
+//    public void setUp() throws Exception {
+//        super.setUp();
+//        Intents.init();
+//    }
+//
+//    @Test
+//    public void testDeleteProject() {
+//        Intent intent = new Intent();
+//        intent.putExtra("id", "1");
+//
+//        act.launchActivity(intent);
+//
+//        intended(hasComponent(UserHomeActivity.class.getName()));
+//
+//        onData(anything())
+//                .inAdapterView(withId(R.id.project_list))
+//                .atPosition(0)
+//                .onChildView(withId(R.id.deleteProject))
+//                .check(matches(isDisplayed()))
+//                .perform(click());
+//
+//    }
+//
+//
+//
+//    public void tearDown() throws Exception {
+//        Intents.release();
+//    }
 }

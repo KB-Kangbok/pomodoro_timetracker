@@ -2,9 +2,11 @@ package com.example.tejasvedantham.pttmobile2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,6 +46,11 @@ public class CreateUserActivity extends AppCompatActivity {
     }
 
     public void createUser(View view) {
+        if ((TextUtils.isEmpty(emailField.getText().toString())) || emailField.getText().toString() == "") {
+            Toast toast = Toast.makeText(getBaseContext(), "Please provide an email address", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
         JSONObject postData = new JSONObject();
         try {
             postData.put("firstName", firstNameField.getText().toString());
@@ -66,6 +73,10 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(LOG_TAG, "POST /users REQ FAILED");
+                if (error.networkResponse.statusCode == 409) {
+                    Toast toast = Toast.makeText(getBaseContext(), "Email Already Taken", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
         requestQueue.add(jsonObjectRequest);
