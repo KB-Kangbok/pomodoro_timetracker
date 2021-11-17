@@ -1,0 +1,52 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.cs6301'
+version = '0.0.1-SNAPSHOT'
+
+description = """PTTBackend2"""
+
+sourceCompatibility = 8
+targetCompatibility = 8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+
+
+repositories {
+        
+     maven { url "https://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'2.5.5'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.5.5'
+    compile group: 'org.projectlombok', name: 'lombok', version:'1.18.20'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version:'2.5.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.12.5'
+    compile group: 'joda-time', name: 'joda-time', version:'2.10'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version:'2.5.5'
+    compile group: 'org.apache.commons', name: 'commons-math', version:'2.0'
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version:'2.2.6.RELEASE'
+    runtime group: 'com.h2database', name: 'h2', version:'1.4.200'
+    runtime(group: 'mysql', name: 'mysql-connector-java', version:'8.0.26') {
+exclude(module: 'protobuf-java')
+    }
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.5.5'
+    testCompile group: 'org.apache.httpcomponents', name: 'httpcore', version:'4.4.14'
+    testCompile(group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.13') {
+exclude(module: 'commons-logging')
+    }
+    testCompile group: 'junit', name: 'junit', version:'4.13.2'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+test {
+    useJUnit()
+
+    maxHeapSize = '1G'
+}
+
+task BackendTestsBackend2(type: Test) {
+    useJUnit()
+}
