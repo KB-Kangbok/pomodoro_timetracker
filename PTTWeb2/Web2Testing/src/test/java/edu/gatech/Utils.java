@@ -26,7 +26,7 @@ public class Utils {
         login_btn.click();
     }
 
-    public static void logout(WebDriver driver) throws Exception {
+    public void logout(WebDriver driver) throws Exception {
         WebElement logout = driver.findElement(By.id("log-out"));
         logout.click();
         Thread.sleep(200);
