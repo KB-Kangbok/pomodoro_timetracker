@@ -35,6 +35,7 @@ public class FrontEndTest
         options.addArguments("--disable-web-security");
         // options.addArguments("headless");
         driver = new ChromeDriver(options);
+        System.out.println("gagagaga");
     }
 
     @AfterTest
