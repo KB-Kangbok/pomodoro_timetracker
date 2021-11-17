@@ -189,6 +189,8 @@ public class AdminHomeActivityTest extends TestCase {
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
 
+        Intents.release();
+
     }
 
 
@@ -219,6 +221,7 @@ public class AdminHomeActivityTest extends TestCase {
                 .atPosition(0)
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
+        Intents.release();
     }
 
     @Test
@@ -246,6 +249,7 @@ public class AdminHomeActivityTest extends TestCase {
                 .atPosition(0)
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
+        Intents.release();
     }
 
 
@@ -266,6 +270,7 @@ public class AdminHomeActivityTest extends TestCase {
         onView(withId(R.id.createUserButton)).perform(click());
 
         onView(withText("Please provide an email address")).inRoot(new AdminHomeActivityTest.ToastMatcher()).check(matches(isDisplayed()));
+        Intents.release();
     }
 
     public String username = "";
@@ -299,6 +304,7 @@ public class AdminHomeActivityTest extends TestCase {
 
         onView(withText("Email Already Taken")).inRoot(new AdminHomeActivityTest.ToastMatcher()).check(matches(isDisplayed()));
         deleteDummyUser();
+        Intents.release();
     }
 
     @Test
