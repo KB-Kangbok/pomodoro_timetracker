@@ -182,6 +182,7 @@ public class AdminHomeActivityTest extends TestCase {
         Log.d("in","Here");
 
         intended(hasComponent(AdminHomeActivity.class.getName()));
+
         onData(anything())
                 .inAdapterView(withId(R.id.admin_user_list))
                 .atPosition(0)
