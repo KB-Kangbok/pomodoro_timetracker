@@ -16,7 +16,7 @@ import java.util.List;
 public class FrontEndTest 
 {
     private WebDriver driver;
-    private String baseUrl = "http://localhost:3000";
+    private String baseUrl = "http://localhost:3000/#";
     
     @BeforeTest
     public void setup(){
@@ -40,6 +40,16 @@ public class FrontEndTest
     @AfterTest
     public void teardown() {
         driver.close();
+    }
+
+    @Test
+    public void loginAdminTest() throws Exception {
+        login("admin");
+        
+        String expected = baseUrl + "/admin";
+        String actual = driver.getCurrentUrl();
+
+        Assert.assertEquals(actual, expected);
     }
 
     private void login(String email_str) throws Exception {
