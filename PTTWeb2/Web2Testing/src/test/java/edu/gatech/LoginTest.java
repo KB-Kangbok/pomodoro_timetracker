@@ -16,13 +16,15 @@ public class LoginTest extends BrowserFunctions {
 
     @Test
     public void loginAdminTest() throws Exception {
+        System.out.println("Login Test Start");
         utils.login("admin");
         
         String expected = getBaseUrl() + "/admin";
-        String actual = driver.getCurrentUrl();
-
+        String actual = utils.driver.getCurrentUrl();
+        
+        System.out.println("Login Test Middle");
         Assert.assertEquals(actual, expected);
     }
-
+    
 
 }
