@@ -8,35 +8,22 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.BundleMatchers.hasEntry;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static androidx.test.internal.util.Checks.checkNotNull;
 import static com.example.tejasvedantham.pttmobile2.CreateProjectActivity.createProjectInternal;
-import static com.example.tejasvedantham.pttmobile2.CreateProjectActivityTest.createProjectActivity;
 import static com.example.tejasvedantham.pttmobile2.CreateUserActivity.createUserInternal;
-import static com.example.tejasvedantham.pttmobile2.CreateUserActivityTest.createUserActivity;
 import static com.example.tejasvedantham.pttmobile2.UserListAdapter.CONFIRM_MSG;
 
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.EasyMock2Matchers.equalTo;
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.core.AllOf.allOf;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.hamcrest.core.StringStartsWith.startsWith;
-import static org.hamcrest.object.HasToString.hasToString;
 
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,10 +34,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import androidx.test.espresso.Root;
-import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.BoundedMatcher;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -69,7 +54,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -79,7 +63,12 @@ public class AdminHomeActivityTest extends TestCase {
     private static final String LOG_TAG = AdminHomeActivityTest.class.getSimpleName();
 
     @Rule
-    public  ActivityTestRule<AdminHomeActivity> adminHomeActivity = new ActivityTestRule<>(AdminHomeActivity.class, false, false);
+    public final ActivityTestRule<AdminHomeActivity> adminHomeRule =
+            new ActivityTestRule<>(AdminHomeActivity.class, false, false);
+
+    @Rule
+    public final ActivityTestRule<CreateUserActivity> createUserRule =
+            new ActivityTestRule<>(CreateUserActivity.class, false, false);
 
     private ArrayList<User> testUserList = new ArrayList<>();
     public ArrayList<User> createdUserList = new ArrayList<>();
@@ -158,25 +147,16 @@ public class AdminHomeActivityTest extends TestCase {
     @Test
     public void TestCreateButton() {
         // Type text and then press the button.
-        ActivityTestRule<AdminHomeActivity> adminIntentRule =
-                new ActivityTestRule<>(AdminHomeActivity.class, false, false);
-        Intents.init();
-        Intent intent = new Intent();
-        adminIntentRule.launchActivity(intent);
+        createUserRule.launchActivity(intent);
         onView(withId(R.id.createUserButton)).perform(click());
 
         intended(hasComponent(CreateUserActivity.class.getName()));
-        Intents.release();
     }
+
     public String email = "";
     @Test
     public void TestCreatingUserAllFields() {
-        ActivityTestRule<CreateUserActivity> adminIntentRule =
-                new ActivityTestRule<>(CreateUserActivity.class, false, false);
-        Intents.init();
-        Intent intent = new Intent();
-        adminIntentRule.launchActivity(intent);
-        removeAllCurrent();
+        createUserRule.launchActivity(intent);
         // Type text and then press the button.
         onView(withId(R.id.userFirstName))
                 .perform(typeText("Min"), closeSoftKeyboard());
@@ -195,22 +175,11 @@ public class AdminHomeActivityTest extends TestCase {
                 .atPosition(0)
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
-
-        Intents.release();
-
     }
-
-
-
 
     @Test
     public void TestCreatingUserNoFirstName() {
-        ActivityTestRule<CreateUserActivity> adminIntentRule =
-                new ActivityTestRule<>(CreateUserActivity.class, false, false);
-        Intents.init();
-        Intent intent = new Intent();
-        adminIntentRule.launchActivity(intent);
-        removeAllCurrent();
+        createUserRule.launchActivity(intent);
         // Type text and then press the button.
         onView(withId(R.id.userFirstName))
                 .perform(typeText(""), closeSoftKeyboard());
@@ -228,17 +197,11 @@ public class AdminHomeActivityTest extends TestCase {
                 .atPosition(0)
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
-        Intents.release();
     }
 
     @Test
     public void TestCreatingUserNoLastName() {
-        ActivityTestRule<CreateUserActivity> adminIntentRule =
-                new ActivityTestRule<>(CreateUserActivity.class, false, false);
-        Intents.init();
-        Intent intent = new Intent();
-        adminIntentRule.launchActivity(intent);
-        removeAllCurrent();
+        createUserRule.launchActivity(intent);
         // Type text and then press the button.
         onView(withId(R.id.userFirstName))
                 .perform(typeText("Min"), closeSoftKeyboard());
@@ -256,17 +219,11 @@ public class AdminHomeActivityTest extends TestCase {
                 .atPosition(0)
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
-        Intents.release();
     }
-
 
     @Test
     public void TestCreatingUserNoEmail() {
-        ActivityTestRule<CreateUserActivity> adminIntentRule =
-                new ActivityTestRule<>(CreateUserActivity.class, false, false);
-        Intents.init();
-        Intent intent = new Intent();
-        adminIntentRule.launchActivity(intent);
+        createUserRule.launchActivity(intent);
         // Type text and then press the button.
         onView(withId(R.id.userFirstName))
                 .perform(typeText("Min"), closeSoftKeyboard());
@@ -277,19 +234,13 @@ public class AdminHomeActivityTest extends TestCase {
         onView(withId(R.id.createUserButton)).perform(click());
 
         onView(withText("Please provide an email address")).inRoot(new AdminHomeActivityTest.ToastMatcher()).check(matches(isDisplayed()));
-        Intents.release();
     }
 
     public String username = "";
     public String id = "";
     @Test
     public void TestCreatingUserEmailTaken() {
-        ActivityTestRule<CreateUserActivity> adminIntentRule =
-                new ActivityTestRule<>(CreateUserActivity.class, false, false);
-        Intents.init();
-        Intent intent = new Intent();
-
-        adminIntentRule.launchActivity(intent);
+        createUserRule.launchActivity(intent);
 
         createDummyUser();
         try
@@ -311,7 +262,6 @@ public class AdminHomeActivityTest extends TestCase {
 
         onView(withText("Email Already Taken")).inRoot(new AdminHomeActivityTest.ToastMatcher()).check(matches(isDisplayed()));
         deleteDummyUser();
-        Intents.release();
     }
 
     @Test
@@ -320,7 +270,7 @@ public class AdminHomeActivityTest extends TestCase {
         TimeUnit.SECONDS.sleep(3);
         assert(createdUserList.size() > 0);
 
-        adminHomeActivity.launchActivity(intent);
+        adminHomeRule.launchActivity(intent);
         onData(withContent(testUserList.get(0))).inAdapterView(withId(R.id.admin_user_list)).onChildView(withId(R.id.deleteUser)).perform(click());
         onView(withId(R.id.admin_user_list)).check(matches(not(withContent(testUserList.get(0)))));
     }
@@ -334,7 +284,7 @@ public class AdminHomeActivityTest extends TestCase {
         int userIndexToTest = 0;
         setupProjects(createdUserList.get(userIndexToTest).id);
 
-        adminHomeActivity.launchActivity(intent);
+        adminHomeRule.launchActivity(intent);
         onData(withContent(createdUserList.get(userIndexToTest))).inAdapterView(withId(R.id.admin_user_list)).onChildView(withId(R.id.deleteUser)).perform(click());
         onView(withText(CONFIRM_MSG)).check(matches(isDisplayed()));
     }
