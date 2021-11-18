@@ -5,7 +5,7 @@
         <classes>
             <class name="edu.gatech.LoginTest" />
             <class name="edu.gatech.CreateUserTest" /> 
-            <!-- <class name="edu.gatech.EditUserTest" /> -->
+            <class name="edu.gatech.EditUserTest" />
             <class name="edu.gatech.DeleteUserTest" />
             <class name="edu.gatech.DeleteProjectTest" />
         </classes>

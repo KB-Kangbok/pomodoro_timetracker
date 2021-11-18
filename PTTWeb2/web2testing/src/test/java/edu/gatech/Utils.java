@@ -7,8 +7,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.Keys;
 
-import java.util.List;
+import java.util.*;
 
 public class Utils {
     public WebDriver driver;
@@ -79,6 +80,35 @@ public class Utils {
                 driver.switchTo().alert().dismiss();
             }
         }
+    }
+
+    public String editUser(Map<String, String> information) throws Exception {
+        WebElement drop = driver.findElement(By.id("edit-email-select"));
+        drop.click();
+        Thread.sleep(100);
+        List<WebElement> users = driver.findElements(By.tagName("li"));
+        for (WebElement user : users) {
+            if (user.getText().equals(information.get("username"))) {
+                user.click();
+                break;
+            }
+        }
+        
+        if (information.containsKey("firstName")) {
+            WebElement fname = driver.findElement(By.id("edit-fname"));
+            fname.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+            fname.sendKeys(information.get("firstName"));
+        }
+        if (information.containsKey("lastName")) {
+            WebElement lname = driver.findElement(By.id("edit-lname"));
+            lname.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+            lname.sendKeys(information.get("lastName"));
+        }
+        WebElement edit = driver.findElement(By.id("edit-user-btn"));
+        edit.click();
+        Thread.sleep(200);
+
+        return getAlertMessage();
     }
 
     //name should be changed to "validateUserDeleted"

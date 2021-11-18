@@ -22,7 +22,6 @@ public class CreateUserTest extends BrowserFunctions {
     public void createDuplicateUser() throws Exception {
     
         String expected = USERNAME_ALREADY_EXISTS[0] + USERNAME + USERNAME_ALREADY_EXISTS[1];
-        // System.out.println(USERNAME);
         String actual = utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
 
         Assert.assertEquals(actual, expected);
