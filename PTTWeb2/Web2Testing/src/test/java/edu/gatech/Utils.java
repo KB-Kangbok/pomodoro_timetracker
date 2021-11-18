@@ -1,11 +1,10 @@
 package edu.gatech;
 
-import org.testng.Assert;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
@@ -18,19 +17,22 @@ public class Utils {
         this.driver = driver;
         this.baseUrl = baseUrl; 
     }
-
     public void login(String email_str) throws Exception {
         driver.get(baseUrl);
 
         WebElement username = driver.findElement(By.id("user-login-input"));
-        WebElement login_btn = driver.findElement(By.id("login-btn"));
+        WebElement login = driver.findElement(By.id("login-btn"));
         username.sendKeys(email_str);
-        login_btn.click();
+        login.click();
     }
 
-    public void logout(WebDriver driver) throws Exception {
-        WebElement logout = driver.findElement(By.id("log-out"));
-        logout.click();
+    public void logout() throws Exception {
+        try {
+            WebElement logout = driver.findElement(By.id("log-out"));
+            logout.click();
+        } catch(NoSuchElementException e) {
+            return;
+        }
         Thread.sleep(200);
     }
 
@@ -81,7 +83,7 @@ public class Utils {
         }
     }
 
-    public void checkUserExisting(String username) throws Exception {
+    public boolean checkUserExisting(String username) throws Exception {
         login("admin");
 
         WebElement drop = driver.findElement(By.id("delete-email-select"));
@@ -89,8 +91,11 @@ public class Utils {
         Thread.sleep(100);
         List<WebElement> users = driver.findElements(By.tagName("li"));
         for (WebElement user : users) {
-            Assert.assertNotEquals(username, user.getText());
+            if(user.getText().equals(username)) {
+                return true;
+            }
         }
+        return false;
     }
 
     public void createProject(String username, String projName) throws Exception {
@@ -142,6 +147,7 @@ public class Utils {
         Thread.sleep(200);
     }
 
+
     public void createSession(String projName) throws Exception {
         WebElement drop = driver.findElement(By.id("existing-projects-select"));
         drop.click();
@@ -169,5 +175,17 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public String getFirstName() throws Exception {
+        WebElement greeting = driver.findElement(By.id("greeting")); //"Hi, FIRSTNAME"
+        return greeting.getText().substring(4);
+    }
+
+    public String getAlertMessage() throws Exception {
+        Alert alert = driver.switchTo().alert();
+        String message = alert.getText();
+        alert.accept();
+        return message;
     }
 }

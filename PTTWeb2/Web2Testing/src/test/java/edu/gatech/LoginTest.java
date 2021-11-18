@@ -60,7 +60,7 @@ public class LoginTest extends BrowserFunctions {
 
     public void deleteUser() throws Exception {
         // utils.login(ADMIN);
-        utils.deleteUser(FIRST_NAME, LAST_NAME, USERNAME);
+        utils.deleteUser(USERNAME, true);
         utils.logout();
     }
 
