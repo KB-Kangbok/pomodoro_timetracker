@@ -3,6 +3,7 @@
 <test name="Test">
 <classes>
     <class name="edu.gatech.LoginTest" />
+    <class name="edu.gatech.CreateUserTest" /> 
 </classes>
 </test>
 </suite>

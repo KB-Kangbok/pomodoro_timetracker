@@ -3,15 +3,6 @@ package edu.gatech;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
-// import org.openqa.selenium.WebDriver;
-// import org.openqa.selenium.chrome.ChromeDriver;
-// import org.openqa.selenium.chrome.ChromeOptions;
-// import org.openqa.selenium.WebElement;
-// import org.openqa.selenium.Alert;
-// import org.openqa.selenium.By;
-
-// import edu.gatech.Utils;
-
 public class LoginTest extends BrowserFunctions {
     private final String ADMIN = "admin";
     private final String FIRST_NAME = "John";
@@ -19,7 +10,7 @@ public class LoginTest extends BrowserFunctions {
     private final String USERNAME = "test@gatech.edu";
     private final String USER_NOT_FOUND = "User not found";
 
-    @Test
+    @Test(description = "Test to login as an admin")
     public void loginAdminTest() throws Exception {
         utils.login(ADMIN);
         
