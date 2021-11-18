@@ -8,7 +8,7 @@ public class CreateUserTest extends BrowserFunctions {
     private final String FIRST_NAME = "John";
     private final String LAST_NAME = "Doe";
     private final String USERNAME = "test@gatech.edu";
-    private final String USERNAME_ALREADY_EXISTS = "Create user failed with undefined code";
+    private final String[] USERNAME_ALREADY_EXISTS = new String[]{"User with email ", " already exists!"};
     private final String INFORMATION_INSUFFICIENT = "Please fill in all the fields!";
 
     @Test(description = "Test to create a user with valid information", groups = {"deleteUser"})
@@ -21,7 +21,7 @@ public class CreateUserTest extends BrowserFunctions {
     @Test(description = "Test to create a user with an existing username", groups = {"deleteUser"}, dependsOnMethods = {"createValidUser"})
     public void createDuplicateUser() throws Exception {
     
-        String expected = USERNAME_ALREADY_EXISTS;
+        String expected = String.join(USERNAME, USERNAME_ALREADY_EXISTS);
         String actual = utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
 
         Assert.assertEquals(actual, expected);
