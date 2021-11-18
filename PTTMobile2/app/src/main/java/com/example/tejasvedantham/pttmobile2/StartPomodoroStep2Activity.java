@@ -28,7 +28,7 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
         setContentView(R.layout.start_pomodoro_2);
 
         timerText = (TextView) findViewById(R.id.timerText);
-
+        numPomodorosText = (TextView) findViewById(R.id.numPomodorosText);
         numPomodorosText.setText("Pomodoros in this session: " + numPomodoros);
         timer = new CountDownTimer(1800000, 1000) {
             @Override

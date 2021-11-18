@@ -45,7 +45,7 @@ public class StartPomodoroStep1Activity extends AppCompatActivity {
 
     }
 
-    protected void startPomodoro(View view) {
+    public void startPomodoro(View view) {
         Intent intent = new Intent(getApplicationContext(), StartPomodoroStep2Activity.class);
         startActivity(intent);
     }
