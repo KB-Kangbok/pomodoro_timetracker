@@ -7,8 +7,8 @@
             <!-- <class name="edu.gatech.CreateUserTest" />  -->
             <!-- <class name="edu.gatech.EditUserTest" /> -->
             <!-- <class name="edu.gatech.DeleteUserTest" /> -->
-            <!-- <class name="edu.gatech.DeleteProjectTest" /> -->
-            <class name="edu.gatech.CreateProjectTest" />
+            <class name="edu.gatech.DeleteProjectTest" />
+            <!-- <class name="edu.gatech.CreateProjectTest" /> -->
         </classes>
     </test>
 </suite>

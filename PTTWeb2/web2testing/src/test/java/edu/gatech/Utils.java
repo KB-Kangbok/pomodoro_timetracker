@@ -180,9 +180,11 @@ public class Utils {
         List<WebElement> projects = driver.findElements(By.tagName("li"));
         for (WebElement project : projects) {
             if (project.getText().equals(projName)) {
+                project.click();
                 return true;
             }
         }
+        driver.findElement(By.id("project-input"));
         return false;
     }
 

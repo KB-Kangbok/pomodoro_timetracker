@@ -1,42 +1,43 @@
 package edu.gatech;
 
 import org.testng.annotations.*;
+import org.checkerframework.checker.units.qual.A;
 import org.testng.Assert;
 
 public class DeleteProjectTest extends BrowserFunctions {
+    private final String username = "kb@gmail.com";
+    private final String projName = "exampleProject";
+    
+    @BeforeClass
+    public void setup() throws Exception {
+        utils.createUser("kb", "lee", username);
+    }
+
+    @AfterClass
+    public void teardown() throws Exception {
+        utils.deleteUser(username, true);
+    }
+
     @Test
     public void deleteProject() throws Exception {
-        utils.createUser("kb", "lee", "kb@gmail.com");
+        utils.createProject(username, projName);
+        utils.deleteProject(projName, true);
 
-        utils.createProject("kb@gmail.com", "exampleProject");
-        utils.deleteProject("exampleProject", true);
-
-        boolean isProj = utils.checkProjects("exampleProject");
-        utils.deleteUser("kb@gmail.com", true);
-        Assert.assertTrue(!isProj);
+        Assert.assertTrue(!utils.checkProjects(projName));
     }
 
-    @Test
+    @Test(dependsOnMethods = {"deleteProject"})
     public void deleteProjectWithSessionCancel() throws Exception {
-        utils.createUser("kb", "lee", "kb@gmail.com");
+        utils.createProject(username, projName);
+        utils.createSession(projName);
+        utils.deleteProject(projName, false);
 
-        utils.createProject("kb@gmail.com", "exampleProject");
-        utils.createSession("exampleProject");
-        utils.deleteProject("exampleProject", false);
-        boolean isProj = utils.checkProjects("exampleProject");
-        utils.deleteUser("kb@gmail.com", true);
-        Assert.assertTrue(isProj);
+        Assert.assertTrue(utils.checkProjects(projName));
     }
 
-    @Test
+    @Test(dependsOnMethods = {"deleteProjectWithSessionCancel"})
     public void deleteProjectWithSessionAccept() throws Exception {
-        utils.createUser("kb", "lee", "kb@gmail.com");
-
-        utils.createProject("kb@gmail.com", "exampleProject");
-        utils.createSession("exampleProject");
-        utils.deleteProject("exampleProject", true);
-        boolean isProj = utils.checkProjects("exampleProject");
-        utils.deleteUser("kb@gmail.com", true);
-        Assert.assertTrue(!isProj);
+        utils.deleteProject(projName, true);
+        Assert.assertTrue(!utils.checkProjects(projName));
     }
 }
