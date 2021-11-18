@@ -1,13 +1,12 @@
 package edu.gatech;
 
-import org.testng.Assert;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -55,26 +54,35 @@ public class Utils {
         return getAlertMessage();
     }
 
-    public void deleteUser(String firstname, String lastname, String username) throws Exception {
+    public void deleteUser(String username, boolean isAccept) throws Exception {
         login("admin");
         
         WebElement drop = driver.findElement(By.id("delete-email-select"));
         drop.click();
         Thread.sleep(100);
-        List<WebElement> list = driver.findElements(By.tagName("li"));
-        for (WebElement e : list) {
-            if (e.getText().equals(username)) {
-                e.click();
+        List<WebElement> users = driver.findElements(By.tagName("li"));
+        for (WebElement user : users) {
+            if (user.getText().equals(username)) {
+                user.click();
                 break;
             }
         }
         WebElement delete = driver.findElement(By.id("delete-user-btn"));
         delete.click();
         Thread.sleep(100);
+
+        if(ExpectedConditions.alertIsPresent().apply(driver) != null) {
+            if(isAccept) {
+                driver.switchTo().alert().accept();
+            }
+            else {
+                driver.switchTo().alert().dismiss();
+            }
+        }
     }
 
     //name should be changed to "validateUserDeleted"
-    public void checkUserExisting(String username) throws Exception {
+    public boolean checkUserExisting(String username) throws Exception {
         login("admin");
 
         WebElement drop = driver.findElement(By.id("delete-email-select"));
@@ -82,8 +90,10 @@ public class Utils {
         Thread.sleep(100);
         List<WebElement> users = driver.findElements(By.tagName("li"));
         for (WebElement user : users) {
-            Assert.assertNotEquals(username, user.getText());
-        }
+            if(user.getText().equals(username)) {
+                return true;
+            }
+        } return false;
     }
 
     public boolean existUser(String username) throws Exception {
@@ -99,7 +109,7 @@ public class Utils {
 
     public void deleteUserWithProject(String firstname, String lastname, String username) throws Exception {
         login("admin");
-        deleteUser(firstname, lastname, username);
+        deleteUser(username, true);
 
         //cancel the delete
         Thread.sleep(100);
@@ -108,7 +118,7 @@ public class Utils {
 
         //confirm the delete
         Thread.sleep(100);
-        deleteUser(firstname, lastname, username);
+        deleteUser(username, true);
         Thread.sleep(100);
         Alert alert2 = driver.switchTo().alert();
         alert2.accept();
@@ -122,7 +132,47 @@ public class Utils {
         projectNameInput.sendKeys(projName);
         WebElement projCreateBtn = driver.findElement(By.id("project-create-btn"));
         projCreateBtn.click();
+        Thread.sleep(200);
     }
+
+    public void deleteProject(String projName, boolean isAccept) throws Exception {
+        WebElement drop = driver.findElement(By.id("existing-projects-select"));
+        drop.click();
+        Thread.sleep(200);
+        List<WebElement> list = driver.findElements(By.tagName("li"));
+        for (WebElement e : list) {
+            if (e.getText().equals(projName)) {
+                e.click();
+                break;
+            }
+        }
+
+        WebElement delete = driver.findElement(By.id("delete-project-btn"));
+        delete.click();
+        Thread.sleep(200);
+
+        if(ExpectedConditions.alertIsPresent().apply(driver) != null) {
+            driver.switchTo().alert().accept();
+            Thread.sleep(200);
+        }
+        else {
+            WebElement btnToClick;
+            if(isAccept) {
+                btnToClick = driver.findElement(By.id("dialog-accept"));
+            } else {
+                btnToClick = driver.findElement(By.id("dialog-cancel"));
+            }
+            btnToClick.click();
+            Thread.sleep(200);
+
+            if(ExpectedConditions.alertIsPresent().apply(driver) != null) {
+                driver.switchTo().alert().accept();
+                Thread.sleep(200);
+            }
+        }
+        Thread.sleep(200);
+    }
+
 
     public void createSession(String projName) throws Exception {
         WebElement drop = driver.findElement(By.id("existing-projects-select"));
@@ -138,39 +188,6 @@ public class Utils {
 
         WebElement sessionBtn = driver.findElement(By.id("create-session-btn"));
         sessionBtn.click();
-    }
-
-    public void deleteProjectWithSession(String projName, boolean isAccept) throws Exception {
-        WebElement drop = driver.findElement(By.id("existing-projects-select"));
-        drop.click();
-        Thread.sleep(300);
-        List<WebElement> list = driver.findElements(By.tagName("li"));
-        for (WebElement e : list) {
-            if (e.getText().equals(projName)) {
-                e.click();
-                break;
-            }
-        }
-
-        WebElement delete = driver.findElement(By.id("delete-project-btn"));
-        delete.click();
-        
-        Thread.sleep(100);
-        WebElement btnToClick;
-        if(isAccept) {
-            btnToClick = driver.findElement(By.id("dialog-accept"));
-        } else {
-            btnToClick = driver.findElement(By.id("dialog-cancel"));
-        }
-        btnToClick.click();
-        Thread.sleep(100);
-
-        if(isAccept) {
-            Alert alert = driver.switchTo().alert();
-            alert.accept();
-            Thread.sleep(100);
-        }
-
     }
 
     public boolean checkProjects(String projName) throws Exception {

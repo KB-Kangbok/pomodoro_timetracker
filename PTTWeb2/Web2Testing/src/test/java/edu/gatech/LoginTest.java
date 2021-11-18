@@ -15,8 +15,9 @@ public class LoginTest extends BrowserFunctions {
         utils.login(ADMIN);
         
         String expected = getBaseUrl() + "/admin";
-        String actual = driver.getCurrentUrl();
-
+        String actual = utils.driver.getCurrentUrl();
+        
+        System.out.println("Login Test Middle");
         Assert.assertEquals(actual, expected);
     }
 
@@ -50,7 +51,7 @@ public class LoginTest extends BrowserFunctions {
 
     public void deleteUser() throws Exception {
         // utils.login(ADMIN);
-        utils.deleteUser(FIRST_NAME, LAST_NAME, USERNAME);
+        utils.deleteUser(USERNAME, true);
         utils.logout();
     }
 
