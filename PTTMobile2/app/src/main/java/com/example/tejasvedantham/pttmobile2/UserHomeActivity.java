@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -126,6 +127,8 @@ public class UserHomeActivity extends AppCompatActivity {
 
     public void createPomodoro(View view) {
         Intent intent = new Intent(getApplicationContext(), StartPomodoroStep1Activity.class);
+        intent.putExtra("projects", (Serializable) projectList);
+        intent.putExtra("id", userId);
         startActivity(intent);
     }
 }
