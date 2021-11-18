@@ -21,7 +21,8 @@ public class CreateUserTest extends BrowserFunctions {
     @Test(description = "Test to create a user with an existing username", groups = {"deleteUser"}, dependsOnMethods = {"createValidUser"})
     public void createDuplicateUser() throws Exception {
     
-        String expected = String.join(USERNAME, USERNAME_ALREADY_EXISTS);
+        String expected = USERNAME_ALREADY_EXISTS[0] + USERNAME + USERNAME_ALREADY_EXISTS[1];
+        // System.out.println(USERNAME);
         String actual = utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
 
         Assert.assertEquals(actual, expected);
