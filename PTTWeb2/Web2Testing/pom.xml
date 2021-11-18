@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>edu.gatech</groupId>
-  <artifactId>web2testing</artifactId>
+  <artifactId>Web2Testing</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>web2testing</name>
+  <name>Web2Testing</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
