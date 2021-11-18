@@ -6,6 +6,7 @@
             <class name="edu.gatech.LoginTest" />
             <class name="edu.gatech.CreateUserTest" /> 
             <class name="edu.gatech.DeleteProjectTest" />
+            <class name="edu.gatech.DeleteUserTest" />
         </classes>
     </test>
 </suite>
