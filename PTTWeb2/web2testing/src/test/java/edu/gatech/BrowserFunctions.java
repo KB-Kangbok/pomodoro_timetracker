@@ -28,7 +28,7 @@ public class BrowserFunctions {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-web-security");
-        // options.addArguments("headless");
+        options.addArguments("headless");
         driver = new ChromeDriver(options);
         
         utils = new Utils(driver, baseUrl);

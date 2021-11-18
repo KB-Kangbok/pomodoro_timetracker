@@ -17,7 +17,6 @@ public class LoginTest extends BrowserFunctions {
         String expected = getBaseUrl() + "/admin";
         String actual = utils.driver.getCurrentUrl();
         
-        System.out.println("Login Test Middle");
         Assert.assertEquals(actual, expected);
     }
 

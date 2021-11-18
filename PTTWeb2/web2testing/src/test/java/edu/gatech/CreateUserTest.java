@@ -15,7 +15,7 @@ public class CreateUserTest extends BrowserFunctions {
     public void createValidUser() throws Exception {
 
         utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
-        Assert.assertEquals(utils.existUser(USERNAME), true);
+        Assert.assertEquals(utils.checkUserExisting(USERNAME), true);
     }
 
     @Test(description = "Test to create a user with an existing username", groups = {"deleteUser"}, dependsOnMethods = {"createValidUser"})

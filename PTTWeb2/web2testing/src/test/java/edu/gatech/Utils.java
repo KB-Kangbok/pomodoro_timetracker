@@ -126,17 +126,6 @@ public class Utils {
         } return false;
     }
 
-    public boolean existUser(String username) throws Exception {
-        WebElement drop = driver.findElement(By.id("delete-email-select"));
-        drop.click();
-        Thread.sleep(100);
-        List<WebElement> users = driver.findElements(By.tagName("li"));
-        for (WebElement user : users) {
-            System.out.println(user.getText());
-            if (user.getText().equals(username)) return true;
-        } return false;
-    }
-
     public void createProject(String username, String projName) throws Exception {
         //create a user without a project
         login(username);
@@ -220,17 +209,12 @@ public class Utils {
 
     public void clearInput() throws Exception {
         Thread.sleep(300);
-        List<WebElement> inputs = driver.findElements(By.tagName("input"));
         WebElement fname = driver.findElement(By.id("fname-input"));
         WebElement lname = driver.findElement(By.id("lname-input"));
         WebElement email = driver.findElement(By.id("email-input"));
         fname.clear();
         lname.clear();
         email.clear();
-        // for (WebElement input : inputs) {
-        //     if (input.isEnabled()) input.clear();
-        //     Thread.sleep(100);
-        // }
     }
 
     public String getFirstName() throws Exception {
