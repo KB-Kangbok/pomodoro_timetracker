@@ -50,7 +50,6 @@ public class CreateUserTest extends BrowserFunctions {
         String expected = INFORMATION_INSUFFICIENT;
         String actual = utils.createUser(FIRST_NAME, "", USERNAME);
 
-
         Assert.assertEquals(actual, expected);
         utils.clearInput();
     }
