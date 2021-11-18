@@ -5,8 +5,8 @@ import org.testng.Assert;
 
 public class CreateUserTest extends BrowserFunctions {
     private final String ADMIN = "admin";
-    private final String FIRST_NAME = "John";
-    private final String LAST_NAME = "Doe";
+    private final String FIRST_NAME = "Heejoo";
+    private final String LAST_NAME = "Cho";
     private final String USERNAME = "test@gatech.edu";
     private final String[] USERNAME_ALREADY_EXISTS = new String[]{"User with email ", " already exists!"};
     private final String INFORMATION_INSUFFICIENT = "Please fill in all the fields!";
