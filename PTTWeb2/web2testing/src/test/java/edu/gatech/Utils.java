@@ -107,23 +107,6 @@ public class Utils {
         } return false;
     }
 
-    public void deleteUserWithProject(String firstname, String lastname, String username) throws Exception {
-        login("admin");
-        deleteUser(username, true);
-
-        //cancel the delete
-        Thread.sleep(100);
-        Alert alert1 = driver.switchTo().alert();
-        alert1.dismiss();
-
-        //confirm the delete
-        Thread.sleep(100);
-        deleteUser(username, true);
-        Thread.sleep(100);
-        Alert alert2 = driver.switchTo().alert();
-        alert2.accept();
-    }
-
     public void createProject(String username, String projName) throws Exception {
         //create a user without a project
         login(username);
