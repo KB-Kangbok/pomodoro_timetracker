@@ -67,7 +67,7 @@ public class CreateUserTest extends BrowserFunctions {
 
     @AfterGroups("deleteUser")
     public void deleteUser() throws Exception {
-        utils.deleteUser(FIRST_NAME, LAST_NAME, USERNAME);
+        utils.deleteUser(USERNAME, true);
     }    
     
 

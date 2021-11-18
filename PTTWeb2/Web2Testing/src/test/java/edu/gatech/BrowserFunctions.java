@@ -1,17 +1,17 @@
 package edu.gatech;
 
+import org.testng.annotations.*;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 
 
 public class BrowserFunctions {
-    public Utils utils;
-    private String baseUrl = "http://localhost:3000/#";
+    public static WebDriver driver;
+    public static Utils utils;
+    private static String baseUrl = "http://localhost:3000/#";
+
 
     @BeforeSuite
     public void initializeBrowser() {
@@ -29,18 +29,17 @@ public class BrowserFunctions {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-web-security");
         // options.addArguments("headless");
-        WebDriver driver = new ChromeDriver(options);
+        driver = new ChromeDriver(options);
         
         utils = new Utils(driver, baseUrl);
     }
 
     @AfterSuite
     public void closeBrowser() {
-        System.out.println("Suite over");
-        utils.driver.quit();
+        driver.quit();
     }
 
-    public String getBaseUrl() {
+    public static String getBaseUrl() {
         return baseUrl;
     }
 }
