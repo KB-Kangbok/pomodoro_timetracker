@@ -15,22 +15,39 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static androidx.test.InstrumentationRegistry.getContext;
+
 public class StartPomodoroStep2Activity extends AppCompatActivity {
 
     public TextView numPomodorosText;
     public int numPomodoros = 1;
     public CountDownTimer timer;
     public TextView timerText;
+    private String userId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_pomodoro_2);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("id");
+
+        }
+
         timerText = (TextView) findViewById(R.id.timerText);
         numPomodorosText = (TextView) findViewById(R.id.numPomodorosText);
         numPomodorosText.setText("Pomodoros in this session: " + numPomodoros);
-        timer = new CountDownTimer(1800000, 1000) {
+
+        startPomodoro();
+
+    }
+
+    public void startPomodoro() {
+        numPomodorosText.setText("Pomodoros in this session: " + numPomodoros);
+//        timer = new CountDownTimer(1800000, 1000) {
+        timer = new CountDownTimer(1800, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long minutes = (millisUntilFinished / 1000) / 60;
@@ -41,14 +58,14 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timerText.setText("Time's up!");
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext())
+                AlertDialog.Builder builder = new AlertDialog.Builder(StartPomodoroStep2Activity.this)
                         .setTitle("New Pomodoro")
                         .setMessage("Would you like to start another Pomodoro?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 numPomodoros++;
-                                onCreate(new Bundle());
+                                startPomodoro();
                                 //Start new pomodoro
                             }
                         })
@@ -56,13 +73,15 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //TODO: System should log details to backend
-                                startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+                                Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                                intent.putExtra("id", userId);
+                                startActivity(intent);
                             }
                         })
                         .setCancelable(false)
                         .setIcon(android.R.drawable.ic_dialog_alert);
 
-                builder.create().show();
+                builder.show();
 
             }
         }.start();
