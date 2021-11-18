@@ -31,12 +31,14 @@ import java.util.ArrayList;
 public class ProjectListAdapter extends ArrayAdapter<Project> {
 
     private Context context;
+    private String userId;
     private static final String LOG_TAG = ProjectListAdapter.class.getSimpleName();
-    private static final String CONFIRM_MSG = "The project has time already logged to it. Do you still want to delete it?";
+    public static final String CONFIRM_MSG = "The project has time already logged to it. Do you still want to delete it?";
 
-    public ProjectListAdapter(Context context, ArrayList<Project> data) {
+    public ProjectListAdapter(Context context, ArrayList<Project> data, String userId) {
         super(context, 0, data);
         this.context = context;
+        this.userId = userId;
     }
 
     @Override
@@ -52,6 +54,8 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         nameProject.setText(project.projectName);
 
         Button deleteProjectButton = (Button) convertView.findViewById(R.id.deleteProject);
+        Button generateReportButton = (Button) convertView.findViewById(R.id.generateReport);
+
         deleteProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,11 +64,19 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             }
         });
 
+        generateReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                context.startActivity(intent);
+            }
+        });
+
         return convertView;
     }
 
     public void deleteProject(String projectId) {
-        String url = BackendConnections.baseUrl + String.format("/users/%s/projects/%s/sessions", userSession.getUserId(), projectId);
+        String url = BackendConnections.baseUrl + String.format("/users/%s/projects/%s/sessions", userId, projectId);
         Log.d(LOG_TAG, "delete check project sessions url: " + url);
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -82,7 +94,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
                                 break;
                         }
                     };
-                    builder.setMessage("The project has time already logged to it. Do you still want to delete it?");
+                    builder.setMessage(CONFIRM_MSG);
                     builder.setPositiveButton("Yes", listener);
                     builder.setNegativeButton("No", listener);
                     builder.show();
@@ -100,7 +112,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
     }
 
     private void deleteProjectConfirm(String projectId) {
-        String url = BackendConnections.baseUrl + String.format("/users/%s/projects/%s", userSession.getUserId(), projectId);
+        String url = BackendConnections.baseUrl + String.format("/users/%s/projects/%s", userId, projectId);
         Log.d(LOG_TAG, "delete project url: " + url);
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -118,6 +130,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         requestQueue.add(jsonObjectRequest);
 
         Intent intent = new Intent(context.getApplicationContext(), UserHomeActivity.class);
+        intent.putExtra("id", userId);
         context.startActivity(intent);
     }
 }

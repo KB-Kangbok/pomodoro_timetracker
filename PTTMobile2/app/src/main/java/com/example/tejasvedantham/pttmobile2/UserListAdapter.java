@@ -33,7 +33,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
     private Context context;
 
     private static final String LOG_TAG = UserListAdapter.class.getSimpleName();
-    private static final String CONFIRM_MSG = "The user has projects. Do you still want to delete it?";
+    public static final String CONFIRM_MSG = "The user has projects. Do you still want to delete it?";
 
     public UserListAdapter(Context context, ArrayList<User> data) {
         super(context, 0, data);
@@ -99,7 +99,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
                                 break;
                         }
                     };
-                    builder.setMessage("This user has projects as associated with it. Are you sure you want to delete?");
+                    builder.setMessage(CONFIRM_MSG);
                     builder.setPositiveButton("Yes", listener);
                     builder.setNegativeButton("No", listener);
                     builder.show();

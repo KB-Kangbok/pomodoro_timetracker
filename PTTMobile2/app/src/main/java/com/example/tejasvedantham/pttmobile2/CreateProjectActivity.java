@@ -2,11 +2,14 @@ package com.example.tejasvedantham.pttmobile2;
 
 import static com.example.tejasvedantham.pttmobile2.LoginActivity.userSession;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,15 +46,45 @@ public class CreateProjectActivity extends AppCompatActivity {
 
         projectNameField = (EditText) findViewById(R.id.projectName);
 
-        userId = userSession.getUserId();
-        backendConnections = new BackendConnections(this);
-        backendConnections.addHeader("Authorization", "EMPTY FOR NOW");
+//        userId = userSession.getUserId();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("id");
+        }
     }
 
     public void createProject(View view) {
+        if ((TextUtils.isEmpty(projectNameField.getText().toString())) || projectNameField.getText().toString() == "") {
+            Toast toast = Toast.makeText(getBaseContext(), "Please provide a name for the project", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
+        Project project = new Project(projectNameField.getText().toString(), null);
+        createProjectInternal(project, userId, this, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(LOG_TAG, String.format("POST create project RES %s", response));
+                Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                intent.putExtra("id", userId);
+                startActivity(intent);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(LOG_TAG, String.format("POST create project REQ FAILED"));
+                if (error.networkResponse.statusCode == 409) {
+                    Toast toast = Toast.makeText(getBaseContext(), "Project Name Already Taken", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
+    }
+
+    public static void createProjectInternal(Project project, String userId, Context context, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         JSONObject postData = new JSONObject();
         try {
-            postData.put("projectname", projectNameField.getText().toString());
+            postData.put("projectname", project.projectName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,20 +93,8 @@ public class CreateProjectActivity extends AppCompatActivity {
         String url = BackendConnections.baseUrl + String.format("/users/%s/projects", userId);
         Log.d(LOG_TAG, "to url: " + url);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d(LOG_TAG, String.format("POST %s RES %s", url, response));
-                startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(LOG_TAG, String.format("POST %s REQ FAILED", url));
-            }
-        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, listener, errorListener);
         requestQueue.add(jsonObjectRequest);
     }
 }

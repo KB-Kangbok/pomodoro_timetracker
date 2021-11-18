@@ -1,10 +1,13 @@
 package com.example.tejasvedantham.pttmobile2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,19 +47,14 @@ public class CreateUserActivity extends AppCompatActivity {
     }
 
     public void createUser(View view) {
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("firstName", firstNameField.getText().toString());
-            postData.put("lastName", lastNameField.getText().toString());
-            postData.put("email", emailField.getText().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if ((TextUtils.isEmpty(emailField.getText().toString())) || emailField.getText().toString() == "") {
+            Toast toast = Toast.makeText(getBaseContext(), "Please provide an email address", Toast.LENGTH_LONG);
+            toast.show();
+            return;
         }
-        Log.d(LOG_TAG, "create user: " + postData.toString());
 
-        String url = BackendConnections.baseUrl + "/users";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
+        User user = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), null);
+        createUserInternal(user, this, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(LOG_TAG, "POST /users RES " + response);
@@ -66,8 +64,26 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(LOG_TAG, "POST /users REQ FAILED");
+                Toast toast = Toast.makeText(getApplicationContext(), "Email Already Taken", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
+    }
+
+    public static void createUserInternal(User user, Context context, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("firstName", user.firstName);
+            postData.put("lastName", user.lastName);
+            postData.put("email", user.email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(LOG_TAG, "create user: " + postData.toString());
+
+        String url = BackendConnections.baseUrl + "/users";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, listener, errorListener);
         requestQueue.add(jsonObjectRequest);
     }
 

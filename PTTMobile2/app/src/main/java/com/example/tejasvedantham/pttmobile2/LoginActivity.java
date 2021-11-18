@@ -77,7 +77,9 @@ public class LoginActivity extends AppCompatActivity {
                                 if (user.get("email").equals(email)) {
                                     userSession.setUserId(user.get("id").toString());
                                     userFound = true;
-                                    startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+                                    Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                                    intent.putExtra("id", userSession.getUserId());
+                                    startActivity(intent);
                                 }
                             }
                             if (!userFound) {
@@ -96,22 +98,22 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        jsonArrayRequest.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 5000;
-            }
-
-            @Override
-            public int getCurrentRetryCount() {
-                return 5000;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });
+//        jsonArrayRequest.setRetryPolicy(new RetryPolicy() {
+//            @Override
+//            public int getCurrentTimeout() {
+//                return 5000;
+//            }
+//
+//            @Override
+//            public int getCurrentRetryCount() {
+//                return 5000;
+//            }
+//
+//            @Override
+//            public void retry(VolleyError error) throws VolleyError {
+//
+//            }
+//        });
         requestQueue.add(jsonArrayRequest);
     }
 
