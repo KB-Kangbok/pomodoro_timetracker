@@ -132,7 +132,7 @@ export default function User({
 
   return (
     <div style={{ margin: 20 }}>
-      <Typography component="h6" align="right">{`Hi, ${firstName}`}</Typography>
+      <Typography id="greeting" component="h6" align="right">{`Hi, ${firstName}`}</Typography>
       <Typography variant="inherit" component="h1" style={{ marginTop: -20 }}>
         Manage Projects
       </Typography>

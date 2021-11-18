@@ -8,7 +8,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.time.Duration;
 import java.util.List;
 
 public class Utils {
@@ -92,25 +91,6 @@ public class Utils {
         for (WebElement user : users) {
             Assert.assertNotEquals(username, user.getText());
         }
-    }
-
-
-
-    public void deleteUserWithProject(String firstname, String lastname, String username) throws Exception {
-        login("admin");
-        deleteUser(username);
-
-        //cancel the delete
-        Thread.sleep(100);
-        Alert alert1 = driver.switchTo().alert();
-        alert1.dismiss();
-
-        //confirm the delete
-        Thread.sleep(100);
-        deleteUser(username);
-        Thread.sleep(100);
-        Alert alert2 = driver.switchTo().alert();
-        alert2.accept();
     }
 
     public void createProject(String username, String projName) throws Exception {
