@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/step1Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate Report Step 1"
+            android:textSize="36dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/spinnerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/step1Title"
+            android:text="Select Project"
+            android:layout_margin="10dp"
+            android:textSize="16dp">
+
+        </TextView>
+
+        <Spinner
+            android:id="@+id/project_report_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerTitle"
+            android:layout_margin="10dp">
+
+        </Spinner>
+
+        <TextView
+            android:id="@+id/startText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/project_report_spinner"
+            android:text="Start Time"
+            android:layout_margin="10dp"
+            android:textSize="16dp">
+
+        </TextView>
+
+        <TimePicker
+            android:id="@+id/startPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startText"
+            android:layout_margin="10dp"
+            android:timePickerMode="spinner">
+        </TimePicker>
+
+        <TextView
+            android:id="@+id/endText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startPicker"
+            android:text="End Time"
+            android:layout_margin="10dp"
+            android:textSize="16dp">
+
+        </TextView>
+
+        <TimePicker
+            android:id="@+id/endPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/endText"
+            android:layout_margin="10dp"
+            android:timePickerMode="spinner">
+        </TimePicker>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:text="Generate Report"
+            android:onClick="generateReport">
+
+        </Button>
+
+    </RelativeLayout>
+
+</ScrollView>

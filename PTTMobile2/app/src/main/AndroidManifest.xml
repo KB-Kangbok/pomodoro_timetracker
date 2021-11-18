@@ -2,21 +2,63 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tejasvedantham.pttmobile2">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="PTT Mobile 2"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HomePageActivity">
         <activity
-            android:name="com.example.tejasvedantham.pttmobile2.MainActivity"
+            android:name="com.example.tejasvedantham.pttmobile2.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.CreateUserActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.AdminHomeActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.CreateProjectActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.UserHomeActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.EditUserActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.StartPomodoroStep1Activity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.StartPomodoroStep2Activity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.GenerateReportStep1Activity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tejasvedantham.pttmobile2.GenerateReportStep2Activity"
+            android:exported="true">
         </activity>
     </application>
 
