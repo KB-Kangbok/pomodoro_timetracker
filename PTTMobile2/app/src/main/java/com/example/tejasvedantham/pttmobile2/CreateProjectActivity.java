@@ -5,6 +5,7 @@ import static com.example.tejasvedantham.pttmobile2.LoginActivity.userSession;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -53,6 +54,11 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     public void createProject(View view) {
+        if ((TextUtils.isEmpty(projectNameField.getText().toString())) || projectNameField.getText().toString() == "") {
+            Toast toast = Toast.makeText(getBaseContext(), "Please provide a name for the project", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
         Project project = new Project(projectNameField.getText().toString(), null);
         createProjectInternal(project, userId, this, new Response.Listener<JSONObject>() {
             @Override

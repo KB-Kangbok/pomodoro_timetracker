@@ -133,7 +133,38 @@ public class CreateProjectActivityTest extends TestCase {
         Espresso.onView(withId(R.id.createProjectButton)).perform(click());
         onView(withText("Project Name Already Taken")).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
 
+    }
+    @Test
+    public void testProjectNameEmpty() {
+        removeAllCurrent();
+        createDummyUser();
+        try
+        {
+            Thread.sleep(1800);
+        }
+        catch(InterruptedException e) {
 
+        }
+        createDummyProject(id);
+
+        try
+        {
+            Thread.sleep(1800);
+        }
+        catch(InterruptedException e) {
+
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra("id", id);
+
+        createProjectActivity.launchActivity(intent);
+
+
+
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.createProjectButton)).perform(click());
+        onView(withText("Please provide a name for the project")).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
 
     }
 

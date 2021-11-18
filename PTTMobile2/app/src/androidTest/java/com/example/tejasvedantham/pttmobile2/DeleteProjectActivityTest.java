@@ -187,6 +187,14 @@ public class DeleteProjectActivityTest extends TestCase {
         intent.putExtra("id", id);
 
         deleteProject.launchActivity(intent);
+        try
+        {
+            Thread.sleep(1800);
+        }
+        catch(InterruptedException e)
+        {
+
+        }
 
         onData(anything())
                 .inAdapterView(withId(R.id.project_list))
