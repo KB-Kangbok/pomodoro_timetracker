@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 
 import java.util.List;
 
@@ -21,14 +22,18 @@ public class Utils {
         driver.get(baseUrl);
 
         WebElement username = driver.findElement(By.id("user-login-input"));
-        WebElement login_btn = driver.findElement(By.id("login-btn"));
+        WebElement login = driver.findElement(By.id("login-btn"));
         username.sendKeys(email_str);
-        login_btn.click();
+        login.click();
     }
 
-    public static void logout(WebDriver driver) throws Exception {
-        WebElement logout = driver.findElement(By.id("log-out"));
-        logout.click();
+    public void logout() throws Exception {
+        try {
+            WebElement logout = driver.findElement(By.id("log-out"));
+            logout.click();
+        } catch(NoSuchElementException e) {
+            return;
+        }
         Thread.sleep(200);
     }
 
@@ -44,7 +49,7 @@ public class Utils {
 
         WebElement create = driver.findElement(By.id("create-user-btn"));
         create.click();
-        Thread.sleep(100);
+        Thread.sleep(300);
         driver.switchTo().alert().accept();
     }
 
@@ -166,5 +171,17 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public String getFirstName() throws Exception {
+        WebElement greeting = driver.findElement(By.id("greeting")); //"Hi, FIRSTNAME"
+        return greeting.getText().substring(4);
+    }
+
+    public String getAlertMessage() throws Exception {
+        Alert alert = driver.switchTo().alert();
+        String message = alert.getText();
+        alert.accept();
+        return message;
     }
 }
