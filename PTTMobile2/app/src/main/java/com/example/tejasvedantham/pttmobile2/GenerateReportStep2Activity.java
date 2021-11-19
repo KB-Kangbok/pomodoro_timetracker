@@ -18,6 +18,8 @@ public class GenerateReportStep2Activity extends AppCompatActivity {
     public TextView projectName;
     public TextView information;
 
+    private List<Session> sessionList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +28,18 @@ public class GenerateReportStep2Activity extends AppCompatActivity {
         projectName = (TextView) findViewById(R.id.projectNameText);
         information = (TextView) findViewById(R.id.informationText);
 
-        //TODO: Append information to report here
-        projectName.append("Project Name HERE");
-        information.append("Information HERR");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Project project = (Project) extras.getSerializable("project");
+            projectName.append(project.projectName);
+
+            sessionList = (List<Session>) getIntent().getSerializableExtra("sessions");
+            for (Session s : sessionList) {
+                information.append("\n");
+                information.append(String.format("startingTime: %s, endingTime: %s, hoursWorked: %d", s.startingTime, s.endingTime, s.hoursWorked));
+                information.append("\n");
+            }
+        }
 
     }
 

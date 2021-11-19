@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ProjectListAdapter extends ArrayAdapter<Project> {
@@ -67,7 +68,9 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         generateReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(context, GenerateReportStep1Activity.class);
+                intent.putExtra("project", project);
+                intent.putExtra("userId", userId);
                 context.startActivity(intent);
             }
         });
