@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +39,7 @@ import static androidx.test.InstrumentationRegistry.getContext;
 public class StartPomodoroStep2Activity extends AppCompatActivity {
 
     public TextView numPomodorosText;
-    public int numPomodoros = 1;
+    public int numPomodoros = 0;
     public CountDownTimer timer;
     public TextView timerText;
     public TextView projectNameTextView;
@@ -48,10 +49,12 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
     private String projectName = "";
     private String startTime = "";
     private String endTime = "";
+    private String lastEndTime = "";
     private static final String LOG_TAG = StartPomodoroStep2Activity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_pomodoro_2);
 
@@ -66,7 +69,7 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
 
         timerText = (TextView) findViewById(R.id.timerText);
         numPomodorosText = (TextView) findViewById(R.id.numPomodorosText);
-        numPomodorosText.setText("Pomodoros in this session: " + numPomodoros);
+        numPomodorosText.setText("Pomodoros completed in this session: " + numPomodoros);
 
         projectNameTextView =  (TextView) findViewById(R.id.projectNameText);
         projectNameTextView.setText(projectName);
@@ -75,18 +78,23 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         startTime = dateFormat.format(new Date()) + "Z";
-
+        Button b = (Button) findViewById(R.id.stopButton);
+        b.setClickable(false);
+        b.setAlpha(.4f);
 
 
     }
 
     public void startPomodoro(View view) {
-        Button b = (Button) findViewById(R.id.startPomodoroButton);
-        b.setClickable(false);
-        b.setAlpha(.4f);
+        Button b = (Button) findViewById(R.id.stopButton);
+        b.setClickable(true);
+        b.setAlpha(1);
+        Button c = (Button) findViewById(R.id.startPomodoroButton);
+        c.setClickable(false);
+        c.setAlpha(.4f);
         numPomodorosText.setText("Pomodoros in this session: " + numPomodoros);
-        timer = new CountDownTimer(1800000, 1000) {
-//        timer = new CountDownTimer(1800, 1000) {
+//        timer = new CountDownTimer(1800000, 1000) {
+        timer = new CountDownTimer(1800, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long minutes = (millisUntilFinished / 1000) / 60;
@@ -96,6 +104,9 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                numPomodoros++;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                lastEndTime = dateFormat.format(new Date()) + "Z";
                 timerText.setText("Time's up!");
                 AlertDialog.Builder builder = new AlertDialog.Builder(StartPomodoroStep2Activity.this)
                         .setTitle("New Pomodoro")
@@ -103,7 +114,7 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                numPomodoros++;
+
                                 startPomodoro(view);
                                 //Start new pomodoro
                             }
@@ -112,8 +123,11 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                if (projectId != "-1") {
-                                    logSession();
+                                if (!projectId.equals("-1")) {
+
+                                    logSession(false);
+
+
                                 }
 
                                 Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
@@ -132,12 +146,27 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
 
 
     }
-    public void logSession() {
-        Log.d(LOG_TAG, "LOGGING");
+    public void logSession(Boolean partial)  {
+//        To test the sessions
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+//        Date d = df.parse(startTime.substring(0, startTime.length() - 1));
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(d);
+//        cal.add(Calendar.MINUTE, 30);
+//        String newTime = df.format(cal.getTime()) + "Z";
+        //        Log.d(LOG_TAG, newTime);
+
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         endTime = dateFormat.format(new Date()) + "Z";
         Log.d(LOG_TAG, startTime);
         Log.d(LOG_TAG, endTime);
+
+        if (partial) {
+            endTime = lastEndTime;
+        }
+
+        Log.d(LOG_TAG, Integer.toString(numPomodoros));
         String url = BackendConnections.baseUrl + String.format("/users/%s/projects/%s/sessions", userId, projectId);
         JSONObject postData = new JSONObject();
         try {
@@ -166,24 +195,31 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
         });
         requestQueue.add(jsonObjectRequest);
     }
-    protected void stopPomodoro(View view) {
+    public void stopPomodoro(View view) {
         timer.cancel();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(StartPomodoroStep2Activity.this)
                 .setTitle("Stop Pomodoro")
                 .setMessage("Would you like to log this partial Pomodoro to this Project?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO: Log partial time
-                        startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+
+                        logSession(false);
+                        Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                        intent.putExtra("id", userId);
+                        intent.putExtra("projects", (Serializable) projectList);
+                        startActivity(intent);
                     }
                 })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO: Log partial time
-                        startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+                        logSession(true);
+                        Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                        intent.putExtra("id", userId);
+                        intent.putExtra("projects", (Serializable) projectList);
+                        startActivity(intent);
                     }
                 })
                 .setCancelable(false)
@@ -191,9 +227,6 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
 
         builder.show();
 
-        Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
-        intent.putExtra("id", userId);
-        intent.putExtra("projects", (Serializable) projectList);
-        startActivity(intent);
+
     }
 }
