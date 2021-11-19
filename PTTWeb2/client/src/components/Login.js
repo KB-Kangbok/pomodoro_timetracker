@@ -30,8 +30,9 @@ function Login({ username, handleChange, setIsLogin }) {
     }
   };
   const paperStyle = {
+    marginTop: 50,
     padding: 20,
-    height: "60vh",
+    height: "45vh",
     width: 280,
     margin: "20px auto",
   };

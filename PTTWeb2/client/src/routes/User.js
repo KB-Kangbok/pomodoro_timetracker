@@ -14,10 +14,11 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { apiUrl } from "../config.json";
+import Session from "../components/Session";
 
 export default function User({
   location: {
-    state: { firstName, id },
+    state: { firstName, id, startSession },
   },
 }) {
   const [projects, setProjects] = useState([{ id: 0 }]);
@@ -25,6 +26,7 @@ export default function User({
   const [hasSessions, setHasSessions] = useState(false);
   const [input, setInput] = useState("");
   const [update, setUpdate] = useState(false);
+  const [startedSession, setStartedSession] = useState(false);
 
   useEffect(() => {
     const getProjects = async () => {
@@ -106,6 +108,7 @@ export default function User({
 
   const handleSession = async () => {
     try {
+      setStartedSession(true);
       const res = await axios.post(
         `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`,
         {
@@ -129,11 +132,10 @@ export default function User({
     width: 500,
     margin: "20px auto",
   };
-
   return (
-    <div style={{ margin: 20 }}>
+    <div className="font-sans" style={{ margin: 30, marginTop: 0, color:"#414244"}}>
       <Typography id="greeting" component="h6" align="right">{`Hi, ${firstName}`}</Typography>
-      <Typography variant="inherit" component="h1" style={{ marginTop: -20 }}>
+      <Typography variant="inherit" component="h1" style={{ padding: 0 }}>
         Manage Projects
       </Typography>
       <Grid style={gridStyle}>
@@ -152,8 +154,15 @@ export default function User({
             ))}
           </Select>
           <Button
+          id="create-session-btn"
+          variant="outlined"
+          onClick={handleSession}
+        >
+          Start a session
+        </Button>
+          <Button
             id="delete-project-btn"
-            variant="contained"
+            variant="outlined"
             onClick={handleDelete}
           >
             Delete
@@ -170,19 +179,16 @@ export default function User({
           />
           <Button
             id="project-create-btn"
-            variant="contained"
+            variant="outlined"
             onClick={handleCreate}
           >
             Create
           </Button>
         </FormControl>
-        <Button
-          id="create-session-btn"
-          variant="contained"
-          onClick={handleSession}
-        >
-          Temporary create session
-        </Button>
+
+        <div style={{position: "absolute", paddingLeft: 20}}>
+        {startedSession && <Session/>}
+        </div>
 
         <Dialog
           open={hasSessions}

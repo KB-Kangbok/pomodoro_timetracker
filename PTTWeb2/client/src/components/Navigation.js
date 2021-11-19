@@ -1,11 +1,12 @@
 import { useHistory } from "react-router-dom";
-import { Toolbar, AppBar, Typography, CssBaseline } from "@material-ui/core";
+import { Toolbar, Typography, CssBaseline } from "@material-ui/core";
 import { Link } from "@mui/material";
 import Pomodoro from "../assets/pomodoro.png";
 
 const linkStyle = {
-  marginLeft: "5px",
-  color: "red",
+  fontSize: "20px",
+  margin: "7px",
+  color: "#E0362A",
   textDecoration: "none",
 };
 
@@ -18,11 +19,13 @@ function Navigation({ isLogin, setIsLogin }) {
   return (
     <div>
       <CssBaseline />
-      <AppBar style={{ backgroundColor: "#034B03" }} position="relative">
-        <Toolbar>
-          <img src={Pomodoro} width="40" alt="Pomodoro" />
-          <Typography variant="h6" color="secondary">
+      {/* <AppBar style={{ backgroundColor: "transparent" }} position="relative"> */}
+        <Toolbar style={{paddingTop: 20}}>
+          <img src={Pomodoro} width="70" alt="Pomodoro" />
+          <Typography variant="h3">
+            <div className="font-pan" style={{color: "#E0362A", paddingLeft: 10}}>
             Tomato Pomodoro
+            </div>
           </Typography>
           <div style={{ marginLeft: "auto" }}>
             {isLogin ? (
@@ -33,14 +36,16 @@ function Navigation({ isLogin, setIsLogin }) {
                 variant="subtitle1"
                 onClick={handleClick}
               >
-                Log Out
+                <div className="font-pan">
+                Logout
+                </div>
               </Link>
             ) : (
               <></>
             )}
           </div>
         </Toolbar>
-      </AppBar>
+      {/* </AppBar> */}
     </div>
   );
 }

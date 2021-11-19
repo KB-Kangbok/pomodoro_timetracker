@@ -149,11 +149,11 @@ function Admin() {
   };
 
   return (
-    <div style={{ margin: 20 }}>
+    <div className="font-sans" style={{margin: 30, marginTop: 0, color: "#414244"}}>
       <Typography component="h6" align="right">
         Hi, Admin
       </Typography>
-      <Typography variant="inherit" component="h1" style={{ marginTop: -20 }}>
+      <Typography variant="inherit" component="h1" style={{ padding: 0 }}>
         Manage Users
       </Typography>
 
@@ -184,11 +184,15 @@ function Admin() {
               id="email-input"
               label="Email"
               variant="outlined"
+              
               onChange={handleInputEmailNew}
               value={inputEmailNew}
               margin="dense"
             />
-            <Button id="create-user-btn" variant="contained" onClick={handleCreate}>
+            <Button 
+            id="create-user-btn" 
+            variant="contained" 
+            onClick={handleCreate}>
               Create
             </Button>
           </FormControl>

@@ -9,6 +9,7 @@ import { useState } from "react";
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   return (
+    <div style={{backgroundColor:"pink", height: '100vh', minHeight : '100vh'}}>
     <HashRouter>
       <Navigation isLogin={isLogin} setIsLogin={setIsLogin} />
       <Route
@@ -19,6 +20,7 @@ function App() {
       <Route path="/admin" exact={true} component={Admin} />
       <Route path="/user" exact={true} component={User} />
     </HashRouter>
+    </div>
   );
 }
 
