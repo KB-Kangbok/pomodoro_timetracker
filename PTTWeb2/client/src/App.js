@@ -9,7 +9,7 @@ import { useState } from "react";
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   return (
-    <div style={{backgroundColor:"pink", height: '100vh', minHeight : '100vh'}}>
+    <div style={{backgroundColor:"pink", height: '200vh', minHeight : '100vh'}}>
     <HashRouter>
       <Navigation isLogin={isLogin} setIsLogin={setIsLogin} />
       <Route

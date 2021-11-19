@@ -27,6 +27,7 @@ export default function User({
   const [input, setInput] = useState("");
   const [update, setUpdate] = useState(false);
   const [startedSession, setStartedSession] = useState(false);
+  const [clickcStartSession, setClickcStartSession] = useState(false);
 
   useEffect(() => {
     const getProjects = async () => {
@@ -49,6 +50,17 @@ export default function User({
     setHasSessions(false);
   };
 
+  const handleClose2 = () => {
+    setClickcStartSession(false);
+  };
+
+  const handleClickStartSession = () => {
+    setClickcStartSession(true);
+    if (selectedProject.id != null) {
+      setStartedSession(true);
+    }
+  };
+  
   const handleDelete = async () => {
     console.log(selectedProject.id);
     // const sessions = {
@@ -107,25 +119,29 @@ export default function User({
   };
 
   const handleSession = async () => {
-    try {
-      setStartedSession(true);
-      const res = await axios.post(
-        `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`,
-        {
-          startTime: "2019-02-18T20:00Z",
-          endTime: "2019-02-18T21:00Z",
-          counter: 0,
-        }
-      );
-      console.log(res.data.id);
-      setSelectedProject({});
-      setUpdate(true);
-    } catch (e) {
-      if (e.response.status === 404) {
-        alert(`Bad request`);
-      }
-    }
+    setStartedSession(true);
+    setClickcStartSession(false);
+    // try {
+    //   //delete later - handled in Session.js
+    //   const res = await axios.post(
+    //     `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`,
+    //     {
+    //       startTime: "2019-02-18T20:00Z",
+    //       endTime: "2019-02-18T21:00Z",
+    //       counter: 0,
+    //     }
+    //   );
+    //   console.log(res.data.id);
+    //   // setSelectedProject({});
+    //   setUpdate(true);
+    // } catch (e) {
+    //   if (e.response.status === 404) {
+    //     alert(`Bad request`);
+    //   }
+    // }
   };
+
+
   const gridStyle = {
     padding: 20,
     height: "60vh",
@@ -156,7 +172,7 @@ export default function User({
           <Button
           id="create-session-btn"
           variant="outlined"
-          onClick={handleSession}
+          onClick={handleClickStartSession}
         >
           Start a session
         </Button>
@@ -187,9 +203,9 @@ export default function User({
         </FormControl>
 
         <div style={{position: "absolute", paddingLeft: 20}}>
-        {startedSession && <Session/>}
+        {startedSession && <Session user={id} project={selectedProject.id}/>}
         </div>
-
+      </Grid>
         <Dialog
           open={hasSessions}
           onClose={handleClose}
@@ -215,7 +231,29 @@ export default function User({
             </Button>
           </DialogActions>
         </Dialog>
-      </Grid>
+        <Dialog
+          open={selectedProject.id == null && clickcStartSession}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-session-no-project">
+            Start a session without a project?
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-session-no-project-msg">
+              No project is chosen to be associated. Do you want to continue starting a new session without a project?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button id="dialog-accept-2" onClick={handleSession}>
+              Ok
+            </Button>
+            <Button id="dialog-cancel-2" onClick={handleClose2} autoFocus>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
     </div>
   );
 }
