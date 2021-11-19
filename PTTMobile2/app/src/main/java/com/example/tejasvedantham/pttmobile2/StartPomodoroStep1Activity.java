@@ -48,6 +48,19 @@ public class StartPomodoroStep1Activity extends AppCompatActivity {
     public void startPomodoro(View view) {
         Intent intent = new Intent(getApplicationContext(), StartPomodoroStep2Activity.class);
         intent.putExtra("id", userId);
+        String project = projectSpinner.getSelectedItem().toString();
+        String projectId  = getProjectId((project));
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("projectName", project);
         startActivity(intent);
+    }
+
+    private String getProjectId(String name) {
+        for (Project p: projectList) {
+            if (p.projectName.equals(name)) {
+                return p.id;
+            }
+        }
+        return "-1";
     }
 }

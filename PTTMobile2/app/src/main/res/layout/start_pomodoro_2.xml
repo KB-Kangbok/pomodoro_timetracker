@@ -24,10 +24,40 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/step2Title"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:text="Pomodoros in this session: 1"
+        android:textSize="18dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/LabelProject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/step2Title"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Project:"
+        android:textSize="18dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/projectNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/step2Title"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="No Associated Project"
         android:textSize="18dp">
 
     </TextView>
@@ -47,10 +77,29 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:text="Stop Pomodoro"
-        android:onClick="stopPomodoro">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="12dp"
+        android:onClick="stopPomodoro"
+        android:text="Stop Pomodoro">
+
+    </Button>
+
+    <Button
+        android:id="@+id/startPomodoroButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="457dp"
+        android:layout_marginBottom="12dp"
+        android:onClick="startPomodoro"
+        android:text="Start Pomodoro">
 
     </Button>
 
