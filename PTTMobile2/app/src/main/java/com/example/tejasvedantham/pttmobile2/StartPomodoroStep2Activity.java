@@ -41,6 +41,7 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
     public TextView numPomodorosText;
     public int numPomodoros = 0;
     public CountDownTimer timer;
+    public long countDownTimeInSeconds = 1800;
     public TextView timerText;
     public TextView projectNameTextView;
     private String userId = "";
@@ -94,7 +95,7 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
         c.setAlpha(.4f);
         numPomodorosText.setText("Pomodoros in this session: " + numPomodoros);
 //        timer = new CountDownTimer(1800000, 1000) {
-        timer = new CountDownTimer(1800, 1000) {
+        timer = new CountDownTimer(countDownTimeInSeconds * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long minutes = (millisUntilFinished / 1000) / 60;
