@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { apiUrl } from "../config.json";
 import Session from "../components/Session";
+import Timer from "../components/Timer";
 
 export default function User({
   location: {
@@ -28,6 +29,7 @@ export default function User({
   const [update, setUpdate] = useState(false);
   const [startedSession, setStartedSession] = useState(false);
   const [clickcStartSession, setClickcStartSession] = useState(false);
+  const [countdown, setCountdown] = useState(300);
 
   useEffect(() => {
     const getProjects = async () => {
@@ -36,7 +38,7 @@ export default function User({
       setUpdate(false);
     };
     getProjects();
-  }, [update, id]);
+  }, [update]);
 
   const handleSelect = (event) => {
     const {
@@ -60,7 +62,7 @@ export default function User({
       setStartedSession(true);
     }
   };
-  
+
   const handleDelete = async () => {
     console.log(selectedProject.id);
     // const sessions = {
@@ -141,7 +143,6 @@ export default function User({
     // }
   };
 
-
   const gridStyle = {
     padding: 20,
     height: "60vh",
@@ -149,8 +150,15 @@ export default function User({
     margin: "20px auto",
   };
   return (
-    <div className="font-sans" style={{ margin: 30, marginTop: 0, color:"#414244"}}>
-      <Typography id="greeting" component="h6" align="right">{`Hi, ${firstName}`}</Typography>
+    <div
+      className="font-sans"
+      style={{ margin: 30, marginTop: 0, color: "#414244" }}
+    >
+      <Typography
+        id="greeting"
+        component="h6"
+        align="right"
+      >{`Hi, ${firstName}`}</Typography>
       <Typography variant="inherit" component="h1" style={{ padding: 0 }}>
         Manage Projects
       </Typography>
@@ -170,12 +178,12 @@ export default function User({
             ))}
           </Select>
           <Button
-          id="create-session-btn"
-          variant="outlined"
-          onClick={handleClickStartSession}
-        >
-          Start a session
-        </Button>
+            id="create-session-btn"
+            variant="outlined"
+            onClick={handleClickStartSession}
+          >
+            Start a session
+          </Button>
           <Button
             id="delete-project-btn"
             variant="outlined"
@@ -201,59 +209,60 @@ export default function User({
             Create
           </Button>
         </FormControl>
-
-        <div style={{position: "absolute", paddingLeft: 20}}>
-        {startedSession && <Session user={id} project={selectedProject.id}/>}
+        <Timer countdown={countdown} setCountdown={setCountdown} />
+        <div style={{ position: "absolute", paddingLeft: 20 }}>
+          {startedSession && <Session user={id} project={selectedProject.id} />}
         </div>
       </Grid>
-        <Dialog
-          open={hasSessions}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            Delete project "{selectedProject.projectname}"?
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              This project has an associated pomodoro(s). Deleting the project
-              will result in losing all information about the pomodoro(s). Do
-              you still want to delete this project?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button id="dialog-accept" onClick={deleteProject}>
-              Delete
-            </Button>
-            <Button id="dialog-cancel" onClick={handleClose} autoFocus>
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog
-          open={selectedProject.id == null && clickcStartSession}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-session-no-project">
-            Start a session without a project?
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-session-no-project-msg">
-              No project is chosen to be associated. Do you want to continue starting a new session without a project?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button id="dialog-accept-2" onClick={handleSession}>
-              Ok
-            </Button>
-            <Button id="dialog-cancel-2" onClick={handleClose2} autoFocus>
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
+      <Dialog
+        open={hasSessions}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Delete project "{selectedProject.projectname}"?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This project has an associated pomodoro(s). Deleting the project
+            will result in losing all information about the pomodoro(s). Do you
+            still want to delete this project?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button id="dialog-accept" onClick={deleteProject}>
+            Delete
+          </Button>
+          <Button id="dialog-cancel" onClick={handleClose} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={selectedProject.id == null && clickcStartSession}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-session-no-project">
+          Start a session without a project?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-session-no-project-msg">
+            No project is chosen to be associated. Do you want to continue
+            starting a new session without a project?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button id="dialog-accept-2" onClick={handleSession}>
+            Ok
+          </Button>
+          <Button id="dialog-cancel-2" onClick={handleClose2} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

@@ -69,11 +69,11 @@ function Admin() {
         setInputEmailNew("");
       }
     } catch (e) {
-        if (e.response.status === 409) {
-          alert(`User with email ${inputEmailNew} already exists!`);
-        } else {
-          alert(`Create user failed with ${e.status} code`);
-        }
+      if (e.response.status === 409) {
+        alert(`User with email ${inputEmailNew} already exists!`);
+      } else {
+        alert(`Create user failed with ${e.status} code`);
+      }
     }
     setUpdate(true);
   };
@@ -149,7 +149,10 @@ function Admin() {
   };
 
   return (
-    <div className="font-sans" style={{margin: 30, marginTop: 0, color: "#414244"}}>
+    <div
+      className="font-sans"
+      style={{ margin: 30, marginTop: 0, color: "#414244" }}
+    >
       <Typography component="h6" align="right">
         Hi, Admin
       </Typography>
@@ -184,15 +187,15 @@ function Admin() {
               id="email-input"
               label="Email"
               variant="outlined"
-              
               onChange={handleInputEmailNew}
               value={inputEmailNew}
               margin="dense"
             />
-            <Button 
-            id="create-user-btn" 
-            variant="contained" 
-            onClick={handleCreate}>
+            <Button
+              id="create-user-btn"
+              variant="contained"
+              onClick={handleCreate}
+            >
               Create
             </Button>
           </FormControl>
@@ -231,7 +234,11 @@ function Admin() {
               value={inputLnameEdit}
               margin="dense"
             />
-            <Button id="edit-user-btn" variant="contained" onClick={handleUpdate}>
+            <Button
+              id="edit-user-btn"
+              variant="contained"
+              onClick={handleUpdate}
+            >
               Update
             </Button>
           </FormControl>
@@ -239,10 +246,10 @@ function Admin() {
 
         <Grid item>
           <h2>Delete User</h2>
-          <FormControl  sx={{ width: 200 }}>
+          <FormControl sx={{ width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
-                id="delete-email-select"
+              id="delete-email-select"
               value={selectedDelUser}
               onChange={handleDelSelect}
               input={<OutlinedInput label="Name" />}
@@ -253,7 +260,11 @@ function Admin() {
                 </MenuItem>
               ))}
             </Select>
-            <Button id="delete-user-btn" variant="contained" onClick={handleDelete}>
+            <Button
+              id="delete-user-btn"
+              variant="contained"
+              onClick={handleDelete}
+            >
               Delete
             </Button>
           </FormControl>
