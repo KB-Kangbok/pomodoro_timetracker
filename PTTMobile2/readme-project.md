@@ -8,5 +8,8 @@ Installation Instructions for PTTMobile2
 3. Run the following command to build and deploy an APK to the device:
 * `./gradlew installDebug`
 
+4. To run the tests, please run the following command at the root of the Mobile2 repository.
+* `./gradlew test`
+
 This should install and deploy the application on the device.
 *Note: These steps should also work on an emulator, but the emulator needs to be up and running from Android Studio.*
