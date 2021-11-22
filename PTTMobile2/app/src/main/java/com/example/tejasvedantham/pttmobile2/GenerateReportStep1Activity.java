@@ -98,7 +98,7 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
                     List<Session> sessionList = new ArrayList<>();
                     for (int i = 0; i < sessions.length(); ++i) {
                         JSONObject o = sessions.getJSONObject(i);
-                        sessionList.add(new Session(o.getString("startingTime"), o.getString("endingTime"), o.getInt("hoursWorked")));
+                        sessionList.add(new Session(o.getString("startingTime"), o.getString("endingTime"), o.getInt("hoursWorked"), null));
                     }
                     intent.putExtra("sessions", (Serializable) sessionList);
                     if (includeCompletedPomodorosCheckBox.isChecked()) {
@@ -121,28 +121,4 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
         });
         requestQueue.add(jsonObjectRequest);
     }
-
-//    public void onCheckboxClicked(View view) {
-//        boolean checked = ((CheckBox) view).isChecked();
-//
-//        switch (view.getId()) {
-//
-//            case R.id.completedPomodorosCheckbox:
-//                if (checked) {
-//                    //TODO: If completed Pomodoros is checked
-//                } else {
-//                    //TODO: If completed Pomodoros is NOT checked
-//                }
-//                break;
-//
-//            case R.id.totalHoursCheckbox:
-//                if (checked) {
-//                    //TODO: If total hours worked on project is checked
-//                }
-//                else {
-//                    //TODO: If total hours worked on project is NOT checked
-//                }
-//                break;
-//        }
-//    }
 }

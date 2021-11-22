@@ -36,7 +36,7 @@ public class GenerateReportStep2Activity extends AppCompatActivity {
             sessionList = (List<Session>) getIntent().getSerializableExtra("sessions");
             for (Session s : sessionList) {
                 information.append("\n");
-                information.append(String.format("startingTime: %s, endingTime: %s, hoursWorked: %d", s.startingTime, s.endingTime, s.hoursWorked));
+                information.append(String.format("startingTime: %s, endingTime: %s, counter: %d", s.startingTime, s.endingTime, s.counter));
                 information.append("\n");
             }
         }
