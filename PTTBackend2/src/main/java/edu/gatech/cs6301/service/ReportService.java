@@ -48,16 +48,16 @@ public class ReportService {
     private Report generateReportFromSessionList(List<Session> sessionList, Boolean includeCompletedPomodoros, Boolean includeTotalHoursWorkedOnProject) {
         List<Integer> counterList = new ArrayList<>();
         List<Double> hoursWorkedOnProjectList = new ArrayList<>();
-        List<ReportSession> reportSessionList = new ArrayList<>();
+        List<ReportSession> sessions = new ArrayList<>();
         sessionList.forEach(session -> {
             counterList.add(session.getCounter());
             ReportSession reportSession = generateReportSessionFromSession(session);
-            reportSessionList.add(reportSession);
+            sessions.add(reportSession);
             hoursWorkedOnProjectList.add(reportSession.getHoursWorked());
         });
         Double totalHoursWorkedOnProject = (includeTotalHoursWorkedOnProject != null && includeTotalHoursWorkedOnProject) ? sumFromDoubleList(hoursWorkedOnProjectList) : null;
         Integer completedPomodoros = (includeCompletedPomodoros != null && includeCompletedPomodoros) ? sumFromIntegerList(counterList) : null;
-        return new Report(reportSessionList, completedPomodoros, totalHoursWorkedOnProject);
+        return new Report(sessions, completedPomodoros, totalHoursWorkedOnProject);
     }
 
     private ReportSession generateReportSessionFromSession(Session session) {
