@@ -66,7 +66,7 @@ public class SessionService {
     }
 
     private Session generateSessionFromSessionHttp(Integer userid, Integer projectid, Integer sessionid, SessionHttp sessionHttp) {
-        if (validateSessionHttp(userid, sessionHttp)) {
+        if (validateSessionHttpUpdate(userid, sessionHttp)) {
             if (sessionRepository.existsSessionByUseridAndProjectidAndId(userid, projectid, sessionid)) {
                 Session updatedSession = sessionRepository.findSessionById(sessionid);
                 updatedSession.setStartTime(DateTimeConverter.toSQLTimestampUTC(sessionHttp.getStartTime()));
@@ -101,6 +101,18 @@ public class SessionService {
             long diffMilisec = endTimeUTC.getTime() - startTimeUTC.getTime();
             List<Session> sessionList = sessionRepository.getOverlappingSessions(userid, startTimeUTC, endTimeUTC);
             return sessionHttp.getCounter() >= 0 && startTimeUTC.before(endTimeUTC) && diffMilisec >= sessionHttp.getCounter() * 30 * 60 * 1000 && sessionList.size() == 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean validateSessionHttpUpdate(Integer userid, SessionHttp sessionHttp) {
+        try {
+            Timestamp startTimeUTC = DateTimeConverter.toSQLTimestampUTC(sessionHttp.getStartTime());
+            Timestamp endTimeUTC = DateTimeConverter.toSQLTimestampUTC(sessionHttp.getEndTime());
+            long diffMilisec = endTimeUTC.getTime() - startTimeUTC.getTime();
+            //List<Session> sessionList = sessionRepository.getOverlappingSessions(userid, startTimeUTC, endTimeUTC);
+            return sessionHttp.getCounter() >= 0 && startTimeUTC.before(endTimeUTC) && diffMilisec >= sessionHttp.getCounter() * 30 * 60 * 1000;
         } catch (Exception e) {
             return false;
         }
