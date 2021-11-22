@@ -140,7 +140,7 @@ public class Users_UserId_Projects_ProjectId_Report{
     @Test
     public void pttTest1() throws Exception {
         deleteUsers();
-
+        deleteProjects();
         try {
             CloseableHttpResponse response = createUser("John", "Doe", "john@doe.org");
             String userId = getIdFromResponse(response);
@@ -161,7 +161,7 @@ public class Users_UserId_Projects_ProjectId_Report{
     @Test
     public void pttTest2() throws Exception {
         deleteUsers();
-
+        deleteProjects();
         try {
             CloseableHttpResponse response = createUser("John", "Doe", "john@doe.org");
             String userId = getIdFromResponse(response);
@@ -171,7 +171,7 @@ public class Users_UserId_Projects_ProjectId_Report{
             String from = "2019-03-18T20:00Z";
             String to = "2019-03-18T22:00Z";
 
-            response = getReport(userId + "0", projectId, from, to);
+            response = getUsersUseridProjectsProjectidReport(userId + "0", projectId, from, to, "false", "false");
             int status = response.getStatusLine().getStatusCode();
 
             Assert.assertEquals(404, status);
@@ -194,7 +194,7 @@ public class Users_UserId_Projects_ProjectId_Report{
             String from = "2019-03-18T20:00Z";
             String to = "2019-03-18T22:00Z";
 
-            response = getReport(userId, projectId + "0", from, to);
+            response = getUsersUseridProjectsProjectidReport(userId, projectId + "0", from, to, "false", "false");
             int status = response.getStatusLine().getStatusCode();
 
             Assert.assertEquals(404, status);
@@ -216,7 +216,7 @@ public class Users_UserId_Projects_ProjectId_Report{
             String projectId = getIdFromResponse(response);
             String to = "2019-03-18T22:00Z";
 
-            response = getReport(userId, projectId, "test", to);
+            response = getUsersUseridProjectsProjectidReport(userId, projectId, "test", to, "false", "false");
             int status = response.getStatusLine().getStatusCode();
 
             Assert.assertEquals(400, status);
@@ -238,7 +238,7 @@ public class Users_UserId_Projects_ProjectId_Report{
             String projectId = getIdFromResponse(response);
             String from = "2019-03-18T20:00Z";
 
-            response = getReport(userId, projectId, from, "test");
+            response = getUsersUseridProjectsProjectidReport(userId, projectId, from, "test", "false", "false");
             int status = response.getStatusLine().getStatusCode();
 
             Assert.assertEquals(400, status);
