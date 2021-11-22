@@ -1,0 +1,30 @@
+
+*.xml
+*.iml
+*.json
+PTTWeb2/.idea/test/PTTWeb2/chromedriver
+PTTWeb2/.idea/test/PTTWeb2/lib/selenium-java-4/CHANGELOG
+*.jar
+PTTWeb2/.idea/test/PTTWeb2/lib/selenium-java-4/LICENSE
+PTTWeb2/.idea/test/PTTWeb2/lib/selenium-java-4/NOTICE
+*.md
+*.class
+*.cmd
+*.ps1
+*.js
+*.flow
+PTTWeb2/pttweb2/node_modules/@emotion/stylis/LICENSE
+*.ts
+PTTWeb2/pttweb2/node_modules/babel-plugin-syntax-jsx/.npmignore
+*.yml
+PTTWeb2/pttweb2/node_modules/camelize/LICENSE
+*.markdown
+PTTWeb2/pttweb2/node_modules/css-color-keywords/LICENSE
+PTTWeb2/pttweb2/node_modules/shallowequal/LICENSE
+*.map
+PTTWeb2/pttweb2/node_modules/styled-components/node_modules/@emotion/is-prop-valid/LICENSE
+PTTWeb2/pttweb2/node_modules/styled-components/node_modules/@emotion/memoize/LICENSE
+PTTWeb2/Web2Testing/chromedriver-windows
+PTTWeb2/~/chromeTemp/Default/Preferences
+PTTWeb2/~/chromeTemp/First Run
+PTTWeb2/~/chromeTemp/Local State
