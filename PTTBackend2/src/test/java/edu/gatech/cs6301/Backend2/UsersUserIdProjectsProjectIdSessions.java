@@ -65,7 +65,7 @@ public class UsersUserIdProjectsProjectIdSessions{
         }
     }
 
-    //Purpose: UserId not found - 404 
+    //Purpose: UserId not found - 400 - bad request - "string present"
     @Test
     public void pttTest2() throws Exception{
         httpclient = HttpClients.createDefault();
@@ -135,7 +135,7 @@ public class UsersUserIdProjectsProjectIdSessions{
         }
     }
 
-    //Purpose: projectId not found - 404 
+    //Purpose: projectId not found - 400 bad request - string present
     @Test
     public void pttTest4() throws Exception{
         httpclient = HttpClients.createDefault();
@@ -170,7 +170,7 @@ public class UsersUserIdProjectsProjectIdSessions{
         }
     }
 
-    //Purpose: projectId empty - 404
+    //Purpose: projectId empty - 405 - method not allowed
     @Test
     public void pttTest5() throws Exception{
         httpclient = HttpClients.createDefault();

@@ -371,7 +371,7 @@ public class Users_userId_projects_projectId_sessions {
     }
 
     @Test
-    // Purpose: Check if API returns 400 when userId is empty.
+    // Purpose: Check if API returns 404 when userId is empty.
     public void pttTest11() throws Exception {
         httpclient = HttpClients.createDefault();
 

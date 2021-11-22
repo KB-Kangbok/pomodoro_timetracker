@@ -307,7 +307,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
         }
     }
 
-    //Purpose: sessionId empty - 404 
+    //Purpose: sessionId empty - session id empty - 405 method not allowed
     @Test
     public void pttTest7() throws Exception{
         httpclient = HttpClients.createDefault();

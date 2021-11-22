@@ -20,11 +20,12 @@ import java.time.format.DateTimeFormatter;
 public class Users_userId_projects_projectId_report extends PTTBackendTestBase {
 
     @Test
-    // Purpose: When userId doesn't exist, backend should return 404
+    // Purpose: When userId doesn't exist, backend should return error.
     public void pttTest1() throws Exception {
         try {
             CloseableHttpResponse response = getReport("0", "0", "1", "2", true, true);
             int status = response.getStatusLine().getStatusCode();
+            //400 due to start and end time not being valid
             Assert.assertEquals(400, status);
             EntityUtils.consume(response.getEntity());
             response.close();
@@ -43,6 +44,7 @@ public class Users_userId_projects_projectId_report extends PTTBackendTestBase {
 
             CloseableHttpResponse response = getReport(userId, "0", "1", "2", true, true);
             int status = response.getStatusLine().getStatusCode();
+            //400 due to start and end time not being valid
             Assert.assertEquals(400, status);
             EntityUtils.consume(response.getEntity());
             response.close();
