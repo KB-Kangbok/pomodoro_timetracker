@@ -44,10 +44,11 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
 
     public TimePicker startTime;
     public TimePicker endTime;
+    public CheckBox includeCompletedPomodorosCheckBox;
+    public CheckBox includeTotalHoursWorkedOnProjectCheckBox;
 
     private String userId;
     private Project project;
-//    private List<Project> projectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
 
         startTime = (TimePicker) findViewById(R.id.startPicker);
         endTime = (TimePicker) findViewById(R.id.endPicker);
+        includeCompletedPomodorosCheckBox = (CheckBox) findViewById(R.id.completedPomodorosCheckbox);
+        includeTotalHoursWorkedOnProjectCheckBox = (CheckBox) findViewById(R.id.totalHoursCheckbox);
         startTime.setIs24HourView(true);
         endTime.setIs24HourView(true);
 
@@ -63,12 +66,7 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
             project = (Project) getIntent().getSerializableExtra("project");
-//            projectList = (List<Project>) getIntent().getSerializableExtra("userId");
         }
-
-//        projectSpinner = (Spinner) findViewById(R.id.project_report_spinner);
-//        ArrayAdapter<Project> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, projectList);
-//        projectSpinner.setAdapter(adapter);
     }
 
     public void generateReport(View view) throws JSONException {
@@ -84,14 +82,9 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
         endTimeFormat = formatter.format(date) + "T" + endHour + ":" + endMinute + "Z";
         Log.d(LOG_TAG, String.format("start time: %s, end time: %s", startTimerFormat, endTimeFormat));
 
-        // TODO: need these two options on the UI
-        boolean completedPomodoros = true;
-        boolean totalHoursWorkedOnProject = true;
-
         //TODO: Query backend for projects in this timeframe
-//        String projectId = projectList.get(projectSpinner.getSelectedItemPosition()).id;
         String url = String.format(BackendConnections.baseUrl + "/users/%s/projects/%s/report", userId, project.id);
-        String params = String.format("?from=%s&to=%s&completedPomodoros=%s&totalHoursWorkedOnProject=%s", startTimerFormat, endTimeFormat, completedPomodoros, totalHoursWorkedOnProject);
+        String params = String.format("?from=%s&to=%s&completedPomodoros=%s&totalHoursWorkedOnProject=%s", startTimerFormat, endTimeFormat, includeCompletedPomodorosCheckBox.isChecked(), includeTotalHoursWorkedOnProjectCheckBox.isChecked());
         url = url + params;
         Log.d(LOG_TAG, String.format("url: %s", url));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -108,10 +101,10 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
                         sessionList.add(new Session(o.getString("startingTime"), o.getString("endingTime"), o.getInt("hoursWorked")));
                     }
                     intent.putExtra("sessions", (Serializable) sessionList);
-                    if (response.has("completedPomodoros")) {
+                    if (includeCompletedPomodorosCheckBox.isChecked()) {
                         intent.putExtra("completedPomodoros", response.getString("completedPomodoros"));
                     }
-                    if (response.has("totalHoursWorkedOnProject")) {
+                    if (includeTotalHoursWorkedOnProjectCheckBox.isChecked()) {
                         intent.putExtra("totalHoursWorkedOnProject", response.getString("totalHoursWorkedOnProject"));
                     }
                 } catch (JSONException e) {
@@ -129,27 +122,27 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public void onCheckboxClicked(View view) {
-        boolean checked = ((CheckBox) view).isChecked();
-
-        switch (view.getId()) {
-
-            case R.id.completedPomodorosCheckbox:
-                if (checked) {
-                    //TODO: If completed Pomodoros is checked
-                } else {
-                    //TODO: If completed Pomodoros is NOT checked
-                }
-                break;
-
-            case R.id.totalHoursCheckbox:
-                if (checked) {
-                    //TODO: If total hours worked on project is checked
-                }
-                else {
-                    //TODO: If total hours worked on project is NOT checked
-                }
-                break;
-        }
-    }
+//    public void onCheckboxClicked(View view) {
+//        boolean checked = ((CheckBox) view).isChecked();
+//
+//        switch (view.getId()) {
+//
+//            case R.id.completedPomodorosCheckbox:
+//                if (checked) {
+//                    //TODO: If completed Pomodoros is checked
+//                } else {
+//                    //TODO: If completed Pomodoros is NOT checked
+//                }
+//                break;
+//
+//            case R.id.totalHoursCheckbox:
+//                if (checked) {
+//                    //TODO: If total hours worked on project is checked
+//                }
+//                else {
+//                    //TODO: If total hours worked on project is NOT checked
+//                }
+//                break;
+//        }
+//    }
 }

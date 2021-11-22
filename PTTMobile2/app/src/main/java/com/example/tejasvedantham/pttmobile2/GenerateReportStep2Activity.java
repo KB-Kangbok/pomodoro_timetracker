@@ -41,7 +41,15 @@ public class GenerateReportStep2Activity extends AppCompatActivity {
             }
         }
 
+        if (extras.containsKey("completedPomodoros")) {
+            information.append("\n");
+            information.append(String.format("completedPomodoros: %s", extras.getString("completedPomodoros")));
+        }
+
+        if (extras.containsKey("totalHoursWorkedOnProject")) {
+            information.append("\n");
+            information.append(String.format("totalHoursWorkedOnProject: %s", extras.getString("totalHoursWorkedOnProject")));
+        }
+
     }
-
-
 }

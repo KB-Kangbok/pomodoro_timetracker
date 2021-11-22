@@ -65,9 +65,8 @@
             android:id="@+id/completedPomodorosCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Include Completed Pomodoros"
             android:layout_below="@+id/endPicker"
-            android:onClick="onCheckboxClicked">
+            android:text="Include Completed Pomodoros">
 
         </CheckBox>
 
@@ -75,9 +74,8 @@
             android:id="@+id/totalHoursCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Include Total Hours Worked on Proejct"
             android:layout_below="@+id/completedPomodorosCheckbox"
-            android:onClick="onCheckboxClicked">
+            android:text="Include Total Hours Worked on Proejct">
 
         </CheckBox>
 
