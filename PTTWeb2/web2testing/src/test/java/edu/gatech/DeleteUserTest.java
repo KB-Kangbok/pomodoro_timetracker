@@ -14,7 +14,9 @@ public class DeleteUserTest extends BrowserFunctions{
 
     @Test
     public void deleteUserWithProjectAccept() throws Exception{
+        utils.login(USERNAME);
         utils.createProject(PROJECT);
+        utils.login(ADMIN);
         utils.deleteUser(USERNAME, true);
         
         Assert.assertTrue(!utils.userExists(USERNAME));
@@ -22,7 +24,9 @@ public class DeleteUserTest extends BrowserFunctions{
 
     @Test(groups = {"deleteUser"})
     public void deleteUserWithProjectCancel() throws Exception{
+        utils.login(USERNAME);
         utils.createProject(PROJECT);
+        utils.login(ADMIN);
         utils.deleteUser(USERNAME, false);
         
         Assert.assertTrue(utils.userExists(USERNAME));

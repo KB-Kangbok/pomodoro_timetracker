@@ -11,28 +11,33 @@ public class LoginTest extends BrowserFunctions {
         
         String expected = getBaseUrl() + "/admin";
         String actual = utils.driver.getCurrentUrl();
-        
+
         Assert.assertEquals(actual, expected);
     }
 
     @Test(description = "Test to login as a non-existing user")
     public void loginInvalidUserTest() throws Exception {
-        utils.login(USERNAME);
+        utils.login("InvalidName");
         
         String expected = USER_NOT_FOUND;
         String actual = utils.getAlertMessage();
-
+        Thread.sleep(100);
         Assert.assertEquals(actual, expected);
     }
 
     @Test(description = "Test to login as a valid user", groups = {"validUser"})
     public void loginValidUserTest() throws Exception {
+        utils.login(ADMIN);
+        utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
         utils.login(USERNAME);
         
         String expected = FIRST_NAME;
         String actual = utils.getFirstName();
-
+        Thread.sleep(100);
         Assert.assertEquals(actual, expected);
+
+        utils.login(ADMIN);
+        utils.deleteUser(USERNAME, true);
     }
 
     @BeforeGroups("validUser")
