@@ -43,7 +43,7 @@ public class Http {
             HttpHost localhost = new HttpHost("locahost", 8080);
             Http.cm.setMaxPerRoute(new HttpRoute(localhost), 10);
             Http.client = HttpClients.custom().setConnectionManager(Http.cm)
-                .build();
+                    .build();
             Http.setup = true;
         }
     }
@@ -75,14 +75,14 @@ public class Http {
             throws IOException {
         request.addHeader("accept", "application/json");
         System.out.println("*** Executing request "
-                           + request.getRequestLine() + "***");
+                + request.getRequestLine() + "***");
         CloseableHttpResponse response = Http.client.execute(request);
         System.out.println("*** Raw response " + response + "***");
         return response;
     }
 
     private CloseableHttpResponse exec(HttpEntityEnclosingRequestBase request,
-            JSONObject data) throws IOException {
+                                       JSONObject data) throws IOException {
         StringEntity input = new StringEntity(data.toString());
         input.setContentType("application/json");
         request.setEntity(input);

@@ -86,7 +86,7 @@ public class Users extends Base {
         }
     }
 
-    // Purpose: Tests if input lastname is valid String for POST method for endpoint /users 
+    // Purpose: Tests if input lastname is valid String for POST method for endpoint /users
     @Test
     public void pttTest4() throws Exception {
         deleteUsers().close();
@@ -109,7 +109,7 @@ public class Users extends Base {
         }
     }
 
-    // Purpose: Tests if input email is valid email string for POST method for endpoint /users 
+    // Purpose: Tests if input email is valid email string for POST method for endpoint /users
     @Test
     public void pttTest5() throws Exception {
         deleteUsers().close();

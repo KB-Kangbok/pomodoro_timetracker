@@ -13,7 +13,7 @@ public class Users_UserId extends Base {
         CloseableHttpResponse response = null;
         try {
             response = postUser(0, "John", "Doe", "john@doe.org");
-            assertStatus(500, response);
+            assertStatus(405, response);
         } finally {
             if (response != null) {
                 response.close();
