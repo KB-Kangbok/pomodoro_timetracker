@@ -27,42 +27,68 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/step1Title"
+<<<<<<< HEAD
+=======
+            android:text="Start Date and Time"
+>>>>>>> d4f26d8e347954868be2ca2a550b1cdaa4338b07
             android:layout_margin="10dp"
             android:text="Start Time"
             android:textSize="16dp">
 
         </TextView>
 
+        <DatePicker
+            android:id="@+id/startDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startText"
+            android:layout_margin="10dp">
+
+        </DatePicker>
+
         <TimePicker
             android:id="@+id/startPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/startText"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:timePickerMode="spinner"></TimePicker>
+            android:layout_below="@+id/startDatePicker"
+            android:layout_margin="10dp"
+            android:timePickerMode="spinner">
+
+        </TimePicker>
 
         <TextView
             android:id="@+id/endText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/startPicker"
+<<<<<<< HEAD
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:text="End Time"
+=======
+            android:text="End Date and Time"
+            android:layout_margin="10dp"
+>>>>>>> d4f26d8e347954868be2ca2a550b1cdaa4338b07
             android:textSize="16dp">
 
         </TextView>
+
+        <DatePicker
+            android:id="@+id/endDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/endText"
+            android:layout_margin="10dp">
+
+        </DatePicker>
 
         <TimePicker
             android:id="@+id/endPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/endText"
+            android:layout_below="@+id/endDatePicker"
             android:layout_margin="10dp"
             android:timePickerMode="spinner"></TimePicker>
 
