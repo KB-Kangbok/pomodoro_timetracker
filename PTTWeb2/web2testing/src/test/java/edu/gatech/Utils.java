@@ -163,10 +163,28 @@ public class Utils {
         Thread.sleep(200);
     }
 
-    public void createSession(String projName) throws Exception {
-        WebElement drop = driver.findElement(By.id("existing-projects-select"));
-        drop.click();
+    // public void createSession(String projName) throws Exception {
+    //     WebElement drop = driver.findElement(By.id("existing-projects-select"));
+    //     drop.click();
+    //     Thread.sleep(100);
+    //     List<WebElement> projects = driver.findElements(By.tagName("li"));
+    //     for (WebElement project : projects) {
+    //         if (project.getText().equals(projName)) {
+    //             project.click();
+    //             break;
+    //         }
+    //     }
+
+    //     WebElement create = driver.findElement(By.id("create-session-btn"));
+    //     create.click();
+    // }
+
+    public void startPomodoroWithProject(String projName) throws Exception {
+        WebElement btn = driver.findElement(By.id("start-pomodoro-btn"));
+        btn.click();
         Thread.sleep(100);
+        WebElement select = driver.findElement(By.id("proj-list"));
+        select.click();
         List<WebElement> projects = driver.findElements(By.tagName("li"));
         for (WebElement project : projects) {
             if (project.getText().equals(projName)) {
@@ -174,9 +192,8 @@ public class Utils {
                 break;
             }
         }
-
-        WebElement create = driver.findElement(By.id("create-session-btn"));
-        create.click();
+        WebElement start = driver.findElement(By.id("project-start-btn"));
+        start.click();
     }
 
     public boolean projectExists(String projName) throws Exception {
