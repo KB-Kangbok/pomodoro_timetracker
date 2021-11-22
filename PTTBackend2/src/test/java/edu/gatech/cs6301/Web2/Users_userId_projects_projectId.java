@@ -370,8 +370,8 @@ public class Users_userId_projects_projectId {
             int status = response.getStatusLine().getStatusCode();
             HttpEntity entity;
             String strResponse;
-            Assert.assertEquals(500, status);
-            if (status != 500) {
+            Assert.assertEquals(405, status);
+            if (status != 405) {
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
 
