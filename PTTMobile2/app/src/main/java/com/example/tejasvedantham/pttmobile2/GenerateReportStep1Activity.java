@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
@@ -46,6 +47,8 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
     public TimePicker endTime;
     public CheckBox includeCompletedPomodorosCheckBox;
     public CheckBox includeTotalHoursWorkedOnProjectCheckBox;
+    public DatePicker startDatePicker;
+    public DatePicker endDatePicker;
 
     private String userId;
     private Project project;
@@ -62,6 +65,9 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
         startTime.setIs24HourView(true);
         endTime.setIs24HourView(true);
 
+        startDatePicker = (DatePicker) findViewById(R.id.startDatePicker);
+        endDatePicker = (DatePicker) findViewById(R.id.endDatePicker);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
@@ -74,6 +80,15 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
         int startMinute = startTime.getCurrentMinute();
         int endHour = endTime.getCurrentHour();
         int endMinute = endTime.getCurrentMinute();
+
+        int startDay = startDatePicker.getDayOfMonth();
+        int startMonth = startDatePicker.getMonth();
+        int startYear = startDatePicker.getYear();
+
+        int endDay = endDatePicker.getDayOfMonth();
+        int endMonth = endDatePicker.getMonth();
+        int endYear = endDatePicker.getYear();
+
         String startTimerFormat;
         String endTimeFormat;
         Date date = new Date();
