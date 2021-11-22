@@ -8,7 +8,7 @@ Installation Instructions for PTTMobile2
 3. Run the following command to build and deploy an APK to the device:
 * `./gradlew installDebug` or `./gradlew build`
 
-4. For DevOps Team: To change the IP of Backend Connection, navigate to `BackendConnections` and change the `baseUrl` on line 28.
+4. For DevOps Team: To change the IP of Backend Connection, navigate to `.../BackendConnections.java` and change the `baseUrl` on line 28.
 
 5. To run the tests, please run the following command at the root of the Mobile2 repository.
 * `./gradlew test`
