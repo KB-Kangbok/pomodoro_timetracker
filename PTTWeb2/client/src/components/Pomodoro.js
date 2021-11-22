@@ -72,7 +72,7 @@ export default function Pomodoro({ id, projects }) {
   const startTimer = () => {
     setIsRest(false);
     setIsTimer(true);
-    setCountdown(3);
+    setCountdown(30);
   };
 
   const handlePomodoro = () => {
