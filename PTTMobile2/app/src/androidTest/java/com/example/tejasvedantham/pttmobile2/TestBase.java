@@ -21,7 +21,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 public class TestBase extends TestCase {
+
+    private static final int TIME_OUT_SECONDS = 1;
 
     /** Remove all users in DB to make a clean start for testing. */
     public void removeAllCurrent() {
@@ -71,13 +75,13 @@ public class TestBase extends TestCase {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private String createdUserId;
-    public String createUser(User user) {
+    private String createdUserId = "0";
+    public String createUser(User user) throws InterruptedException {
         createUserInternal(user, getApplicationContext(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    user.id = response.getString("id");
+                    createdUserId = response.getString("id");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -88,11 +92,12 @@ public class TestBase extends TestCase {
 
             }
         });
+        TimeUnit.SECONDS.sleep(TIME_OUT_SECONDS); // wait for the response before return it
         return createdUserId;
     }
 
     private String createdProjectId;
-    public String createProject(String userId, Project project) {
+    public synchronized String createProject(String userId, Project project) throws InterruptedException {
         createProjectInternal(project, userId, getApplicationContext(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -107,11 +112,12 @@ public class TestBase extends TestCase {
             public void onErrorResponse(VolleyError error) {
             }
         });
+        TimeUnit.SECONDS.sleep(TIME_OUT_SECONDS); // wait for the response before return it
         return createdProjectId;
     }
 
     private String createdSessionId;
-    public String createSession(String userId, String projectId, Session session) {
+    public synchronized String createSession(String userId, String projectId, Session session) throws InterruptedException {
         createSessionInternal(userId, projectId, session, getApplicationContext(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -126,6 +132,7 @@ public class TestBase extends TestCase {
             public void onErrorResponse(VolleyError error) {
             }
         });
+        TimeUnit.SECONDS.sleep(TIME_OUT_SECONDS); // wait for the response before return it
         return createdSessionId;
     }
 

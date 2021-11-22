@@ -19,9 +19,12 @@
         android:id="@+id/projectNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Project Name: "
         android:layout_below="@+id/step2Title"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Project Name: "
         android:textSize="18dp">
 
     </TextView>
@@ -30,9 +33,12 @@
         android:id="@+id/informationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Information: "
         android:layout_below="@+id/projectNameText"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Information: "
         android:textSize="18dp">
 
     </TextView>

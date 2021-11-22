@@ -98,14 +98,14 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
                     List<Session> sessionList = new ArrayList<>();
                     for (int i = 0; i < sessions.length(); ++i) {
                         JSONObject o = sessions.getJSONObject(i);
-                        sessionList.add(new Session(o.getString("startingTime"), o.getString("endingTime"), o.getInt("hoursWorked"), null));
+                        sessionList.add(new Session(o.getString("startingTime"), o.getString("endingTime"), -1, null, o.getDouble("hoursWorked")));
                     }
                     intent.putExtra("sessions", (Serializable) sessionList);
                     if (includeCompletedPomodorosCheckBox.isChecked()) {
-                        intent.putExtra("completedPomodoros", response.getString("completedPomodoros"));
+                        intent.putExtra("completedPomodoros", response.getInt("completedPomodoros"));
                     }
                     if (includeTotalHoursWorkedOnProjectCheckBox.isChecked()) {
-                        intent.putExtra("totalHoursWorkedOnProject", response.getString("totalHoursWorkedOnProject"));
+                        intent.putExtra("totalHoursWorkedOnProject", response.getDouble("totalHoursWorkedOnProject"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
