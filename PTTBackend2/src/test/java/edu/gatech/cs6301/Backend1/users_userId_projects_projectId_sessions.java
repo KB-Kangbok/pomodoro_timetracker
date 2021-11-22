@@ -97,7 +97,7 @@ public class users_userId_projects_projectId_sessions extends BaseTestClass{
         try {
             CloseableHttpResponse response = createSession("123", "", "2021-10-10T20:00Z", "2021-10-10T21:00Z", 2);
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
             EntityUtils.consume(response.getEntity());
             response.close();
 

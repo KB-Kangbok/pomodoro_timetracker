@@ -202,7 +202,7 @@ public class UsersUseridProjectsProjectidReportAPI {
             int status = response.getStatusLine().getStatusCode();
             HttpEntity entity;
             String strResponse;
-            if (status != 404) {
+            if (status != 400) {
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
             response.close();

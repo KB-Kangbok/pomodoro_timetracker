@@ -59,8 +59,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest1() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -97,8 +97,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest2() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -134,8 +134,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest3() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -173,8 +173,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest4() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -209,8 +209,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest5() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -247,8 +247,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest6() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -281,8 +281,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest7() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -318,8 +318,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest8() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -355,8 +355,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest9() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         
         String newEndTime = "2017-02-18T22:00Z";
 
@@ -395,8 +395,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest10() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "0";
         String newCounter = "-1";
 
@@ -433,12 +433,12 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest11() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T19:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T19:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "0";
 
-        String newStartTime = "2019-02-18T21:00Z";
-        String newEndTime = "2019-02-18T22:00Z";
+        String newStartTime = "2021-02-18T21:00Z";
+        String newEndTime = "2021-02-18T22:00Z";
 
 
         try {
@@ -488,8 +488,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest12() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "0";
 
         try {
@@ -511,20 +511,20 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             int status = response.getStatusLine().getStatusCode();
             HttpEntity entity;
-            //expected 400
-            if (status != 400) {
+            entity = response.getEntity();
+            if (status != 201) {
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
-//            String strResponse = EntityUtils.toString(entity);
-//
-//            System.out.println("*** String response " + strResponse + " (" + response.getStatusLine().getStatusCode() + ") ***");
-//
-//            String expectedJson = "{\"id\":" + sessionId + "," +
-//                "\"startTime\":\"" + startTime + "\"," +
-//                "\"endTime\":\"" + endTime + "\"," +
-//                "\"counter\":" + counter + "}";
-//	        JSONAssert.assertEquals(expectedJson,strResponse, false);
-//            EntityUtils.consume(response.getEntity());
+            String strResponse = EntityUtils.toString(entity);
+
+            System.out.println("*** String response " + strResponse + " (" + response.getStatusLine().getStatusCode() + ") ***");
+
+            String expectedJson = "{\"id\":" + sessionId + "," +
+                "\"startTime\":\"" + startTime + "\"," +
+                "\"endTime\":\"" + endTime + "\"," +
+                "\"counter\":" + counter + "}";
+	        JSONAssert.assertEquals(expectedJson,strResponse, false);
+            EntityUtils.consume(response.getEntity());
             response.close();
 
             deleteUser(userId);
@@ -538,8 +538,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest13() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T19:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T19:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         String newStartTime = "2018-02-18T20:00Z";
@@ -592,8 +592,8 @@ public class Users_userId_projects_projectId_sessions_sessionId {
     public void pttTest14() throws Exception {
         httpclient = HttpClients.createDefault();
 
-        String startTime = "2019-02-18T20:00Z";
-        String endTime = "2019-02-18T21:00Z";
+        String startTime = "2021-02-18T20:00Z";
+        String endTime = "2021-02-18T21:00Z";
         String counter = "1";
 
         try {
@@ -614,27 +614,27 @@ public class Users_userId_projects_projectId_sessions_sessionId {
             response = updateSession(userId, projectId, sessionId, startTime, endTime, counter);
 
             int status = response.getStatusLine().getStatusCode();
-            //expected 400
-            if(status != 400){
+
+            if(status != 201){
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
-//            HttpEntity entity;
-//            if (status == 201) {
-//                entity = response.getEntity();
-//            } else {
-//                throw new ClientProtocolException("Unexpected response status: " + status);
-//            }
-//            String strResponse = EntityUtils.toString(entity);
-//
-//            System.out.println("*** String response " + strResponse + " (" + response.getStatusLine().getStatusCode() + ") ***");
-//
-//            String expectedJson = "{\"id\":" + sessionId + "," +
-//                "\"startTime\":\"" + startTime + "\"," +
-//                "\"endTime\":\"" + endTime + "\"," +
-//                "\"count\":" + counter + "}";
-//	        JSONAssert.assertEquals(expectedJson,strResponse, false);
-//            EntityUtils.consume(response.getEntity());
-//            response.close();
+            HttpEntity entity;
+            if (status == 201) {
+                entity = response.getEntity();
+            } else {
+                throw new ClientProtocolException("Unexpected response status: " + status);
+            }
+            String strResponse = EntityUtils.toString(entity);
+
+            System.out.println("*** String response " + strResponse + " (" + response.getStatusLine().getStatusCode() + ") ***");
+
+            String expectedJson = "{\"id\":" + sessionId + "," +
+                "\"startTime\":\"" + startTime + "\"," +
+                "\"endTime\":\"" + endTime + "\"," +
+                "\"counter\":" + counter + "}";
+	        JSONAssert.assertEquals(expectedJson,strResponse, false);
+            EntityUtils.consume(response.getEntity());
+            response.close();
 
             deleteUser(userId);
         } finally {

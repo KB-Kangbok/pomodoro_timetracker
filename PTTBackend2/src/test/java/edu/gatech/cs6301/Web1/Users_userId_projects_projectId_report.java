@@ -503,7 +503,7 @@ public class Users_userId_projects_projectId_report {
             HttpEntity entity;
             String strResponse;
 
-            Assert.assertEquals(200, status);
+            Assert.assertEquals(400, status);
 
             entity = response.getEntity();
             strResponse = EntityUtils.toString(entity);

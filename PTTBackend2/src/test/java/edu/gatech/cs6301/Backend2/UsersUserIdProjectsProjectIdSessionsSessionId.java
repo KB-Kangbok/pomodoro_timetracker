@@ -209,7 +209,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response = updateSession(userId, projectId, sessionId, updatedStartTime, updatedEndTime, counter);
 
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(404, status);
+            Assert.assertEquals(400, status);
             EntityUtils.consume(response.getEntity());
             response.close();
 
@@ -294,7 +294,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response = updateSession(userId, projectId, sessionId, updatedStartTime, updatedEndTime, counter);
 
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(404, status);
+            Assert.assertEquals(400, status);
             EntityUtils.consume(response.getEntity());
             response.close();
             
