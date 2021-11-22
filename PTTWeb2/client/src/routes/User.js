@@ -11,6 +11,8 @@ import { useState, useEffect } from "react";
 import Pomodoro from "../components/Pomodoro";
 import axios from "axios";
 import { apiUrl } from "../config.json";
+import Report from "../components/Report";
+// import DateAdapter from "@mui/lab/AdapterDateFns";
 
 export default function User({
   location: {
@@ -28,6 +30,10 @@ export default function User({
     setSelectedMenu("pomodoro");
   };
 
+  const handleReportSelect = () => {
+    setSelectedMenu("report");
+  };
+
   useEffect(() => {
     const getProjects = async () => {
       const { data } = await axios.get(`${apiUrl}/users/${id}/projects`);
@@ -35,7 +41,7 @@ export default function User({
       setUpdate(false);
     };
     getProjects();
-  }, [update]);
+  }, [update, id]);
 
   return (
     <div
@@ -62,6 +68,12 @@ export default function User({
                 <ListItemText disableTypography primary={"Pomodoro"} />
               </ListItemButton>
             </ListItem>
+
+            <ListItem key={2} disablePadding>
+              <ListItemButton onClick={handleReportSelect}>
+                <ListItemText disableTypography primary={"Report"} />
+              </ListItemButton>
+            </ListItem>
           </List>
         </Grid>
         <Grid item xs alignContent="center">
@@ -71,6 +83,7 @@ export default function User({
           {selectedMenu === "pomodoro" && (
             <Pomodoro id={id} projects={projects} />
           )}
+          {selectedMenu === "report" && <Report id={id} projects={projects} />}
         </Grid>
       </Grid>
     </div>

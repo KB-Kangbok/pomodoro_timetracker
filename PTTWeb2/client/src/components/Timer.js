@@ -20,17 +20,41 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
+const getTime = (time) => {
+  const date = new Date(time);
+  const year = date.getFullYear();
+  const month = "0" + (date.getMonth() + 1);
+  const day = "0" + date.getDate();
+  // Hours part from the timestamp
+  const hours = "0" + date.getHours();
+  // Minutes part from the timestamp;
+  const minutes = "0" + date.getMinutes();
+  // Will display time in 2019-02-19T10:30Z format
+  return (
+    year +
+    "-" +
+    month.substr(-2) +
+    "-" +
+    day.substr(-2) +
+    "T" +
+    hours.substr(-2) +
+    ":" +
+    minutes.substr(-2) +
+    "Z"
+  );
+};
+
 export default function Timer({
   countdown,
   setCountdown,
   isRest,
   setIsRest,
   setIsTimer,
+  setContinueDialog,
+  projectId,
+  setEndTime,
   counter,
   setCounter,
-  sessionId,
-  setSessionId,
-  setContinueDialog,
 }) {
   const initialMin = Math.floor(countdown / 60);
   const initialSec = countdown % 60;
@@ -45,13 +69,11 @@ export default function Timer({
 
   const endOfTimer = (countdown, minute, second) => {
     if (isRest) {
-      setCounter(counter + 1);
-      if (counter === 1) {
-        //create new session and get sessionId and set it inside sessionId using setSessionId
-      } else {
-        //edit session with increased pomodoro counter and end time
+      if (projectId !== "") {
+        setCounter(counter + 1);
+        setEndTime(getTime(Date.now() + 30 * 1000 * 60));
+        setContinueDialog(true);
       }
-      setContinueDialog(true);
       setIsTimer(false);
     } else {
       setIsRest(true);
