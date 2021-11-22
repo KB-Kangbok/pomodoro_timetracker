@@ -144,7 +144,7 @@ public class UsersUserIdProjectsProjectIdReport {
         try {
             CloseableHttpResponse response2 = getReport(1L, 1L, "2019-03-18T20:00Z", "2019-02-18T20:00Z");
             int getStatus = response2.getStatusLine().getStatusCode();
-            Assert.assertEquals(getStatus, 404);
+            Assert.assertEquals(400,getStatus);
             response2.close();
         } finally {
             httpclient.close();

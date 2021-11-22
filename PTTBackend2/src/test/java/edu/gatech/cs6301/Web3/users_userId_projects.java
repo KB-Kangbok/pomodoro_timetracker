@@ -81,7 +81,7 @@ public class users_userId_projects {
         try {
             CloseableHttpResponse response = createProject("2", "project1", "");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
             response.close();
         } finally {
             httpclient.close();

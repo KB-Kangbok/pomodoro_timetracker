@@ -63,7 +63,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
         try {
             CloseableHttpResponse response = putSessionId("10", "1", "1", "2019-02-18T20:00Z", "2019-02-18T20:25Z", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             EntityUtils.consume(response.getEntity());
             response.close();
@@ -82,7 +82,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, "1", "1", "2019-02-18T20:00Z", "2019-02-18T20:25Z", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteUser(createdUserId);
 
@@ -107,7 +107,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, "1", "2019-02-18T20:00Z", "2019-02-18T20:25Z", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -137,7 +137,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "2019-02-18T20:00Z", "2019-02-18T20:25Z", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -167,7 +167,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "", "2019-02-18T20:30Z", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -197,7 +197,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "TIME", "2019-02-18T20:30Z", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -227,7 +227,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "2019-02-18T20:05Z", "", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -257,7 +257,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "2019-02-18T20:05Z", "TIME", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -287,7 +287,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "2019-02-18T20:05Z", "2019-02-18T20:30Z", "1");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -317,7 +317,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "2019-02-18T20:05Z", "2019-02-18T20:30Z", "TEN");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -347,7 +347,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "2019-02-18T20:05Z", "2019-02-18T20:30Z", "-4");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
@@ -377,7 +377,7 @@ public class Users_userId_projects_projectId_sessions_sessionId {
 
             CloseableHttpResponse response = putSessionId(createdUserId, createdProjectId, createdSessionId, "2019-02-18T20:05Z", "2019-02-18T20:30Z", "2");
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             deleteProject(createdUserId, createdProjectId);
             deleteUser(createdUserId);
