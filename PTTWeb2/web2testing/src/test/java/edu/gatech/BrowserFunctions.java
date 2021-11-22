@@ -14,6 +14,7 @@ public class BrowserFunctions {
     public final String LAST_NAME = "last";
     public final String USERNAME = "test@gatech.edu";
     public final String PROJECT = "proj";
+    public final String PROJECT2 = "proj2";
     public final String CHANGE = "change";
     //alert messages
     public final String USER_NOT_FOUND = "User not found";

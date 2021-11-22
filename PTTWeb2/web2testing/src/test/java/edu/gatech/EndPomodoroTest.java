@@ -6,14 +6,14 @@ import org.testng.Assert;
 public class EndPomodoroTest extends BrowserFunctions {
 //User story 7
 
-    @Test(description = "Test to choose to end session after Pomodoro completes", groups = {})
-    public void logProjectAfterEnded() throws Exception {
- 
+    @Test(description = "Test to choose to end session after Pomodoro completes")
+    public void endSessionTest() throws Exception {
+        utils.startPomodoroWithProject(PROJECT);
     }
 
-    @Test(description = "Test to continue session with another Pomodoro ", groups = {}, dependsOnMethods = {})
-    public void beginNewPomodoroInSession() throws Exception {
-
+    @Test(description = "Test to continue session with another Pomodoro ")
+    public void continueSessionTest() throws Exception {
+        utils.startPomodoroWithProject(PROJECT2);
     }
 
     @BeforeClass
@@ -23,7 +23,7 @@ public class EndPomodoroTest extends BrowserFunctions {
         utils.logout();
         utils.login(USERNAME);
         utils.createProject(PROJECT);
-        utils.createSession(PROJECT);
+        utils.createProject(PROJECT2);
     }
 
     @AfterClass

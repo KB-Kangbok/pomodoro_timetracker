@@ -223,7 +223,7 @@ export default function Pomodoro({ id, projects }) {
           style={{ justifyContent: "center", alignContent: "center" }}
         >
           {!isTimer && (
-            <Button onClick={handlePomodoro} variant="outlined">
+            <Button id="start-pomodoro-btn" onClick={handlePomodoro} variant="outlined">
               Start Pomodoro
             </Button>
           )}
@@ -293,6 +293,7 @@ export default function Pomodoro({ id, projects }) {
                 ))}
               </Select>
               <Button
+                id="project-start-btn"
                 style={{ marginTop: 20 }}
                 variant="outlined"
                 onClick={handleStart}
