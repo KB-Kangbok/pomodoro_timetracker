@@ -1,31 +1,7 @@
 package com.example.tejasvedantham.pttmobile2;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
-import static androidx.test.espresso.Espresso.onData;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
-import static com.example.tejasvedantham.pttmobile2.CreateProjectActivity.createProjectInternal;
-import static com.example.tejasvedantham.pttmobile2.CreateUserActivity.createUserInternal;
-import static com.example.tejasvedantham.pttmobile2.UserListAdapter.CONFIRM_MSG;
-
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.anything;
-
 import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
-import android.view.WindowManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,25 +11,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import androidx.test.espresso.Root;
-import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.BoundedMatcher;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
-
-import junit.framework.TestCase;
-
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,9 +22,21 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-@RunWith(AndroidJUnit4.class)
+import androidx.test.espresso.IdlingPolicies;
+import androidx.test.espresso.intent.Intents;
+import androidx.test.rule.ActivityTestRule;
 
-public class StartPomodoroStep1ActivityTest extends TestCase {
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+public class StartPomodoroStep2ActivityTest {
 
     private String projectName = "MyProject";
 
@@ -73,10 +46,58 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
     public String username = "";
     public String projectId = "";
 
+
+
     @Test
-    public void TestProjectShowsInProjectListSpinnerPomodoro() {
-        ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
-                new ActivityTestRule<>(StartPomodoroStep1Activity.class, false, false);
+    public void TestPomodoroTimerFinishYes() {
+        ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
+                new ActivityTestRule<>(StartPomodoroStep2Activity.class, false, false);
+        removeAllCurrent();
+        createDummyUser();
+        try
+        {
+            Thread.sleep(1800);
+        }
+        catch(InterruptedException e)
+        {
+
+        }
+
+        List<Project> projects = new ArrayList<>();
+        projects.add(new Project("MyProject", projectId));
+        Intents.init();
+        Intent intent = new Intent();
+        intent.putExtra("id", id);
+        intent.putExtra("projects", (Serializable)projects);
+        intent.putExtra("projectId", "-1");
+        intent.putExtra("projectName", "No Associated Project");
+        StartPomodoroStep2.launchActivity(intent);
+
+        StartPomodoroStep2.getActivity().countDownTimeInSeconds = 10;
+        onView(withId(R.id.startPomodoroButton)).perform(click());
+        try
+        {
+            Thread.sleep(10000);
+        }
+        catch(InterruptedException e)
+        {
+
+        }
+
+        onView(withText(android.R.string.yes)).check(matches(isDisplayed()));
+        onView(withText(android.R.string.yes)).perform(click());
+        onView(withId(R.id.numPomodorosText)).check(matches(withText("Pomodoros in this session: 1")));
+
+        deleteDummyUser();
+        Intents.release();
+
+
+    }
+
+    @Test
+    public void TestPomodoroTimerFinishNo() {
+        ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
+                new ActivityTestRule<>(StartPomodoroStep2Activity.class, false, false);
         removeAllCurrent();
         createDummyUser();
         try
@@ -88,34 +109,40 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
 
         }
         addProjectUser("MyProject");
-        try
-        {
-            Thread.sleep(1800);
-        }
-        catch(InterruptedException e)
-        {
-
-        }
         List<Project> projects = new ArrayList<>();
         projects.add(new Project("MyProject", projectId));
         Intents.init();
         Intent intent = new Intent();
         intent.putExtra("id", id);
         intent.putExtra("projects", (Serializable)projects);
-        StartPomodoroStep1.launchActivity(intent);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("projectName", "MyProject");
+        StartPomodoroStep2.launchActivity(intent);
 
+        StartPomodoroStep2.getActivity().countDownTimeInSeconds = 10;
+        onView(withId(R.id.startPomodoroButton)).perform(click());
+        try
+        {
+            Thread.sleep(10000);
+        }
+        catch(InterruptedException e)
+        {
 
-        onView(withId(R.id.project_spinner)).perform(click());
-        onData(anything()).atPosition(1).perform(click());
-        onView(withId(R.id.project_spinner)).check(matches(withSpinnerText("MyProject")));
+        }
+
+        onView(withText("No")).check(matches(isDisplayed()));
+        onView(withText("No")).perform(click());
+        intended(hasComponent(UserHomeActivity.class.getName()));
+
         deleteDummyUser();
         Intents.release();
     }
 
     @Test
-    public void TestNoProjectShowsInProjectListSpinnerPomodoro() {
-        ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
-                new ActivityTestRule<>(StartPomodoroStep1Activity.class, false, false);
+    public void TestPomodoroTimerStopWithProject(){
+        ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
+                new ActivityTestRule<>(StartPomodoroStep2Activity.class, false, false);
+
         removeAllCurrent();
         createDummyUser();
         try
@@ -127,34 +154,33 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
 
         }
         addProjectUser("MyProject");
-        try
-        {
-            Thread.sleep(1800);
-        }
-        catch(InterruptedException e)
-        {
-
-        }
         List<Project> projects = new ArrayList<>();
         projects.add(new Project("MyProject", projectId));
         Intents.init();
         Intent intent = new Intent();
         intent.putExtra("id", id);
         intent.putExtra("projects", (Serializable)projects);
-        StartPomodoroStep1.launchActivity(intent);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("projectName", "MyProject");
+        StartPomodoroStep2.launchActivity(intent);
+        StartPomodoroStep2.getActivity().countDownTimeInSeconds = 18;
 
+        onView(withId(R.id.startPomodoroButton)).perform(click());
+        onView(withId(R.id.stopButton)).perform(click());
 
-        onView(withId(R.id.project_spinner)).perform(click());
-        onData(anything()).atPosition(0).perform(click());
-        onView(withId(R.id.project_spinner)).check(matches(withSpinnerText("No Associated Project")));
+        onView(withText("Would you like to log this partial Pomodoro to this Project?")).check(matches(isDisplayed()));
+        onView(withText("No")).check(matches(isDisplayed()));
+        onView(withText("No")).perform(click());
+        intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
         Intents.release();
+
     }
 
     @Test
-    public void TestStartPomodoroButtonWithNoProject() {
-        ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
-                new ActivityTestRule<>(StartPomodoroStep1Activity.class, false, false);
+    public void TestPomodoroTimerStopWithNoProject(){
+        ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
+                new ActivityTestRule<>(StartPomodoroStep2Activity.class, false, false);
 
         removeAllCurrent();
         createDummyUser();
@@ -173,24 +199,27 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         Intent intent = new Intent();
         intent.putExtra("id", id);
         intent.putExtra("projects", (Serializable)projects);
+        intent.putExtra("projectId", "-1");
+        intent.putExtra("projectName", "No Associated Project");
+        StartPomodoroStep2.launchActivity(intent);
+        StartPomodoroStep2.getActivity().countDownTimeInSeconds = 18;
 
-        StartPomodoroStep1.launchActivity(intent);
+        onView(withId(R.id.startPomodoroButton)).perform(click());
+        onView(withId(R.id.stopButton)).perform(click());
 
-        onView(withId(R.id.project_spinner)).perform(click());
-        onData(anything()).atPosition(0).perform(click());
-        onView(withId(R.id.start_pomodoro_to_step_2_button)).perform(click());
 
-        // Check activity change
-        intended(hasComponent(StartPomodoroStep2Activity.class.getName()));
-        onView(withId(R.id.projectNameText)).check(matches(withText("No Associated Project")));
+        intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
         Intents.release();
+
     }
 
     @Test
-    public void TestStartPomodoroButtonWithProject() {
-        ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
-                new ActivityTestRule<>(StartPomodoroStep1Activity.class, false, false);
+    public void TestPomodoroTimerStopLogPartial() {
+
+
+        ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
+                new ActivityTestRule<>(StartPomodoroStep2Activity.class, false, false);
 
         removeAllCurrent();
         createDummyUser();
@@ -202,31 +231,33 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         {
 
         }
-
+        addProjectUser("MyProject");
         List<Project> projects = new ArrayList<>();
         projects.add(new Project("MyProject", projectId));
         Intents.init();
         Intent intent = new Intent();
         intent.putExtra("id", id);
         intent.putExtra("projects", (Serializable)projects);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("projectName", "MyProject");
+        StartPomodoroStep2.launchActivity(intent);
+        StartPomodoroStep2.getActivity().countDownTimeInSeconds = 18;
 
-        StartPomodoroStep1.launchActivity(intent);
+        onView(withId(R.id.startPomodoroButton)).perform(click());
+        onView(withId(R.id.stopButton)).perform(click());
 
-        onView(withId(R.id.project_spinner)).perform(click());
-        onData(anything()).atPosition(1).perform(click());
-        onView(withId(R.id.start_pomodoro_to_step_2_button)).perform(click());
-
-        // Check activity change
-        intended(hasComponent(StartPomodoroStep2Activity.class.getName()));
-        onView(withId(R.id.projectNameText)).check(matches(withText("MyProject")));
+        onView(withText("Would you like to log this partial Pomodoro to this Project?")).check(matches(isDisplayed()));
+        onView(withText("Yes")).check(matches(isDisplayed()));
+        onView(withText("Yes")).perform(click());
+        intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
         Intents.release();
     }
-
     @Test
-    public void TestStartPomodoroButtonWithProjectIntializeNumberProjects() {
-        ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
-                new ActivityTestRule<>(StartPomodoroStep1Activity.class, false, false);
+    public void TestPomodoroTimerStopNoLogPartial() {
+        // Yes to log partial
+        ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
+                new ActivityTestRule<>(StartPomodoroStep2Activity.class, false, false);
 
         removeAllCurrent();
         createDummyUser();
@@ -238,29 +269,28 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         {
 
         }
-
+        addProjectUser("MyProject");
         List<Project> projects = new ArrayList<>();
         projects.add(new Project("MyProject", projectId));
         Intents.init();
         Intent intent = new Intent();
         intent.putExtra("id", id);
         intent.putExtra("projects", (Serializable)projects);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("projectName", "MyProject");
+        StartPomodoroStep2.launchActivity(intent);
+        StartPomodoroStep2.getActivity().countDownTimeInSeconds = 18;
 
-        StartPomodoroStep1.launchActivity(intent);
+        onView(withId(R.id.startPomodoroButton)).perform(click());
+        onView(withId(R.id.stopButton)).perform(click());
 
-        onView(withId(R.id.project_spinner)).perform(click());
-        onData(anything()).atPosition(1).perform(click());
-        onView(withId(R.id.start_pomodoro_to_step_2_button)).perform(click());
-
-        // Check activity change
-        intended(hasComponent(StartPomodoroStep2Activity.class.getName()));
-        onView(withId(R.id.projectNameText)).check(matches(withText("MyProject")));
-        onView(withId(R.id.numPomodorosText)).check(matches(withText("Pomodoros in this session: 0")));
+        onView(withText("Would you like to log this partial Pomodoro to this Project?")).check(matches(isDisplayed()));
+        onView(withText("No")).check(matches(isDisplayed()));
+        onView(withText("No")).perform(click());
+        intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
         Intents.release();
     }
-
-
 
     private void removeAllCurrent() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -461,6 +491,5 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         }
         return email;
     }
-
 
 }

@@ -120,7 +120,7 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
                                 //Start new pomodoro
                             }
                         })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -198,7 +198,13 @@ public class StartPomodoroStep2Activity extends AppCompatActivity {
     }
     public void stopPomodoro(View view) {
         timer.cancel();
-
+        if (projectId.equals("-1")) {
+            Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+            intent.putExtra("id", userId);
+            intent.putExtra("projects", (Serializable) projectList);
+            startActivity(intent);
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(StartPomodoroStep2Activity.this)
                 .setTitle("Stop Pomodoro")
                 .setMessage("Would you like to log this partial Pomodoro to this Project?")
