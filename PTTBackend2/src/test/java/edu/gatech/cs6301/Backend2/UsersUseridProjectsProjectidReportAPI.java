@@ -186,7 +186,7 @@ public class UsersUseridProjectsProjectidReportAPI {
     }
 
     @Test
-    // Purpose: test invalid project id not found
+    // Purpose: test invalid project id not found - return 404
     public void pttTest6() throws Exception {
         httpclient = HttpClients.createDefault();
         deleteUsers();
@@ -202,7 +202,7 @@ public class UsersUseridProjectsProjectidReportAPI {
             int status = response.getStatusLine().getStatusCode();
             HttpEntity entity;
             String strResponse;
-            if (status != 400) {
+            if (status != 404) {
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
             response.close();

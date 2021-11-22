@@ -117,7 +117,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response.close();
 
 	        //user not found
-            String userId = createdUserId + createdUserId + createdUserId;
+            String userId = createdUserId + createdUserId + createdUserId + "xyz";
 
             String updatedStartTime = "2021-10-14T10:00Z";
             String updatedEndTime = "2021-10-14T10:00Z";
@@ -201,7 +201,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response.close();
 
             //projectId not found
-            String projectId =  createdProjectId + createdProjectId + createdProjectId;
+            String projectId =  "-" + createdProjectId + createdProjectId + createdProjectId;
 
             String updatedStartTime = "2021-10-14T10:00Z";
             String updatedEndTime = "2021-10-14T10:00Z";
@@ -209,7 +209,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response = updateSession(userId, projectId, sessionId, updatedStartTime, updatedEndTime, counter);
 
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(400, status);
+            Assert.assertEquals(404, status);
             EntityUtils.consume(response.getEntity());
             response.close();
 
@@ -286,7 +286,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response.close();
 
             //sessionId not found
-            sessionId = sessionId + sessionId + sessionId;
+            sessionId = "-" + sessionId + sessionId + sessionId;
 
             String updatedStartTime = "2021-10-14T10:00Z";
             String updatedEndTime = "2021-10-14T10:00Z";
@@ -294,7 +294,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response = updateSession(userId, projectId, sessionId, updatedStartTime, updatedEndTime, counter);
 
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(400, status);
+            Assert.assertEquals(404, status);
             EntityUtils.consume(response.getEntity());
             response.close();
             
