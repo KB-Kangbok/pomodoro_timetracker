@@ -20,30 +20,10 @@
         </TextView>
 
         <TextView
-            android:id="@+id/spinnerTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/step1Title"
-            android:text="Select Project"
-            android:layout_margin="10dp"
-            android:textSize="16dp">
-
-        </TextView>
-
-        <Spinner
-            android:id="@+id/project_report_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerTitle"
-            android:layout_margin="10dp">
-
-        </Spinner>
-
-        <TextView
             android:id="@+id/startText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/project_report_spinner"
+            android:layout_below="@+id/step1Title"
             android:text="Start Time"
             android:layout_margin="10dp"
             android:textSize="16dp">
@@ -81,16 +61,33 @@
             android:timePickerMode="spinner">
         </TimePicker>
 
+        <CheckBox
+            android:id="@+id/completedPomodorosCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Include Completed Pomodoros"
+            android:layout_below="@+id/endPicker"
+            android:onClick="onCheckboxClicked">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/totalHoursCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Include Total Hours Worked on Proejct"
+            android:layout_below="@+id/completedPomodorosCheckbox"
+            android:onClick="onCheckboxClicked">
+
+        </CheckBox>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/totalHoursCheckbox"
             android:onClick="generateReport"
-            android:text="Generate Report">
+            android:text="Generate Report"
+            android:layout_margin="10dp">
 
         </Button>
 

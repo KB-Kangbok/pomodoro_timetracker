@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
@@ -41,7 +42,6 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
 
     private static final String LOG_TAG = UserHomeActivity.class.getSimpleName();
 
-    public Spinner projectSpinner;
     public TimePicker startTime;
     public TimePicker endTime;
 
@@ -127,5 +127,29 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+
+        switch (view.getId()) {
+
+            case R.id.completedPomodorosCheckbox:
+                if (checked) {
+                    //TODO: If completed Pomodoros is checked
+                } else {
+                    //TODO: If completed Pomodoros is NOT checked
+                }
+                break;
+
+            case R.id.totalHoursCheckbox:
+                if (checked) {
+                    //TODO: If total hours worked on project is checked
+                }
+                else {
+                    //TODO: If total hours worked on project is NOT checked
+                }
+                break;
+        }
     }
 }
