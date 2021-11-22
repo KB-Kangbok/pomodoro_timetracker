@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/generateReportScrollView"
+<ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,13 +12,10 @@
             android:id="@+id/step1Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:text="Generate Report Step 1"
-            android:textSize="36dp">
+            android:textSize="36dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp">
 
         </TextView>
 
@@ -27,12 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/step1Title"
-<<<<<<< HEAD
-=======
             android:text="Start Date and Time"
->>>>>>> d4f26d8e347954868be2ca2a550b1cdaa4338b07
             android:layout_margin="10dp"
-            android:text="Start Time"
             android:textSize="16dp">
 
         </TextView>
@@ -61,16 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/startPicker"
-<<<<<<< HEAD
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="End Time"
-=======
             android:text="End Date and Time"
             android:layout_margin="10dp"
->>>>>>> d4f26d8e347954868be2ca2a550b1cdaa4338b07
             android:textSize="16dp">
 
         </TextView>
@@ -90,7 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/endDatePicker"
             android:layout_margin="10dp"
-            android:timePickerMode="spinner"></TimePicker>
+            android:timePickerMode="spinner">
+        </TimePicker>
 
         <CheckBox
             android:id="@+id/completedPomodorosCheckbox"

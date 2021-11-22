@@ -92,12 +92,11 @@ public class GenerateReportActivityTest extends TestBase {
 
     @Test
     public void TestNoSessionInTimeRange() {
-        onView(withId(R.id.startPicker)).perform(setTime(12, 0));
-        onView(withId(R.id.endPicker)).perform(setTime(12, 30));
+        onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(12, 0));
+        onView(withId(R.id.endPicker)).perform(scrollTo(), setTime(12, 30));
         HashSet<Integer> exptectedSessionIndex = new HashSet<>();
 
-        onView(withId(R.id.generateReportScrollView)).perform(swipeUp());
-        onView(withId(R.id.generateReportButton)).perform(click());
+        onView(withId(R.id.generateReportButton)).perform(scrollTo(), click());
 
         intended(hasComponent(GenerateReportStep2Activity.class.getName()));
         validateReport(exptectedSessionIndex, false, false);
@@ -105,15 +104,14 @@ public class GenerateReportActivityTest extends TestBase {
 
     @Test
     public void TestSessionsReturnedInTimeRange() {
-        onView(withId(R.id.startPicker)).perform(setTime(13, 10));
-        onView(withId(R.id.endPicker)).perform(setTime(14, 50));
+        onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(13, 10));
+        onView(withId(R.id.endPicker)).perform(scrollTo(), setTime(14, 50));
         HashSet<Integer> exptectedSessionIndex = new HashSet<>();
         // if a timeframe does not fully contain a session, the system should still include the whole session
         exptectedSessionIndex.add(0);
         exptectedSessionIndex.add(1);
 
-        onView(withId(R.id.generateReportScrollView)).perform(swipeUp());
-        onView(withId(R.id.generateReportButton)).perform(click());
+        onView(withId(R.id.generateReportButton)).perform(scrollTo(), click());
 
         intended(hasComponent(GenerateReportStep2Activity.class.getName()));
         validateReport(exptectedSessionIndex, false, false);
@@ -121,8 +119,8 @@ public class GenerateReportActivityTest extends TestBase {
 
     @Test
     public void TestIncludeCompletedPomodorosOption() {
-        onView(withId(R.id.startPicker)).perform(setTime(13, 10));
-        onView(withId(R.id.endPicker)).perform(setTime(14, 50));
+        onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(13, 10));
+        onView(withId(R.id.endPicker)).perform(scrollTo(), setTime(14, 50));
         HashSet<Integer> exptectedSessionIndex = new HashSet<>();
         // if a timeframe does not fully contain a session, the system should still include the whole session
         exptectedSessionIndex.add(0);
@@ -130,8 +128,7 @@ public class GenerateReportActivityTest extends TestBase {
 
         onView(withId(R.id.completedPomodorosCheckbox)).check(matches(isNotChecked())).perform(scrollTo(), click());
 
-        onView(withId(R.id.generateReportScrollView)).perform(swipeUp());
-        onView(withId(R.id.generateReportButton)).perform(click());
+        onView(withId(R.id.generateReportButton)).perform(scrollTo(), click());
 
         intended(hasComponent(GenerateReportStep2Activity.class.getName()));
         validateReport(exptectedSessionIndex, true, false);
@@ -139,8 +136,8 @@ public class GenerateReportActivityTest extends TestBase {
 
     @Test
     public void TestIncludeTotalHoursWorkedOnProjectOption() {
-        onView(withId(R.id.startPicker)).perform(setTime(13, 10));
-        onView(withId(R.id.endPicker)).perform(setTime(14, 50));
+        onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(13, 10));
+        onView(withId(R.id.endPicker)).perform(scrollTo(), setTime(14, 50));
         HashSet<Integer> exptectedSessionIndex = new HashSet<>();
         // if a timeframe does not fully contain a session, the system should still include the whole session
         exptectedSessionIndex.add(0);
@@ -148,8 +145,7 @@ public class GenerateReportActivityTest extends TestBase {
 
         onView(withId(R.id.totalHoursCheckbox)).check(matches(isNotChecked())).perform(scrollTo(), click());
 
-        onView(withId(R.id.generateReportScrollView)).perform(swipeUp());
-        onView(withId(R.id.generateReportButton)).perform(click());
+        onView(withId(R.id.generateReportButton)).perform(scrollTo(), click());
 
         intended(hasComponent(GenerateReportStep2Activity.class.getName()));
         validateReport(exptectedSessionIndex, false, true);
