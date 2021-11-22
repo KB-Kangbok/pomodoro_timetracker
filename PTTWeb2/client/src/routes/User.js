@@ -58,19 +58,19 @@ export default function User({
         <Grid item xs={2} alignItems="center">
           <List sx={{ width: "100%", alignContent: "center" }}>
             <ListItem key={0} disablePadding>
-              <ListItemButton onClick={handleProjectSelect}>
+              <ListItemButton id="project-btn" onClick={handleProjectSelect}>
                 <ListItemText disableTypography primary={"Manage Project"} />
               </ListItemButton>
             </ListItem>
 
             <ListItem key={1} disablePadding>
-              <ListItemButton onClick={handlePomodoroSelect}>
+              <ListItemButton id="pomodoro-btn" onClick={handlePomodoroSelect}>
                 <ListItemText disableTypography primary={"Pomodoro"} />
               </ListItemButton>
             </ListItem>
 
             <ListItem key={2} disablePadding>
-              <ListItemButton onClick={handleReportSelect}>
+              <ListItemButton id="report-btn" onClick={handleReportSelect}>
                 <ListItemText disableTypography primary={"Report"} />
               </ListItemButton>
             </ListItem>

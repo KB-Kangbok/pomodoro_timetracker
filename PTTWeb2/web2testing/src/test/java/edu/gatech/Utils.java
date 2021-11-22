@@ -179,9 +179,21 @@ public class Utils {
     //     create.click();
     // }
 
-    public void startPomodoroWithProject(String projName) throws Exception {
+    //tabName: project, pomodoro, report
+    public void clickUserTab(String tabName) throws Exception {
+        WebElement btn = driver.findElement(By.id(tabName.toLowerCase() + "-btn"));
+        btn.click();
+    }
+
+    public String clickStartPomodoro() throws Exception {
         WebElement btn = driver.findElement(By.id("start-pomodoro-btn"));
         btn.click();
+
+        return getAlertMessage();
+    }
+
+    public void startPomodoroWithProject(String projName) throws Exception {
+        clickStartPomodoro();
         Thread.sleep(100);
         WebElement select = driver.findElement(By.id("proj-list"));
         select.click();

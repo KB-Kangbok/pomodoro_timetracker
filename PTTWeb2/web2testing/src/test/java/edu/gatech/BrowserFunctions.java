@@ -21,6 +21,8 @@ public class BrowserFunctions {
     public final String[] SUCCESSFUL_UPDATE = new String[]{"User \"", "\" is successfully edited."};
     public final String[] USER_ALREADY_EXISTS = new String[]{"User with email ", " already exists!"};
     public final String[] PROJ_ALREADY_EXISTS = new String[]{"Project ", " already exists!"};
+    public final String START_POMODORO = "Do you want to associate Pomodoro with project?";
+    public final String NO_PROJECT_TO_BE_ASSOCIATED = "You don't have any projects to associate!";
 
     public static WebDriver driver;
     public static Utils utils;
