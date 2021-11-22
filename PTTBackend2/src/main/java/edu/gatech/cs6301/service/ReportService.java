@@ -18,6 +18,7 @@ import edu.gatech.cs6301.repository.ProjectRepository;
 //>>>>>>> origin/backend-jipeng:PTTBackend2/src/main/java/edu/gatech/cs6301/service/ReportService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class ReportService {
         Integer projectid = Integer.parseInt(pathProjectid);
         Timestamp startingTime = DateTimeConverter.toSQLTimestampUTC(pathStartingtime);
         Timestamp endingTime = DateTimeConverter.toSQLTimestampUTC(pathEndingtime);
+        if(startingTime.after(endingTime)){
+            throw new IllegalArgumentException("Ending time is earlier than starting time.");
+        }
         if (projectRepository.existsProjectByUseridAndId(userid, projectid)) {
             List<Session> sessionList = sessionRepository.getSessionReports(userid, projectid, startingTime, endingTime);
             return generateReportFromSessionList(sessionList, includeCompletedPomodoros, includeTotalHoursWorkedOnProject);
