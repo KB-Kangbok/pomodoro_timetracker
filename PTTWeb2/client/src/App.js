@@ -5,7 +5,7 @@ import Admin from "./routes/Admin";
 import User from "./routes/User";
 import Navigation from "./components/Navigation";
 import { useState } from "react";
-import TimeCheck from "./routes/TimeCheck";
+import Debug from "./routes/Debug";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -26,7 +26,7 @@ function App() {
         />
         <Route path="/admin" exact={true} component={Admin} />
         <Route path="/user" exact={true} component={User} />
-        <Route path="/debug" component={TimeCheck} />
+        <Route path="/debug" component={Debug} />
       </HashRouter>
     </div>
   );

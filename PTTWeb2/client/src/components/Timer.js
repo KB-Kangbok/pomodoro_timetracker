@@ -20,7 +20,18 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-function Timer({ countdown, setCountdown, isRest, setIsRest, setIsTimer }) {
+export default function Timer({
+  countdown,
+  setCountdown,
+  isRest,
+  setIsRest,
+  setIsTimer,
+  counter,
+  setCounter,
+  sessionId,
+  setSessionId,
+  setContinueDialog,
+}) {
   const initialMin = Math.floor(countdown / 60);
   const initialSec = countdown % 60;
   const [timerMinute, setMinute] = useState(initialMin);
@@ -34,6 +45,13 @@ function Timer({ countdown, setCountdown, isRest, setIsRest, setIsTimer }) {
 
   const endOfTimer = (countdown, minute, second) => {
     if (isRest) {
+      setCounter(counter + 1);
+      if (counter === 1) {
+        //create new session and get sessionId and set it inside sessionId using setSessionId
+      } else {
+        //edit session with increased pomodoro counter and end time
+      }
+      setContinueDialog(true);
       setIsTimer(false);
     } else {
       setIsRest(true);
@@ -63,5 +81,3 @@ function Timer({ countdown, setCountdown, isRest, setIsRest, setIsTimer }) {
     </div>
   );
 }
-
-export default Timer;

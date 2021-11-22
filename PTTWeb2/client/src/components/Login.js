@@ -5,7 +5,7 @@ import axios from "axios";
 import { apiUrl } from "../config.json";
 import { useEffect, useState } from "react";
 
-function Login({ username, handleChange, setIsLogin }) {
+export default function Login({ username, handleChange, setIsLogin }) {
   let history = useHistory();
   const [users, setUsers] = useState([]);
   useEffect(() => {
@@ -57,7 +57,13 @@ function Login({ username, handleChange, setIsLogin }) {
             value={username}
             onChange={handleChange}
           />
-          <Button id="login-btn" type="submit" color="primary" fullWidth variant="contained">
+          <Button
+            id="login-btn"
+            type="submit"
+            color="primary"
+            fullWidth
+            variant="contained"
+          >
             Sign in
           </Button>
         </form>
@@ -65,5 +71,3 @@ function Login({ username, handleChange, setIsLogin }) {
     </Grid>
   );
 }
-
-export default Login;
