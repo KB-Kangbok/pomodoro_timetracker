@@ -89,7 +89,7 @@ export default function Timer({
     if (time >= 0) {
       updateTime(time, minute, second);
     } else {
-      endOfTimer(3, 0, 3);
+      endOfTimer(2, 0, 2);
     }
   }, 1000);
 
