@@ -200,9 +200,11 @@ public class PTTBackendTestBase {
     public CloseableHttpResponse addSession(String userId, String projectId, String startTime, String endTime, int counter) throws IOException {
         HttpPost httpRequest = new HttpPost(baseUrl + "/users/" + userId + "/projects/" + projectId + "/sessions");
         httpRequest.addHeader("accept", "application/json");
-        StringEntity input = new StringEntity("{\"startTime\":\"" + startTime + "\"," +
-                "{\"endTime\":\"" + endTime + "\"," +
-                "{\"counter\":\"" + counter + "\",");
+        StringEntity input = new StringEntity(
+                "{\"startTime\":\"" + startTime + "\"," +
+                        "\"endTime\":\"" + endTime + "\"," +
+                        "\"counter\":0}"
+        );
         input.setContentType("application/json");
         httpRequest.setEntity(input);
 
@@ -216,9 +218,11 @@ public class PTTBackendTestBase {
     public CloseableHttpResponse updateSession(String userId, String projectId, String sessionId, String startTime, String endTime, int counter) throws IOException {
         HttpPut httpRequest = new HttpPut(baseUrl + "/users/" + userId + "/projects/" + projectId + "/sessions/" + sessionId);
         httpRequest.addHeader("accept", "application/json");
-        StringEntity input = new StringEntity("{\"startTime\":\"" + startTime + "\"," +
-                "{\"endTime\":\"" + endTime + "\"," +
-                "{\"counter\":\"" + counter + "\",");
+        StringEntity input = new StringEntity(
+                "{\"startTime\":\"" + startTime + "\"," +
+                        "\"endTime\":\"" + endTime + "\"," +
+                        "\"counter\":" + counter + "}"
+        );
         input.setContentType("application/json");
         httpRequest.setEntity(input);
 
