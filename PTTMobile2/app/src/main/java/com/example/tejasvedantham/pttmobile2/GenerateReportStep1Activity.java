@@ -91,10 +91,8 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
 
         String startTimerFormat;
         String endTimeFormat;
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        startTimerFormat = formatter.format(date) + "T" + startHour + ":" + startMinute + "Z";
-        endTimeFormat = formatter.format(date) + "T" + endHour + ":" + endMinute + "Z";
+        startTimerFormat = String.format("%s-%s-%sT%s:%sZ", startYear, startMonth+1, startDay, startHour, startMinute);
+        endTimeFormat = String.format("%s-%s-%sT%s:%sZ", endYear, endMonth+1, endDay, endHour, endMinute);
         Log.d(LOG_TAG, String.format("start time: %s, end time: %s", startTimerFormat, endTimeFormat));
 
         //TODO: Query backend for projects in this timeframe

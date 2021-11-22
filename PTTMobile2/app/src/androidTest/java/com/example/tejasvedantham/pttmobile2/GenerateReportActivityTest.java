@@ -75,10 +75,6 @@ public class GenerateReportActivityTest extends TestBase {
             session.id = sessionId;
         }
 
-        Log.d(LOG_TAG, String.format("user: %s", user));
-        Log.d(LOG_TAG, String.format("project: %s", project));
-        Log.d(LOG_TAG, String.format("sessions: %s", testSessionList));
-
         intent = new Intent();
         intent.putExtra("userId", user.id);
         intent.putExtra("project", project);
