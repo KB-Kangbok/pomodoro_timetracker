@@ -28,8 +28,9 @@ export default function Debug({
   const [input, setInput] = useState("");
   const [update, setUpdate] = useState(false);
   const [startedSession, setStartedSession] = useState(false);
-  const [clickcStartSession, setClickcStartSession] = useState(false);
+  const [clickStartSession, setClickStartSession] = useState(false);
   const [countdown, setCountdown] = useState(300);
+  const [sessionEnded, setEndedSession] = useState(false);
 
   useEffect(() => {
     const getProjects = async () => {
@@ -53,11 +54,11 @@ export default function Debug({
   };
 
   const handleClose2 = () => {
-    setClickcStartSession(false);
+    setClickStartSession(false);
   };
 
   const handleClickStartSession = () => {
-    setClickcStartSession(true);
+    setClickStartSession(true);
     if (selectedProject.id != null) {
       setStartedSession(true);
     }
@@ -122,7 +123,7 @@ export default function Debug({
 
   const handleSession = async () => {
     setStartedSession(true);
-    setClickcStartSession(false);
+    setClickStartSession(false);
     // try {
     //   //delete later - handled in Session.js
     //   const res = await axios.post(
@@ -141,6 +142,28 @@ export default function Debug({
     //     alert(`Bad request`);
     //   }
     // }
+  };
+
+  const endSession = async () => {
+    setEndedSession(true);
+    const sessions = await axios.post(
+      `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`
+    );
+    // not sure if this is the correct way
+    this.setSession({
+      startTime: sessions.data[0].startTime,
+      counter: sessions.data.length,
+      endTime: sessions.data[sessions.data.length - 1].endTime,
+    });
+  };
+
+  const continueSession = async () => {
+    const sessions = await axios.get(
+      `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`
+    );
+    sessions.data.counter += 1;
+    setClickStartSession(true);
+    setStartedSession(true);
   };
 
   const gridStyle = {
@@ -225,9 +248,9 @@ export default function Debug({
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            This project has an associated pomodoro(s). Deleting the project
-            will result in losing all information about the pomodoro(s). Do you
-            still want to delete this project?
+            This project has associated pomodoro(s). Deleting the project will
+            result in losing all information about the pomodoro(s). Do you still
+            want to delete this project?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -239,8 +262,9 @@ export default function Debug({
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
-        open={selectedProject.id == null && clickcStartSession}
+        open={selectedProject.id == null && clickStartSession}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -260,6 +284,30 @@ export default function Debug({
           </Button>
           <Button id="dialog-cancel-2" onClick={handleClose2} autoFocus>
             Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={selectedProject.id != null && sessionEnded}
+        onClose={handleClose}
+        aria-labelledby="alert-session-finished"
+        aria-describedby="alert-session-finished-msg"
+      >
+        <DialogTitle id="alert-session-finished">
+          You have finished a Pomodoro!
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-session-finished-msg">
+            Would you like to start another Pomodoro for this project?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button id="dialog-yes" onClick={continueSession}>
+            Yes
+          </Button>
+          <Button id="dialog-no" onClick={endSession}>
+            No
           </Button>
         </DialogActions>
       </Dialog>
