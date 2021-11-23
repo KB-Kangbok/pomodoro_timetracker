@@ -69,10 +69,10 @@ public class StartPomodoroTest extends BrowserFunctions {
         utils.createProject(PROJECT);
     }
 
-    @AfterGroups("clickOk")
-    public void clickOk() throws Exception {
-        utils.clickButton("ok-btn", true);
-    }
+    // @AfterGroups("clickOk")
+    // public void clickOk() throws Exception {
+    //     utils.clickButton("ok-btn", true);
+    // }
 
     @AfterMethod
     public void clickStopPomodoro() throws Exception {
