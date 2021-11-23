@@ -11,12 +11,27 @@ public class EndPomodoroTest extends BrowserFunctions {
         utils.clickStartPomodoro();
         utils.selectProjectForPomodoro(PROJECT);
 
+        Thread.sleep(POMODORO_DURATION);
+        Assert.assertEquals(utils.findContinueDialogMsg().getText(), CONTINUE_POMODORO);
+
+        utils.clickStopBtn();
+        // timer not visible
+        // Thread.sleep(POMODORO_DURATION);
     }
 
     @Test(description = "Test to continue session with another Pomodoro ")
     public void continueSessionTest() throws Exception {
         utils.clickStartPomodoro();
-        utils.selectProjectForPomodoro(PROJECT2);    }
+        utils.selectProjectForPomodoro(PROJECT2);
+        
+        Thread.sleep(POMODORO_DURATION);
+        Assert.assertEquals(utils.findContinueDialogMsg().getText(), CONTINUE_POMODORO); 
+
+        utils.clickContinueBtn();
+        Thread.sleep(POMODORO_DURATION);
+
+        utils.clickStopBtn();
+    }
 
     @BeforeClass
     public void setup() throws Exception {
@@ -24,6 +39,8 @@ public class EndPomodoroTest extends BrowserFunctions {
         utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
         utils.logout();
         utils.login(USERNAME);
+        utils.activateTestButton();
+        utils.clickUserTab("pomodoro");
         utils.createProject(PROJECT);
         utils.createProject(PROJECT2);
     }

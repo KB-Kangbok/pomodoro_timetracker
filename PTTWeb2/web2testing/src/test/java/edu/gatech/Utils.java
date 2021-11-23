@@ -40,6 +40,12 @@ public class Utils {
         Thread.sleep(200);
     }
 
+    public void activateTestButton() throws Exception{
+        WebElement test = driver.findElement(By.id("toggle-test-btn"));
+        test.click();
+        Thread.sleep(100);
+    }
+
     public String createUser(String firstname, String lastname, String username) throws Exception {
         WebElement fname = driver.findElement(By.id("fname-input"));
         WebElement lname = driver.findElement(By.id("lname-input"));
