@@ -31,9 +31,11 @@ function App() {
           render={(props) => <Home {...props} setIsLogin={setIsLogin} />}
         />
         <Route path="/admin" exact={true} component={Admin} />
-        <Route path="/user" exact={true}>
-          <User isTest={isTest} />
-        </Route>
+        <Route
+          path="/user"
+          exact={true}
+          render={(props) => <User {...props} isTest={isTest} />}
+        />
         <Route path="/debug" component={Debug} />
       </HashRouter>
     </div>

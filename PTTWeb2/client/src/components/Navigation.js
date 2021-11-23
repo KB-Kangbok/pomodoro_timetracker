@@ -36,6 +36,7 @@ function Navigation({ isLogin, setIsLogin, isTest, setIsTest }) {
           </div>
         </Typography>
         <div style={{ marginLeft: "auto" }}>
+          <button onClick={toggleTest}>test</button>
           {isLogin ? (
             <Link
               id="log-out"
