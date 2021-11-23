@@ -133,7 +133,10 @@ public class Utils {
         WebElement create = driver.findElement(By.id("project-create-btn"));
         create.click();
         Thread.sleep(200);
-        return getAlertMessage();
+        if (ExpectedConditions.alertIsPresent().apply(driver) != null) {
+            return getAlertMessage();
+        }
+        return "no alert!";
     }
 
     public void deleteProject(String projName, boolean isAccept) throws Exception {

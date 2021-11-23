@@ -16,7 +16,7 @@ public class BrowserFunctions {
     public final String PROJECT = "proj";
     public final String PROJECT2 = "proj2";
     public final String CHANGE = "change";
-    public final int POMODORO_DURATION = 10000; //10 seconds
+    public final int POMODORO_DURATION = 6000; //6 seconds
     //alert messages
     public final String USER_NOT_FOUND = "User not found";
     public final String INFORMATION_INSUFFICIENT = "Please fill in all the fields!";
@@ -48,7 +48,7 @@ public class BrowserFunctions {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-web-security");
-        // options.addArguments("headless");
+        options.addArguments("headless");
         driver = new ChromeDriver(options);
 
         utils = new Utils(driver, baseUrl);
