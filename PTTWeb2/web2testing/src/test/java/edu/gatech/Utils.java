@@ -270,6 +270,15 @@ public class Utils {
         return false;
     }
 
+    public boolean checkForTimer() throws Exception {
+        WebElement timer = driver.findElement(By.id("timer-present"));
+        if (timer == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void clearInput() throws Exception {
         Thread.sleep(300);
         WebElement[] elements = new WebElement[]{
