@@ -5,7 +5,6 @@ import Admin from "./routes/Admin";
 import User from "./routes/User";
 import Navigation from "./components/Navigation";
 import { useState } from "react";
-import Debug from "./routes/Debug";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -36,7 +35,6 @@ function App() {
           exact={true}
           render={(props) => <User {...props} isTest={isTest} />}
         />
-        <Route path="/debug" component={Debug} />
       </HashRouter>
     </div>
   );

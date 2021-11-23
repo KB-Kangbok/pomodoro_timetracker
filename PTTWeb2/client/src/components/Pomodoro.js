@@ -18,7 +18,7 @@ import Timer from "./Timer";
 import axios from "axios";
 import { apiUrl } from "../config.json";
 
-export default function Pomodoro({ id, projects }) {
+export default function Pomodoro({ id, projects, isTest }) {
   const [selectedProjectId, setSelectedProjectId] = useState("");
   const [countdown, setCountdown] = useState(10);
   const [isRest, setIsRest] = useState(false);
@@ -70,9 +70,15 @@ export default function Pomodoro({ id, projects }) {
   };
 
   const startTimer = () => {
+    if (isTest) {
+      // 2 seconds for test
+      setCountdown(2);
+    } else {
+      // 25 minutes for actual
+      setCountdown(1500);
+    }
     setIsRest(false);
     setIsTimer(true);
-    setCountdown(3);
   };
 
   const handlePomodoro = () => {
@@ -93,14 +99,29 @@ export default function Pomodoro({ id, projects }) {
     reset();
     startTimer();
     setSessionId("");
-    setStartTime(getTime(Date.now()));
+    if (!isTest || startTime === "") {
+      setStartTime(getTime(Date.now()));
+    }
   };
 
   const handleStop = () => {
     setIsTimer(false);
     setIsRest(false);
     if (selectedProjectId !== "") {
-      setEndTime(getTime(Date.now()));
+      if (isTest) {
+        if (endTime === "") {
+          // start + 1 minute for test
+          const start = new Date(startTime.substr(0, startTime.length - 1));
+          setEndTime(getTime(start.getTime() + 1 * 60 * 1000));
+        } else {
+          // add 30 minutes from previous endtime for test
+          const prevEndTime = new Date(endTime.substr(0, endTime.length - 1));
+          setEndTime(getTime(prevEndTime.getTime() + 31 * 60 * 1000));
+        }
+      } else {
+        // now for actual
+        setEndTime(getTime(Date.now()));
+      }
       setStopDialog(true);
     }
   };
@@ -113,41 +134,56 @@ export default function Pomodoro({ id, projects }) {
   };
 
   const handleStopDialogAccept = async () => {
-    console.log(endTime);
     const request = {
       startTime: startTime,
       endTime: endTime,
       counter: counter,
     };
-    console.log(request);
     const url = `${apiUrl}/users/${id}/projects/${selectedProjectId}/sessions`;
     if (sessionId !== "") {
       try {
         const res = await axios.put(`${url}/${sessionId}`, request);
-        console.log(res.data.id);
-        setSessionId("");
+        console.log(res);
       } catch (e) {
-        console.log(e);
+        if (e.response.status === 400) {
+          alert("Bad request");
+        } else if (e.response.status === 404) {
+          alert("User, project, or session not found");
+        } else {
+          alert(`Failed with ${e.response.status} status`);
+        }
       }
     } else {
       try {
         const res = await axios.post(url, request);
         console.log(res.data.id);
-        setSessionId("");
       } catch (e) {
-        console.log(e);
+        if (e.response.status === 400) {
+          alert("Bad request");
+        } else if (e.response.status === 404) {
+          alert("User, project, or session not found");
+        } else {
+          alert(`Failed with ${e.response.status} status`);
+        }
       }
     }
+    setSessionId("");
     setSelectedProjectId("");
+    if (isTest) {
+      setStartTime(endTime);
+    } else {
+      setStartTime("");
+    }
     setEndTime("");
-    setStartTime("");
     setCounter(0);
     reset();
   };
   const handleStopDialogDismiss = () => {
     setSelectedProjectId("");
     setSessionId("");
-    setStartTime("");
+    if (!isTest) {
+      setStartTime("");
+    }
     setEndTime("");
     setCounter(0);
     reset();
@@ -165,7 +201,13 @@ export default function Pomodoro({ id, projects }) {
         const res = await axios.put(`${url}/${sessionId}`, request);
         console.log(res.data.id);
       } catch (e) {
-        console.log(e);
+        if (e.response.status === 400) {
+          alert("Bad request");
+        } else if (e.response.status === 404) {
+          alert("User, project, or session not found");
+        } else {
+          alert(`Failed with ${e.response.status} status`);
+        }
       }
     } else {
       try {
@@ -173,7 +215,13 @@ export default function Pomodoro({ id, projects }) {
         console.log(res.data.id);
         setSessionId(res.data.id);
       } catch (e) {
-        console.log(e);
+        if (e.response.status === 400) {
+          alert("Bad request");
+        } else if (e.response.status === 404) {
+          alert("User, project, or session not found");
+        } else {
+          alert(`Failed with ${e.response.status} status`);
+        }
       }
     }
     reset();
@@ -193,7 +241,13 @@ export default function Pomodoro({ id, projects }) {
         const res = await axios.put(`${url}/${sessionId}`, request);
         console.log(res.data.id);
       } catch (e) {
-        console.log(e);
+        if (e.response.status === 400) {
+          alert("Bad request");
+        } else if (e.response.status === 404) {
+          alert("User, project, or session not found");
+        } else {
+          alert(`Failed with ${e.response.status} status`);
+        }
       }
     } else {
       try {
@@ -201,12 +255,22 @@ export default function Pomodoro({ id, projects }) {
         const res = await axios.post(url, request);
         console.log(res.data.id);
       } catch (e) {
-        console.log(e);
+        if (e.response.status === 400) {
+          alert("Bad request");
+        } else if (e.response.status === 404) {
+          alert("User, project, or session not found");
+        } else {
+          alert(`Failed with ${e.response.status} status`);
+        }
       }
     }
     setSelectedProjectId("");
     setSessionId("");
-    setStartTime("");
+    if (isTest) {
+      setStartTime(endTime);
+    } else {
+      setStartTime("");
+    }
     setEndTime("");
     setCounter(0);
     reset();
@@ -223,7 +287,11 @@ export default function Pomodoro({ id, projects }) {
           style={{ justifyContent: "center", alignContent: "center" }}
         >
           {!isTimer && (
-            <Button id="start-pomodoro-btn" onClick={handlePomodoro} variant="outlined">
+            <Button
+              id="start-pomodoro-btn"
+              onClick={handlePomodoro}
+              variant="outlined"
+            >
               Start Pomodoro
             </Button>
           )}
@@ -237,9 +305,12 @@ export default function Pomodoro({ id, projects }) {
                 setIsTimer={setIsTimer}
                 setContinueDialog={setContinueDialog}
                 projectId={selectedProjectId}
+                endTime={endTime}
                 setEndTime={setEndTime}
                 counter={counter}
                 setCounter={setCounter}
+                isTest={isTest}
+                startTime={startTime}
               />
               <Button id="stop-btn" variant="outlined" onClick={handleStop}>
                 stop
@@ -305,14 +376,18 @@ export default function Pomodoro({ id, projects }) {
         </DialogContent>
         {!isAssociate && (
           <DialogActions>
-            <Button id="dialog-accept" onClick={handleAssociateAccept}>Yes</Button>
-            <Button id="dialog-cancel" onClick={handleAssociateDismiss}>No</Button>
+            <Button id="dialog-accept" onClick={handleAssociateAccept}>
+              Yes
+            </Button>
+            <Button id="dialog-cancel" onClick={handleAssociateDismiss}>
+              No
+            </Button>
           </DialogActions>
         )}
       </Dialog>
       <Dialog open={continueDialog && selectedProjectId !== ""}>
         <DialogTitle>Continue Pomodoro?</DialogTitle>
-        <DialogContent>
+        <DialogContent id="continue-dlg">
           <DialogContentText>
             Do you want to continue another pomodoro?
           </DialogContentText>

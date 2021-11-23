@@ -205,6 +205,30 @@ public class Utils {
         }
     }
 
+    public void clickContinueBtn() throws Exception {
+        WebElement btn = driver.findElement(By.id("continue-accept"));
+        btn.click();
+        Thread.sleep(100);
+    }
+
+    public String clickStopBtn() throws Exception {
+        WebElement btn = driver.findElement(By.id("stop-btn"));
+        btn.click();
+        Thread.sleep(100);
+        return getDialogMessage("partial-pomo-dlg");
+    }
+
+    public void clickLogPartialBtn(String id) throws Exception {
+        WebElement btn = driver.findElement(By.id(id));
+        btn.click();
+        Thread.sleep(100);
+    }
+
+    public WebElement findContinueDialogMsg() throws Exception {
+        WebElement dialog = driver.findElement(By.id("continue-dlg"));
+        return dialog;
+    }
+
     public void selectProjectForPomodoro(String projName) throws Exception {
         WebElement select = driver.findElement(By.id("projList"));
         select.click();
@@ -216,6 +240,7 @@ public class Utils {
             }
         }
         WebElement start = driver.findElement(By.id("project-start-btn"));
+        Thread.sleep(100);
         start.click();
         Thread.sleep(200);
     }

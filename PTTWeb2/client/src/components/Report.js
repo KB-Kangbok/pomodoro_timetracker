@@ -13,9 +13,6 @@ import {
   Checkbox,
   TextField,
   FormGroup,
-  List,
-  ListSubheader,
-  ListItemText,
 } from "@mui/material";
 import { LocalizationProvider, DateTimePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -47,11 +44,12 @@ const getTime = (time) => {
 };
 
 export default function Report({ id, projects, dateAdapter }) {
+  const currTime = Date.now();
   const [selectedProjectId, setSelectedProjectId] = useState("");
-  const [startTime, setStartTime] = useState(Date.now());
-  const [startTimeString, setStartTimeString] = useState("");
-  const [endTime, setEndTime] = useState(Date.now());
-  const [endTimeString, setEndTimeString] = useState("");
+  const [startTime, setStartTime] = useState(currTime);
+  const [startTimeString, setStartTimeString] = useState(getTime(currTime));
+  const [endTime, setEndTime] = useState(currTime);
+  const [endTimeString, setEndTimeString] = useState(getTime(currTime));
   const [totalHour, setTotalHour] = useState(false);
   const [totalPomodoro, setTotalPomodoro] = useState(false);
   const [reportReady, setReportReady] = useState(false);
@@ -66,11 +64,12 @@ export default function Report({ id, projects, dateAdapter }) {
   };
 
   const reset = () => {
+    const currTime = Date.now();
     setSelectedProjectId("");
-    setStartTime(Date.now());
-    setEndTime(Date.now());
-    setStartTimeString("");
-    setEndTimeString("");
+    setStartTime(currTime);
+    setEndTime(currTime);
+    setStartTimeString(getTime(currTime));
+    setEndTimeString(getTime(currTime));
     setTotalHour(false);
     setTotalPomodoro(false);
     setResponse("");
@@ -121,19 +120,15 @@ export default function Report({ id, projects, dateAdapter }) {
       }
     } catch (e) {
       if (e.response.status === 400) {
-        alert("Bad Request!");
+        alert("Bad request");
+      } else if (e.response.status === 404) {
+        alert("User, project, or session not found");
       } else {
-        alert(`Get Report failed with status code: ${e.response.status}`);
+        alert(`Failed with ${e.response.status} status`);
       }
     }
   };
 
-  const handleClose = () => {
-    setReportReady(false);
-    setSelectedProjectId("");
-    setTotalHour(false);
-    setTotalPomodoro(false);
-  };
   return (
     <div style={{ margin: 30 }}>
       <Typography variant="inherit" component="h1" style={{ padding: 0 }}>

@@ -52,32 +52,49 @@ export default function Timer({
   setIsTimer,
   setContinueDialog,
   projectId,
+  endTime,
   setEndTime,
   counter,
   setCounter,
+  isTest,
+  startTime,
 }) {
   const initialMin = Math.floor(countdown / 60);
   const initialSec = countdown % 60;
   const [timerMinute, setMinute] = useState(initialMin);
   const [timerSecond, setSecond] = useState(initialSec);
-
   const updateTime = (countdown, minute, second) => {
     setCountdown(countdown);
     setMinute(minute);
     setSecond(second);
   };
 
-  const endOfTimer = (countdown, minute, second) => {
+  const endOfTimer = (countdown) => {
     if (isRest) {
       if (projectId !== "") {
         setCounter(counter + 1);
-        setEndTime(getTime(Date.now() + 30 * 1000 * 60));
+        if (isTest) {
+          if (endTime === "") {
+            const start = new Date(startTime.substr(0, startTime.length - 1));
+            setEndTime(getTime(start.getTime() + 30 * 1000 * 60));
+          } else {
+            const start = new Date(startTime.substr(0, startTime.length - 1));
+            const prevEndTime = new Date(endTime.substr(0, endTime.length - 1));
+            if (start.getTime() > prevEndTime.getTime()) {
+              setEndTime(getTime(start.getTime() + 30 * 1000 * 60));
+            } else {
+              setEndTime(getTime(prevEndTime.getTime() + 30 * 1000 * 60));
+            }
+          }
+        } else {
+          setEndTime(getTime(Date.now()));
+        }
         setContinueDialog(true);
       }
       setIsTimer(false);
     } else {
       setIsRest(true);
-      updateTime(countdown, minute, second);
+      updateTime(countdown, Math.floor(countdown / 60), countdown % 60);
     }
   };
 
@@ -89,7 +106,11 @@ export default function Timer({
     if (time >= 0) {
       updateTime(time, minute, second);
     } else {
-      endOfTimer(2, 0, 2);
+      if (isTest) {
+        endOfTimer(2);
+      } else {
+        endOfTimer(300);
+      }
     }
   }, 1000);
 

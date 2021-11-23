@@ -16,6 +16,7 @@ public class BrowserFunctions {
     public final String PROJECT = "proj";
     public final String PROJECT2 = "proj2";
     public final String CHANGE = "change";
+    public final int POMODORO_DURATION = 10000; //10 seconds
     //alert messages
     public final String USER_NOT_FOUND = "User not found";
     public final String INFORMATION_INSUFFICIENT = "Please fill in all the fields!";
@@ -24,6 +25,8 @@ public class BrowserFunctions {
     public final String[] PROJ_ALREADY_EXISTS = new String[]{"Project ", " already exists!"};
     public final String START_POMODORO = "Do you want to associate Pomodoro with project?";
     public final String NO_PROJECT_TO_BE_ASSOCIATED = "You don't have any projects to associate!";
+    public final String CONTINUE_POMODORO = "Do you want to continue another pomodoro?";
+    public final String STOP_POMODORO = "Do you want to keep partial pomodoro data?";
 
     public static WebDriver driver;
     public static Utils utils;
