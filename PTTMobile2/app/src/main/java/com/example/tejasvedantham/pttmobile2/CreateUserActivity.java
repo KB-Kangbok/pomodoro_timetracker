@@ -64,8 +64,11 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(LOG_TAG, "POST /users REQ FAILED");
-                Toast toast = Toast.makeText(getApplicationContext(), "Email Already Taken", Toast.LENGTH_LONG);
-                toast.show();
+                if (error.networkResponse.statusCode == 409) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Email Already Taken", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
             }
         });
     }

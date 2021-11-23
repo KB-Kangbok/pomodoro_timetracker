@@ -8,10 +8,13 @@
         android:id="@+id/step2Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Generate Report Step 2"
-        android:textSize="36dp"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Report"
+        android:textSize="36dp">
 
     </TextView>
 
@@ -19,9 +22,12 @@
         android:id="@+id/projectNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Project Name: "
         android:layout_below="@+id/step2Title"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Project Name: "
         android:textSize="18dp">
 
     </TextView>
@@ -30,9 +36,12 @@
         android:id="@+id/informationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Information: "
         android:layout_below="@+id/projectNameText"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Information: "
         android:textSize="18dp">
 
     </TextView>

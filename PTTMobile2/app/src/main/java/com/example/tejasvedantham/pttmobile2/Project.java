@@ -1,6 +1,8 @@
 package com.example.tejasvedantham.pttmobile2;
 
-public class Project {
+import java.io.Serializable;
+
+public class Project implements Serializable {
 
     public String projectName;
     public String id;

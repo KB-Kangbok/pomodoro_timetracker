@@ -18,6 +18,8 @@ public class GenerateReportStep2Activity extends AppCompatActivity {
     public TextView projectName;
     public TextView information;
 
+    private List<Session> sessionList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +28,40 @@ public class GenerateReportStep2Activity extends AppCompatActivity {
         projectName = (TextView) findViewById(R.id.projectNameText);
         information = (TextView) findViewById(R.id.informationText);
 
-        //TODO: Append information to report here
-        projectName.append("Project Name HERE");
-        information.append("Information HERR");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Project project = (Project) extras.getSerializable("project");
+            projectName.append(project.projectName);
+
+            sessionList = (List<Session>) getIntent().getSerializableExtra("sessions");
+            for (Session s : sessionList) {
+                information.append("\n");
+                information.append(formatSession(s));
+                information.append("\n");
+            }
+        }
+
+        if (extras.containsKey("completedPomodoros")) {
+            information.append("\n");
+            information.append(formatCompletedPomodoros(extras.getInt("completedPomodoros")));
+        }
+
+        if (extras.containsKey("totalHoursWorkedOnProject")) {
+            information.append("\n");
+            information.append(formatTotalHoursWorkedOnProject(extras.getDouble("totalHoursWorkedOnProject")));
+        }
 
     }
 
+    public static String formatSession(Session session) {
+        return String.format("startingTime: %s, endingTime: %s, hoursWorked: %.1f", session.startingTime, session.endingTime, session.hoursWorked);
+    }
 
+    public static String formatCompletedPomodoros(int completedPomodoros) {
+        return String.format("completedPomodoros: %d", completedPomodoros);
+    }
+
+    public static String formatTotalHoursWorkedOnProject(double totalHoursWorkedOnProject) {
+        return String.format("totalHoursWorkedOnProject: %.1f", totalHoursWorkedOnProject);
+    }
 }

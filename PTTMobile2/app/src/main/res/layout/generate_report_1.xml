@@ -5,7 +5,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,51 +12,44 @@
             android:id="@+id/step1Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Generate Report Step 1"
-            android:textSize="36dp"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Generate Report "
+            android:textSize="36dp">
 
         </TextView>
-
-        <TextView
-            android:id="@+id/spinnerTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/step1Title"
-            android:text="Select Project"
-            android:layout_margin="10dp"
-            android:textSize="16dp">
-
-        </TextView>
-
-        <Spinner
-            android:id="@+id/project_report_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerTitle"
-            android:layout_margin="10dp">
-
-        </Spinner>
 
         <TextView
             android:id="@+id/startText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/project_report_spinner"
-            android:text="Start Time"
+            android:layout_below="@+id/step1Title"
+            android:text="Start Date and Time"
             android:layout_margin="10dp"
             android:textSize="16dp">
 
         </TextView>
 
+        <DatePicker
+            android:id="@+id/startDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startText"
+            android:layout_margin="10dp">
+
+        </DatePicker>
+
         <TimePicker
             android:id="@+id/startPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/startText"
+            android:layout_below="@+id/startDatePicker"
             android:layout_margin="10dp"
             android:timePickerMode="spinner">
+
         </TimePicker>
 
         <TextView
@@ -65,28 +57,59 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/startPicker"
-            android:text="End Time"
+            android:text="End Date and Time"
             android:layout_margin="10dp"
             android:textSize="16dp">
 
         </TextView>
 
+        <DatePicker
+            android:id="@+id/endDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/endText"
+            android:layout_margin="10dp">
+
+        </DatePicker>
+
         <TimePicker
             android:id="@+id/endPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/endText"
+            android:layout_below="@+id/endDatePicker"
             android:layout_margin="10dp"
             android:timePickerMode="spinner">
         </TimePicker>
 
-        <Button
+        <CheckBox
+            android:id="@+id/completedPomodorosCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
-            android:text="Generate Report"
-            android:onClick="generateReport">
+            android:layout_below="@+id/endPicker"
+            android:text="Include Completed Pomodoros">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/totalHoursCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/completedPomodorosCheckbox"
+            android:text="Include Total Hours Worked on Proejct">
+
+        </CheckBox>
+
+        <Button
+            android:id="@+id/generateReportButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/totalHoursCheckbox"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="generateReport"
+            android:text="Generate Report">
 
         </Button>
 

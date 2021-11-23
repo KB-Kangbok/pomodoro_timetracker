@@ -8,10 +8,13 @@
         android:id="@+id/step1Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Pomodoro Step 1"
-        android:textSize="36dp"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Start Pomodoro"
+        android:textSize="36dp">
 
     </TextView>
 
@@ -31,17 +34,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/step1description"
-        android:layout_margin="10dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
 
     </Spinner>
 
     <Button
+        android:id="@+id/start_pomodoro_to_step_2_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:text="Start Pomodoro"
-        android:onClick="startPomodoro">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="startPomodoro"
+        android:text="Start Pomodoro">
 
     </Button>
 

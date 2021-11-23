@@ -55,6 +55,7 @@ import static org.hamcrest.Matchers.instanceOf;
 
 public class CreateProjectActivityTest extends TestCase {
 
+
     @Rule
     public final static ActivityTestRule<CreateProjectActivity> createProjectActivity = new ActivityTestRule<CreateProjectActivity>(CreateProjectActivity.class, false, false);
 
@@ -64,6 +65,7 @@ public class CreateProjectActivityTest extends TestCase {
         super.setUp();
         Intents.init();
     }
+    /** Test creating a project that should succeed since new project name is provided. */
     public String id = "";
     @Test
     public void testProjectNameSuccess() {
@@ -99,7 +101,7 @@ public class CreateProjectActivityTest extends TestCase {
 
 
     }
-
+    /** Test creating a project with a used project name. */
     @Test
     public void testProjectNameTaken() {
         removeAllCurrent();
@@ -134,6 +136,7 @@ public class CreateProjectActivityTest extends TestCase {
         onView(withText("Project Name Already Taken")).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
 
     }
+    /** Test creating a project with no provided project name. */
     @Test
     public void testProjectNameEmpty() {
         removeAllCurrent();
