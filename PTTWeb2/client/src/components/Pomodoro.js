@@ -241,7 +241,7 @@ export default function Pomodoro({ id, projects }) {
                 counter={counter}
                 setCounter={setCounter}
               />
-              <Button variant="outlined" onClick={handleStop}>
+              <Button id="stop-btn" variant="outlined" onClick={handleStop}>
                 stop
               </Button>
             </div>
@@ -312,7 +312,7 @@ export default function Pomodoro({ id, projects }) {
       </Dialog>
       <Dialog open={continueDialog && selectedProjectId !== ""}>
         <DialogTitle>Continue Pomodoro?</DialogTitle>
-        <DialogContent>
+        <DialogContent id="continue-dlg">
           <DialogContentText>
             Do you want to continue another pomodoro?
           </DialogContentText>
