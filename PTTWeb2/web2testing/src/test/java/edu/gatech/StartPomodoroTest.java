@@ -12,7 +12,7 @@ public class StartPomodoroTest extends BrowserFunctions {
 
         Assert.assertEquals(actual, expected);
 
-        //click no
+        utils.clickCancel();
         // Assert.assertTrue(utils.projectExists(PROJECT));
     }
 
@@ -23,11 +23,10 @@ public class StartPomodoroTest extends BrowserFunctions {
 
         Assert.assertEquals(actual, expected);
         
-        //click yes
+        utils.clickAccept();
         //pick project
 
     }
-
 
     @Test
     public void createPomodoAssociatedProjectWithoutProject() throws Exception {
@@ -36,10 +35,11 @@ public class StartPomodoroTest extends BrowserFunctions {
 
         Assert.assertEquals(actual, expected);
 
-        // actual = utils.clickYes();
+        utils.clickAccept();
+
+        actual = utils.getAlertMessage();
         expected = NO_PROJECT_TO_BE_ASSOCIATED;
         Assert.assertEquals(actual, expected);
-
     }
 
     @BeforeClass

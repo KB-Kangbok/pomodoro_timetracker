@@ -8,13 +8,15 @@ public class EndPomodoroTest extends BrowserFunctions {
 
     @Test(description = "Test to choose to end session after Pomodoro completes")
     public void endSessionTest() throws Exception {
-        utils.startPomodoroWithProject(PROJECT);
+        utils.clickStartPomodoro();
+        utils.selectProjectForPomodoro(PROJECT);
+
     }
 
     @Test(description = "Test to continue session with another Pomodoro ")
     public void continueSessionTest() throws Exception {
-        utils.startPomodoroWithProject(PROJECT2);
-    }
+        utils.clickStartPomodoro();
+        utils.selectProjectForPomodoro(PROJECT2);    }
 
     @BeforeClass
     public void setup() throws Exception {

@@ -148,11 +148,8 @@ public class Utils {
             driver.switchTo().alert().accept();
             Thread.sleep(200);
         } else {
-            WebElement btnToClick;
-            btnToClick = (isAccept) ? 
-            driver.findElement(By.id("dialog-accept")) : driver.findElement(By.id("dialog-cancel"));
-
-            btnToClick.click();
+            if (isAccept) clickAccept();
+            else clickCancel();
             Thread.sleep(200);
 
             if(ExpectedConditions.alertIsPresent().apply(driver) != null) {
@@ -183,18 +180,29 @@ public class Utils {
     public void clickUserTab(String tabName) throws Exception {
         WebElement btn = driver.findElement(By.id(tabName.toLowerCase() + "-btn"));
         btn.click();
+        Thread.sleep(100);
     }
 
     public String clickStartPomodoro() throws Exception {
         WebElement btn = driver.findElement(By.id("start-pomodoro-btn"));
         btn.click();
-
+        Thread.sleep(100);
         return getAlertMessage();
     }
 
-    public void startPomodoroWithProject(String projName) throws Exception {
-        clickStartPomodoro();
+    public void clickAccept() throws Exception {
+        WebElement btn = driver.findElement(By.id("dialog-accept"));
+        btn.click();
         Thread.sleep(100);
+    }
+
+    public void clickCancel() throws Exception {
+        WebElement btn = driver.findElement(By.id("dialog-cancel"));
+        btn.click();
+        Thread.sleep(100);
+    }
+
+    public void selectProjectForPomodoro(String projName) throws Exception {
         WebElement select = driver.findElement(By.id("proj-list"));
         select.click();
         List<WebElement> projects = driver.findElements(By.tagName("li"));

@@ -305,8 +305,8 @@ export default function Pomodoro({ id, projects }) {
         </DialogContent>
         {!isAssociate && (
           <DialogActions>
-            <Button onClick={handleAssociateAccept}>Yes</Button>
-            <Button onClick={handleAssociateDismiss}>No</Button>
+            <Button id="dialog-accept" onClick={handleAssociateAccept}>Yes</Button>
+            <Button id="dialog-cancel" onClick={handleAssociateDismiss}>No</Button>
           </DialogActions>
         )}
       </Dialog>
