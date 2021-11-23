@@ -329,9 +329,9 @@ public class Users_userId {
             String strResponse;
 
             //internal server error
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
-            if (status != 500) {
+            if (status != 405) {
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
 

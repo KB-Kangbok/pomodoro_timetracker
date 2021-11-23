@@ -52,14 +52,29 @@ function Admin() {
   };
 
   const handleCreate = async () => {
-    await axios.post(`${apiUrl}/users`, {
-      firstName: inputFnameNew,
-      lastName: inputLnameNew,
-      email: inputEmailNew,
-    });
-    setInputFnameNew("");
-    setInputLnameNew("");
-    setInputEmailNew("");
+    if (inputFnameNew === "" || inputLnameNew === "" || inputEmailNew === "") {
+      alert("Please fill in all the fields!");
+      return;
+    }
+    try {
+      const res = await axios.post(`${apiUrl}/users`, {
+        firstName: inputFnameNew,
+        lastName: inputLnameNew,
+        email: inputEmailNew,
+      });
+      if (res.status === 201) {
+        alert('User "' + res.data.email + '" is successfully created.');
+        setInputFnameNew("");
+        setInputLnameNew("");
+        setInputEmailNew("");
+      }
+    } catch (e) {
+        if (e.response.status === 409) {
+          alert(`User with email ${inputEmailNew} already exists!`);
+        } else {
+          alert(`Create user failed with ${e.status} code`);
+        }
+    }
     setUpdate(true);
   };
 
@@ -87,13 +102,24 @@ function Admin() {
   };
 
   const handleUpdate = async () => {
-    await axios.put(`${apiUrl}/users/${selectedEditUser.id}`, {
-      firstName: inputFnameEdit,
-      lastName: inputLnameEdit,
-      email: selectedEditUser.email,
-    });
-    setInputFnameEdit("");
-    setInputLnameEdit("");
+    if (inputFnameEdit === "" || inputLnameEdit === "") {
+      alert("Firstname or lastname cannot be empty!");
+      return;
+    }
+    try {
+      const res = await axios.put(`${apiUrl}/users/${selectedEditUser.id}`, {
+        firstName: inputFnameEdit,
+        lastName: inputLnameEdit,
+        email: selectedEditUser.email,
+      });
+      if (res.status === 200) {
+        alert('User "' + res.data.email + '" is successfully edited.');
+        setInputFnameEdit("");
+        setInputLnameEdit("");
+      }
+    } catch (e) {
+      alert(`Edit user failed with ${e.response.status} code`);
+    }
     setUpdate(true);
   };
 
@@ -124,18 +150,20 @@ function Admin() {
 
   return (
     <div style={{ margin: 20 }}>
-        <Typography component="h6" align="right">Hi, Admin</Typography>
-        <Typography variant="inherit" component="h1" style={{marginTop: -20 }}>
-          Manage Users
-        </Typography>
+      <Typography component="h6" align="right">
+        Hi, Admin
+      </Typography>
+      <Typography variant="inherit" component="h1" style={{ marginTop: -20 }}>
+        Manage Users
+      </Typography>
 
       <Grid container direction="row" justifyContent="center">
         <Grid item style={{ marginRight: 50 }}>
           <h2>Add User</h2>
-          <FormControl sx={{ width: 200 }} >
+          <FormControl sx={{ width: 200 }}>
             <TextField
               required
-              id="outlined-basic"
+              id="fname-input"
               label="First Name"
               variant="outlined"
               onChange={handleInputFnameNew}
@@ -144,7 +172,7 @@ function Admin() {
             />
             <TextField
               required
-              id="outlined-basic"
+              id="lname-input"
               label="Last Name"
               variant="outlined"
               onChange={handleInputLnameNew}
@@ -153,14 +181,14 @@ function Admin() {
             />
             <TextField
               required
-              id="outlined-basic"
+              id="email-input"
               label="Email"
               variant="outlined"
               onChange={handleInputEmailNew}
               value={inputEmailNew}
               margin="dense"
             />
-            <Button variant="contained" onClick={handleCreate}>
+            <Button id="create-user-btn" variant="contained" onClick={handleCreate}>
               Create
             </Button>
           </FormControl>
@@ -168,9 +196,10 @@ function Admin() {
 
         <Grid item style={{ marginRight: 50 }}>
           <h2>Edit User</h2>
-          <FormControl sx={{width: 200 }}>
+          <FormControl sx={{ width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
+              id="edit-email-select"
               value={selectedEditUser}
               onChange={handleEditSelect}
               input={<OutlinedInput label="Name" />}
@@ -183,7 +212,7 @@ function Admin() {
               ))}
             </Select>
             <TextField
-              id="outlined-basic"
+              id="edit-fname"
               label="First Name"
               variant="outlined"
               onChange={handleInputFnameEdit}
@@ -191,14 +220,14 @@ function Admin() {
               margin="dense"
             />
             <TextField
-              id="outlined-basic"
+              id="edit-lname"
               label="Last Name"
               variant="outlined"
               onChange={handleInputLnameEdit}
               value={inputLnameEdit}
               margin="dense"
             />
-            <Button variant="contained" onClick={handleUpdate}>
+            <Button id="edit-user-btn" variant="contained" onClick={handleUpdate}>
               Update
             </Button>
           </FormControl>
@@ -206,9 +235,10 @@ function Admin() {
 
         <Grid item>
           <h2>Delete User</h2>
-          <FormControl sx={{ width: 200 }}>
+          <FormControl  sx={{ width: 200 }}>
             <InputLabel>User</InputLabel>
             <Select
+                id="delete-email-select"
               value={selectedDelUser}
               onChange={handleDelSelect}
               input={<OutlinedInput label="Name" />}
@@ -219,7 +249,7 @@ function Admin() {
                 </MenuItem>
               ))}
             </Select>
-            <Button variant="contained" onClick={handleDelete}>
+            <Button id="delete-user-btn" variant="contained" onClick={handleDelete}>
               Delete
             </Button>
           </FormControl>

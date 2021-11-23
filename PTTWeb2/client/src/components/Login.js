@@ -47,6 +47,7 @@ function Login({ username, handleChange, setIsLogin }) {
         </Grid>
         <form onSubmit={handleSubmit}>
           <TextField
+            id="user-login-input"
             label="Username"
             placeholder="Enter username"
             variant="standard"
@@ -55,7 +56,7 @@ function Login({ username, handleChange, setIsLogin }) {
             value={username}
             onChange={handleChange}
           />
-          <Button type="submit" color="primary" fullWidth variant="contained">
+          <Button id="login-btn" type="submit" color="primary" fullWidth variant="contained">
             Sign in
           </Button>
         </form>

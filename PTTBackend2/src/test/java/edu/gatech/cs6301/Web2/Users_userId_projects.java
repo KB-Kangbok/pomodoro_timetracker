@@ -358,7 +358,7 @@ public class Users_userId_projects {
             int status = response.getStatusLine().getStatusCode();
 
             //returns a 500
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             EntityUtils.consume(response.getEntity());
             response.close();
