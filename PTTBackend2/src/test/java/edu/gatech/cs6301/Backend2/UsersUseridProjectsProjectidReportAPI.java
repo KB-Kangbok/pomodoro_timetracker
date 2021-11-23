@@ -120,7 +120,7 @@ public class UsersUseridProjectsProjectidReportAPI {
             String userId = getIdFromResponse(response);
             response = postUsersUseridProjects(userId, "test", userId);
             String projectId = getIdFromResponse(response);
-            response = getUsersUseridProjectsProjectidReport(userId+userId+userId, projectId, "2021-02-18T20:00Z","2023-02-18T20:00Z", "", "");
+            response = getUsersUseridProjectsProjectidReport("-1", projectId, "2021-02-18T20:00Z","2023-02-18T20:00Z", "", "");
 
             int status = response.getStatusLine().getStatusCode();
             HttpEntity entity;
@@ -197,7 +197,7 @@ public class UsersUseridProjectsProjectidReportAPI {
             String userId = getIdFromResponse(response);
             response = postUsersUseridProjects(userId, "test", userId);
             String projectId = getIdFromResponse(response);
-            response = getUsersUseridProjectsProjectidReport(userId, projectId+projectId+projectId, "2021-02-18T20:00Z","2023-02-18T20:00Z", "", "");
+            response = getUsersUseridProjectsProjectidReport(userId, "-1"+projectId, "2021-02-18T20:00Z","2023-02-18T20:00Z", "", "");
 
             int status = response.getStatusLine().getStatusCode();
             HttpEntity entity;

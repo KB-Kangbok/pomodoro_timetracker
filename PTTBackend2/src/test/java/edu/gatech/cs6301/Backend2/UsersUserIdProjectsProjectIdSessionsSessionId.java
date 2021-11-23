@@ -117,7 +117,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response.close();
 
 	        //user not found
-            String userId = createdUserId + createdUserId + createdUserId + "xyz";
+            String userId = createdUserId + "xyz";
 
             String updatedStartTime = "2021-10-14T10:00Z";
             String updatedEndTime = "2021-10-14T10:00Z";
@@ -201,7 +201,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response.close();
 
             //projectId not found
-            String projectId =  "-" + createdProjectId + createdProjectId + createdProjectId;
+            String projectId =  "-1";
 
             String updatedStartTime = "2021-10-14T10:00Z";
             String updatedEndTime = "2021-10-14T10:00Z";
@@ -286,7 +286,7 @@ public class UsersUserIdProjectsProjectIdSessionsSessionId{
             response.close();
 
             //sessionId not found
-            sessionId = "-" + sessionId + sessionId + sessionId;
+            sessionId = "-1";
 
             String updatedStartTime = "2021-10-14T10:00Z";
             String updatedEndTime = "2021-10-14T10:00Z";
