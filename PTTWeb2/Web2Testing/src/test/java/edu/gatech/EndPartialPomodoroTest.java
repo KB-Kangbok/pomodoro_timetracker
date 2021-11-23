@@ -22,7 +22,7 @@ public class EndPartialPomodoroTest extends BrowserFunctions {
         Thread.sleep(100);
         Assert.assertEquals(actual, expected);
 
-        utils.clickAccept();
+        utils.clickButton("dialog-accept", true);
         utils.selectProjectForPomodoro(PROJECT);
 
         Thread.sleep(POMODORO_DURATION);
