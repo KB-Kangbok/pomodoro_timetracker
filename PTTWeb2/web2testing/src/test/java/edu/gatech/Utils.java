@@ -160,24 +160,25 @@ public class Utils {
         Thread.sleep(200);
     }
 
-    // public void createSession(String projName) throws Exception {
-    //     WebElement drop = driver.findElement(By.id("existing-projects-select"));
-    //     drop.click();
-    //     Thread.sleep(100);
-    //     List<WebElement> projects = driver.findElements(By.tagName("li"));
-    //     for (WebElement project : projects) {
-    //         if (project.getText().equals(projName)) {
-    //             project.click();
-    //             break;
-    //         }
-    //     }
+    public void createSession(String projName) throws Exception {
+        WebElement drop = driver.findElement(By.id("existing-projects-select"));
+        drop.click();
+        Thread.sleep(100);
+        List<WebElement> projects = driver.findElements(By.tagName("li"));
+        for (WebElement project : projects) {
+            if (project.getText().equals(projName)) {
+                project.click();
+                break;
+            }
+        }
 
-    //     WebElement create = driver.findElement(By.id("create-session-btn"));
-    //     create.click();
-    // }
+        WebElement create = driver.findElement(By.id("create-session-btn"));
+        create.click();
+    }
 
     //tabName: project, pomodoro, report
     public void clickUserTab(String tabName) throws Exception {
+        System.out.println(tabName.toLowerCase() + "-btn");
         WebElement btn = driver.findElement(By.id(tabName.toLowerCase() + "-btn"));
         btn.click();
         Thread.sleep(100);
@@ -193,13 +194,13 @@ public class Utils {
     public void clickAccept() throws Exception {
         WebElement btn = driver.findElement(By.id("dialog-accept"));
         btn.click();
-        Thread.sleep(100);
+        Thread.sleep(200);
     }
 
     public void clickCancel() throws Exception {
         WebElement btn = driver.findElement(By.id("dialog-cancel"));
         btn.click();
-        Thread.sleep(100);
+        Thread.sleep(200);
     }
 
     public void selectProjectForPomodoro(String projName) throws Exception {
@@ -263,6 +264,8 @@ public class Utils {
             Thread.sleep(200);
             return message;
         } catch (NoAlertPresentException e) {
+            WebElement dialog = driver.findElement(By.xpath("//div[@role = 'dialog']"));
+            if (dialog != null) return dialog.getText();
             return "\"NO ALERT FOUND\"";
         }
     }
