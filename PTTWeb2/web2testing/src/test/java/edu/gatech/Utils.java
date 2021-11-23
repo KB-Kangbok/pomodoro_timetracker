@@ -132,7 +132,10 @@ public class Utils {
         WebElement create = driver.findElement(By.id("project-create-btn"));
         create.click();
         Thread.sleep(200);
-        return getAlertMessage();
+        if (ExpectedConditions.alertIsPresent().apply(driver) != null) {
+            return getAlertMessage();
+        }
+        return "no alert!";
     }
 
     public void deleteProject(String projName, boolean isAccept) throws Exception {
@@ -267,6 +270,15 @@ public class Utils {
         }
         driver.findElement(By.id("project-input"));
         return false;
+    }
+
+    public boolean checkForTimer() throws Exception {
+        WebElement timer = driver.findElement(By.id("timer-present"));
+        if (timer == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void clearInput() throws Exception {

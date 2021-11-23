@@ -13,6 +13,7 @@ public class EndPartialPomodoroTest extends BrowserFunctions {
         utils.login(USERNAME);
         utils.createProject(PROJECT);
         utils.clickUserTab("pomodoro");
+        utils.activateTestButton();
     }
 
     @Test(description = "Test to end a pomodoro in progress")
@@ -29,7 +30,7 @@ public class EndPartialPomodoroTest extends BrowserFunctions {
         Assert.assertEquals(utils.findContinueDialogMsg().getText(), CONTINUE_POMODORO);
 
         utils.clickContinueBtn();
-        Thread.sleep(POMODORO_DURATION / 2);
+        Thread.sleep(POMODORO_DURATION / 3);
 
         String stopMsg = utils.clickStopBtn();
         Assert.assertEquals(stopMsg, STOP_POMODORO);

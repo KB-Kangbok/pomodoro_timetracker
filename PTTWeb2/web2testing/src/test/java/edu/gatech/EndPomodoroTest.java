@@ -15,8 +15,7 @@ public class EndPomodoroTest extends BrowserFunctions {
         Assert.assertEquals(utils.findContinueDialogMsg().getText(), CONTINUE_POMODORO);
 
         utils.clickStopBtn();
-        // timer not visible
-        // Thread.sleep(POMODORO_DURATION);
+        Assert.assertEquals(utils.checkForTimer(), false);
     }
 
     @Test(description = "Test to continue session with another Pomodoro ")
@@ -28,8 +27,8 @@ public class EndPomodoroTest extends BrowserFunctions {
         Assert.assertEquals(utils.findContinueDialogMsg().getText(), CONTINUE_POMODORO); 
 
         utils.clickContinueBtn();
+        Assert.assertEquals(utils.checkForTimer(), true);
         Thread.sleep(POMODORO_DURATION);
-
         utils.clickStopBtn();
     }
 
