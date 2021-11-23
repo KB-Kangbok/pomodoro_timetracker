@@ -7,36 +7,43 @@ public class StartPomodoroTest extends BrowserFunctions {
 
     @Test
     public void createPomodoroNotAssociatedProject() throws Exception {
-        String msg = utils.clickStartPomodoro();
+        String actual = utils.clickStartPomodoro();
+        String expected = START_POMODORO;
 
-        Assert.assertTrue(msg.startsWith(START_POMODORO));
+        Assert.assertEquals(actual, expected);
 
-        utils.clickCancel();
-        // Assert.assertTrue(utils.projectExists(PROJECT));
+        utils.clickButton("dialog-cancel", true);
     }
 
     @Test(groups = {"createProject"}, dependsOnMethods = {"createPomodoroNotAssociatedProject"})
     public void createPomodoAssociatedProject() throws Exception {
-        String msg = utils.clickStartPomodoro();
+        utils.clickUserTab("project");
+        utils.createProject(PROJECT);
 
-        Assert.assertTrue(msg.startsWith(START_POMODORO));
+        utils.clickUserTab("pomodoro");
+        String actual = utils.clickStartPomodoro();
+        String expected = START_POMODORO;
 
-        
-        utils.clickAccept();
+        Assert.assertEquals(actual, expected);
+
+
+        utils.clickButton("dialog-accept", true);
         utils.selectProjectForPomodoro(PROJECT);
     }
 
-    @Test
+    @Test(groups = {"clickOk"})
     public void createPomodoAssociatedProjectWithoutProject() throws Exception {
-        String msg = utils.clickStartPomodoro();
+        String actual = utils.clickStartPomodoro();
+        String expected = START_POMODORO;
 
-        Assert.assertTrue(msg.startsWith(START_POMODORO));
-
-        utils.clickAccept();
-
-        String actual = utils.getAlertMessage();
-        String expected = NO_PROJECT_TO_BE_ASSOCIATED;
         Assert.assertEquals(actual, expected);
+
+        utils.clickButton("dialog-accept", true);
+
+        String msg = utils.getDialogMessage("associate-dlg");
+        Assert.assertTrue(msg.startsWith(NO_PROJECT_TO_BE_ASSOCIATED));
+
+        utils.clickButton("ok-btn", true);
     }
 
     @BeforeClass
@@ -58,6 +65,18 @@ public class StartPomodoroTest extends BrowserFunctions {
 
     @BeforeGroups("createProject")
     public void createProject() throws Exception {
+        utils.clickUserTab("project");
         utils.createProject(PROJECT);
+    }
+
+    @AfterGroups("clickOk")
+    public void clickOk() throws Exception {
+        utils.clickButton("ok-btn", true);
+    }
+
+    @AfterMethod
+    public void clickStopPomodoro() throws Exception {
+        utils.clickButton("stop-btn", true);
+        utils.clickButton("stop-cancel-btn", false);
     }
 }

@@ -241,7 +241,7 @@ export default function Pomodoro({ id, projects }) {
                 counter={counter}
                 setCounter={setCounter}
               />
-              <Button variant="outlined" onClick={handleStop}>
+              <Button id="stop-btn" variant="outlined" onClick={handleStop}>
                 stop
               </Button>
             </div>
@@ -273,7 +273,7 @@ export default function Pomodoro({ id, projects }) {
                 You don't have any projects to associate!
               </DialogContentText>
               <DialogActions>
-                <Button onClick={handleAssociateDismiss}>Ok</Button>
+                <Button id="ok-btn" onClick={handleAssociateDismiss}>Ok</Button>
               </DialogActions>
             </div>
           )}
@@ -322,6 +322,7 @@ export default function Pomodoro({ id, projects }) {
           <Button id="continue-cancel" onClick={handleContinueDialogDismiss}>No</Button>
         </DialogActions>
       </Dialog>
+      
       <Dialog open={stopDialog && selectedProjectId !== ""}>
         <DialogTitle>Stop Pomodoro</DialogTitle>
         <DialogContent id="partial-pomo-dlg">

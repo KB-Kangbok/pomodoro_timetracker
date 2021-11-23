@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.Keys;
 
 import java.util.*;
@@ -120,6 +121,7 @@ public class Utils {
     }
 
     public String createProject(String projName) throws Exception {
+        Thread.sleep(200);
         WebElement project = driver.findElement(By.id("project-input"));
         project.sendKeys(projName);
         WebElement create = driver.findElement(By.id("project-create-btn"));
@@ -148,8 +150,8 @@ public class Utils {
             driver.switchTo().alert().accept();
             Thread.sleep(200);
         } else {
-            if (isAccept) clickAccept();
-            else clickCancel();
+            if (isAccept) clickButton("dialog-accept", true);
+            else clickButton("dialog-cancel", true);
             Thread.sleep(200);
 
             if(ExpectedConditions.alertIsPresent().apply(driver) != null) {
@@ -191,20 +193,20 @@ public class Utils {
         return getDialogMessage("associate-dlg");
     }
 
-    public void clickAccept() throws Exception {
-        WebElement btn = driver.findElement(By.id("dialog-accept"));
-        btn.click();
+    public void clickButton(String id, boolean btnShouldExist) throws Exception {
         Thread.sleep(200);
-    }
-
-    public void clickCancel() throws Exception {
-        WebElement btn = driver.findElement(By.id("dialog-cancel"));
-        btn.click();
-        Thread.sleep(200);
+        try {
+            WebElement btn = driver.findElement(By.id(id));
+            btn.click();
+            Thread.sleep(200);
+        } catch (Exception e) {
+            if (!btnShouldExist) return;
+            else throw e;
+        }
     }
 
     public void selectProjectForPomodoro(String projName) throws Exception {
-        WebElement select = driver.findElement(By.id("proj-list"));
+        WebElement select = driver.findElement(By.id("projList"));
         select.click();
         List<WebElement> projects = driver.findElements(By.tagName("li"));
         for (WebElement project : projects) {
@@ -215,6 +217,7 @@ public class Utils {
         }
         WebElement start = driver.findElement(By.id("project-start-btn"));
         start.click();
+        Thread.sleep(200);
     }
 
     public boolean projectExists(String projName) throws Exception {
@@ -264,14 +267,13 @@ public class Utils {
             Thread.sleep(200);
             return message;
         } catch (NoAlertPresentException e) {
-            WebElement dialog = driver.findElement(By.xpath("//div[@role = 'dialog']"));
-            if (dialog != null) return dialog.getText();
             return "\"NO ALERT FOUND\"";
         }
     }
 
-    public String getDialogMessage(String id) {
-        WebElement we = driver.findElement(By.id(id));
-        return we.getText();
+    public String getDialogMessage(String id) throws Exception {
+        WebElement dialog = driver.findElement(By.id(id));
+        Thread.sleep(200);
+        return dialog.getText();
     }
 }
