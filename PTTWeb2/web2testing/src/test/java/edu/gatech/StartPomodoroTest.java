@@ -7,10 +7,9 @@ public class StartPomodoroTest extends BrowserFunctions {
 
     @Test
     public void createPomodoroNotAssociatedProject() throws Exception {
-        String actual = utils.clickStartPomodoro();
-        String expected = START_POMODORO;
+        String msg = utils.clickStartPomodoro();
 
-        Assert.assertEquals(actual, expected);
+        Assert.assertTrue(msg.startsWith(START_POMODORO));
 
         utils.clickCancel();
         // Assert.assertTrue(utils.projectExists(PROJECT));
@@ -18,27 +17,25 @@ public class StartPomodoroTest extends BrowserFunctions {
 
     @Test(groups = {"createProject"}, dependsOnMethods = {"createPomodoroNotAssociatedProject"})
     public void createPomodoAssociatedProject() throws Exception {
-        String actual = utils.clickStartPomodoro();
-        String expected = START_POMODORO;
+        String msg = utils.clickStartPomodoro();
 
-        Assert.assertEquals(actual, expected);
+        Assert.assertTrue(msg.startsWith(START_POMODORO));
+
         
         utils.clickAccept();
-        //pick project
-
+        utils.selectProjectForPomodoro(PROJECT);
     }
 
     @Test
     public void createPomodoAssociatedProjectWithoutProject() throws Exception {
-        String actual = utils.clickStartPomodoro();
-        String expected = START_POMODORO;
+        String msg = utils.clickStartPomodoro();
 
-        Assert.assertEquals(actual, expected);
+        Assert.assertTrue(msg.startsWith(START_POMODORO));
 
         utils.clickAccept();
 
-        actual = utils.getAlertMessage();
-        expected = NO_PROJECT_TO_BE_ASSOCIATED;
+        String actual = utils.getAlertMessage();
+        String expected = NO_PROJECT_TO_BE_ASSOCIATED;
         Assert.assertEquals(actual, expected);
     }
 
