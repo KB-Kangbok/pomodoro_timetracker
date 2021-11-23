@@ -261,7 +261,7 @@ export default function Pomodoro({ id, projects }) {
       </Grid>
       <Dialog open={projDialog}>
         <DialogTitle>Start pomodoro</DialogTitle>
-        <DialogContent>
+        <DialogContent id="associate-dlg">
           {!isAssociate && (
             <DialogContentText>
               Do you want to associate Pomodoro with project?
@@ -318,20 +318,20 @@ export default function Pomodoro({ id, projects }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleContinueDialogAccept}>Yes</Button>
-          <Button onClick={handleContinueDialogDismiss}>No</Button>
+          <Button id="continue-accept" onClick={handleContinueDialogAccept}>Yes</Button>
+          <Button id="continue-cancel" onClick={handleContinueDialogDismiss}>No</Button>
         </DialogActions>
       </Dialog>
       <Dialog open={stopDialog && selectedProjectId !== ""}>
         <DialogTitle>Stop Pomodoro</DialogTitle>
-        <DialogContent>
+        <DialogContent id="partial-pomo-dlg">
           <DialogContentText>
             Do you want to keep partial pomodoro data?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleStopDialogAccept}>Yes</Button>
-          <Button onClick={handleStopDialogDismiss}>No</Button>
+          <Button id="stop-accept-btn" onClick={handleStopDialogAccept}>Yes</Button>
+          <Button id="stop-cancel-btn" onClick={handleStopDialogDismiss}>No</Button>
         </DialogActions>
       </Dialog>
     </div>

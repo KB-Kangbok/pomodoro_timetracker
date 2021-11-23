@@ -187,7 +187,7 @@ public class Utils {
         WebElement btn = driver.findElement(By.id("start-pomodoro-btn"));
         btn.click();
         Thread.sleep(100);
-        return getAlertMessage();
+        return getDialogMessage("associate-dlg");
     }
 
     public void clickAccept() throws Exception {
@@ -265,5 +265,10 @@ public class Utils {
         } catch (NoAlertPresentException e) {
             return "\"NO ALERT FOUND\"";
         }
+    }
+
+    public String getDialogMessage(String id) {
+        WebElement we = driver.findElement(By.id(id));
+        return we.getText();
     }
 }
