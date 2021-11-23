@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.Keys;
 
 import java.util.*;
@@ -306,5 +305,28 @@ public class Utils {
         WebElement dialog = driver.findElement(By.id(id));
         Thread.sleep(200);
         return dialog.getText();
+    }
+
+    public void selectProject(String selectId, String target) throws Exception {
+        WebElement drop = driver.findElement(By.id(selectId));
+        drop.click();
+        Thread.sleep(100);
+        List<WebElement> projects = driver.findElements(By.tagName("li"));
+        for (WebElement project : projects) {
+            if (project.getText().equals(target)) {
+                project.click();
+            }
+        }
+        //unclick dropdown
+        driver.findElement(By.xpath("//html")).click();
+        Thread.sleep(200);
+    }
+
+    public void changeDate(String xpath, String target) throws Exception {
+        WebElement input = driver.findElement(By.xpath(xpath));
+        input.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        input.sendKeys(Keys.DELETE);
+        input.sendKeys(target);
+        Thread.sleep(200);
     }
 }

@@ -16,7 +16,7 @@ public class BrowserFunctions {
     public final String PROJECT = "proj";
     public final String PROJECT2 = "proj2";
     public final String CHANGE = "change";
-    public final int POMODORO_DURATION = 10000; //10 seconds
+    public final int POMODORO_DURATION = 5000; //10 seconds
     //alert messages
     public final String USER_NOT_FOUND = "User not found";
     public final String INFORMATION_INSUFFICIENT = "Please fill in all the fields!";
@@ -34,7 +34,7 @@ public class BrowserFunctions {
 
 
     @BeforeSuite
-    public void initializeBrowser() {
+    public void initializeBrowser() throws Exception {
         String driverPath;
         String os = System.getProperty("os.name");
         if (os.startsWith("Mac")) {
@@ -52,6 +52,10 @@ public class BrowserFunctions {
         driver = new ChromeDriver(options);
 
         utils = new Utils(driver, baseUrl);
+        driver.get(baseUrl);
+        Thread.sleep(200);
+
+        utils.activateTestButton();
     }
 
     @AfterSuite

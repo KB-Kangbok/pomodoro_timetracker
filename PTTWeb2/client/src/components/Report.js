@@ -158,6 +158,7 @@ export default function Report({ id, projects, dateAdapter }) {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <FormControl sx={{ marginTop: 2 }}>
                     <DateTimePicker
+                      id="start-time-picker"
                       label="Start Time Picker"
                       value={startTime}
                       onChange={handleStartTimeChange}

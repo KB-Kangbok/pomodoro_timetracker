@@ -16,6 +16,7 @@
             <class name="edu.gatech.StartPomodoroTest" />
             <class name="edu.gatech.EndPomodoroTest" />
             <class name="edu.gatech.EndPartialPomodoroTest" />
+            <class name="edu.gatech.ReportTest" />
         </classes>
     </test> 
 </suite>
