@@ -12,12 +12,12 @@ import Pomodoro from "../components/Pomodoro";
 import axios from "axios";
 import { apiUrl } from "../config.json";
 import Report from "../components/Report";
-// import DateAdapter from "@mui/lab/AdapterDateFns";
 
 export default function User({
   location: {
     state: { id, firstName },
   },
+  isTest,
 }) {
   const [projects, setProjects] = useState([{ id: 0 }]);
   const [selectedMenu, setSelectedMenu] = useState("project");
@@ -81,7 +81,7 @@ export default function User({
             <ManageProject id={id} projects={projects} setUpdate={setUpdate} />
           )}
           {selectedMenu === "pomodoro" && (
-            <Pomodoro id={id} projects={projects} />
+            <Pomodoro id={id} projects={projects} isTest={isTest} />
           )}
           {selectedMenu === "report" && <Report id={id} projects={projects} />}
         </Grid>

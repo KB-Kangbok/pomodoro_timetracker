@@ -1,10 +1,8 @@
 import {
-  Grid,
   Button,
   List,
   ListSubheader,
   ListItemText,
-  ListItemButton,
   ListItemIcon,
   ListItem,
 } from "@mui/material";
@@ -51,8 +49,8 @@ export default function Result({
         sx={{ width: "100%" }}
         subheader={<ListSubheader>Sessions List</ListSubheader>}
       >
-        {data.reportSessionList.map((session) => (
-          <ListItem sx={{ width: "100%" }} divider alignItems="flex">
+        {data.sessions.map((session) => (
+          <ListItem sx={{ width: "100%" }} divider>
             <ListItemIcon>
               <AssessmentIcon />
             </ListItemIcon>
