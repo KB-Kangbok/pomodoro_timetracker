@@ -69,7 +69,7 @@ public class DeleteProjectActivityTest extends TestCase {
 
     public final static ActivityTestRule<UserHomeActivity> deleteProject = new ActivityTestRule<UserHomeActivity>(UserHomeActivity.class, false, false);
 
-
+    /** Test deleting a project with no associated time. */
     @Test
     public void testDeleteNoTime() {
         removeAllCurrent();
@@ -140,7 +140,7 @@ public class DeleteProjectActivityTest extends TestCase {
 
     }
     String projectId = "";
-
+    /** Test deleting a user with associated time and no provided on confirmation request. */
     @Test
     public void testDeleteWithTimeNoConfirm() {
         removeAllCurrent();
@@ -225,7 +225,7 @@ public class DeleteProjectActivityTest extends TestCase {
         Intents.release();
 
     }
-
+    /** Test deleting a user with associated time and yes provided on confirmation request. */
     @Test
     public void testDeleteWithTimeYesConfirm() {
         projectId = "";
@@ -288,7 +288,7 @@ public class DeleteProjectActivityTest extends TestCase {
 
         }
         onView(withText("The project has time already logged to it. Do you still want to delete it?")).check(matches(isDisplayed()));
-        onView(withText("YES")).perform(click());
+        onView(withText("Yes")).perform(click());
         onData(anything())
                 .inAdapterView(withId(R.id.project_list))
                 .atPosition(0)

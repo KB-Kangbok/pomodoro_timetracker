@@ -97,7 +97,7 @@ public class GenerateReportStep1Activity extends AppCompatActivity {
 
         //TODO: Query backend for projects in this timeframe
         String url = String.format(BackendConnections.baseUrl + "/users/%s/projects/%s/report", userId, project.id);
-        String params = String.format("?from=%s&to=%s&completedPomodoros=%s&totalHoursWorkedOnProject=%s", startTimerFormat, endTimeFormat, includeCompletedPomodorosCheckBox.isChecked(), includeTotalHoursWorkedOnProjectCheckBox.isChecked());
+        String params = String.format("?from=%s&to=%s&includeCompletedPomodoros=%s&includeTotalHoursWorkedOnProject=%s", startTimerFormat, endTimeFormat, includeCompletedPomodorosCheckBox.isChecked(), includeTotalHoursWorkedOnProjectCheckBox.isChecked());
         url = url + params;
         Log.d(LOG_TAG, String.format("url: %s", url));
         RequestQueue requestQueue = Volley.newRequestQueue(this);

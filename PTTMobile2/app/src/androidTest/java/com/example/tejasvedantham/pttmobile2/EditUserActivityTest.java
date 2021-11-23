@@ -100,6 +100,8 @@ public class EditUserActivityTest {
 //    @Rule
 //    public ActivityTestRule<AdminHomeActivity> admin =
 //            new ActivityTestRule<>(AdminHomeActivity.class);
+
+    /** Test edit user button is visible. */
     public String id = "";
     public String firstname = "";
     public String lastname = "";
@@ -134,7 +136,7 @@ public class EditUserActivityTest {
 
     }
 
-
+    /** Test editing a user with a new first, name and email. */
 
     @Test
     public void TestEditAllFields() {
@@ -155,9 +157,9 @@ public class EditUserActivityTest {
                 new ActivityTestRule<>(AdminHomeActivity.class, false, false);
 
         Intent intent = new Intent();
-//        intent.putExtra("firstName", firstname);
-//        intent.putExtra("lastName", lastname);
-//        intent.putExtra("email", email);
+        intent.putExtra("firstName", firstname);
+        intent.putExtra("lastName", lastname);
+        intent.putExtra("email", email);
         editIntent.launchActivity(intent);
 
 
@@ -200,7 +202,7 @@ public class EditUserActivityTest {
         Intents.release();
 
     }
-
+    /** Test editing a user with only new first name. */
     @Test
     public void TestEditOnlyFirstName() {
 
@@ -220,9 +222,9 @@ public class EditUserActivityTest {
                 new ActivityTestRule<>(AdminHomeActivity.class, false, false);
 
         Intent intent = new Intent();
-//        intent.putExtra("firstName", firstname);
-//        intent.putExtra("lastName", lastname);
-//        intent.putExtra("email", email);
+        intent.putExtra("firstName", firstname);
+        intent.putExtra("lastName", lastname);
+        intent.putExtra("email", email);
         editIntent.launchActivity(intent);
 
 
@@ -264,7 +266,7 @@ public class EditUserActivityTest {
         Intents.release();
 
     }
-
+    /** Test editing a user with only new last name. */
     @Test
     public void TestEditOnlyLastName() {
 
@@ -284,9 +286,9 @@ public class EditUserActivityTest {
                 new ActivityTestRule<>(AdminHomeActivity.class, false, false);
 
         Intent intent = new Intent();
-//        intent.putExtra("firstName", firstname);
-//        intent.putExtra("lastName", lastname);
-//        intent.putExtra("email", email);
+        intent.putExtra("firstName", firstname);
+        intent.putExtra("lastName", lastname);
+        intent.putExtra("email", email);
         editIntent.launchActivity(intent);
 
 
@@ -328,6 +330,7 @@ public class EditUserActivityTest {
         Intents.release();
 
     }
+    /** Test editing a user with no new values provided. */
     @Test
     public void TestEditNoFields() {
 
@@ -347,9 +350,9 @@ public class EditUserActivityTest {
                 new ActivityTestRule<>(AdminHomeActivity.class, false, false);
 
         Intent intent = new Intent();
-//        intent.putExtra("firstName", firstname);
-//        intent.putExtra("lastName", lastname);
-//        intent.putExtra("email", email);
+        intent.putExtra("firstName", firstname);
+        intent.putExtra("lastName", lastname);
+        intent.putExtra("email", email);
         editIntent.launchActivity(intent);
 
 

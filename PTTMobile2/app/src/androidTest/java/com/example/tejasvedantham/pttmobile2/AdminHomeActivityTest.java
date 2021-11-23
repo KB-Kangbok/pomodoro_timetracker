@@ -74,6 +74,7 @@ public class AdminHomeActivityTest extends TestCase {
     public ArrayList<User> createdUserList = new ArrayList<>();
     private Intent intent;
 
+    /** Remove all users in DB to make a clean start for testing. */
     private void removeAllCurrent() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         String url = BackendConnections.baseUrl + "/users";
@@ -103,7 +104,7 @@ public class AdminHomeActivityTest extends TestCase {
         });
         requestQueue.add(jsonArrayRequest);
     }
-
+    /** Helper method to remove a specific user. */
     private void deleteUser(String id) {
 
         String url = BackendConnections.baseUrl + String.format("/users/%s", id);
@@ -144,6 +145,7 @@ public class AdminHomeActivityTest extends TestCase {
         Intents.release();
     }
 
+    /** Test whether create button is visible. */
     @Test
     public void TestCreateButton() {
         // Type text and then press the button.
@@ -152,7 +154,7 @@ public class AdminHomeActivityTest extends TestCase {
 
         intended(hasComponent(CreateUserActivity.class.getName()));
     }
-
+    /** Test creating a user with a first name, last name and email. */
     public String email = "";
     @Test
     public void TestCreatingUserAllFields() {
@@ -176,7 +178,7 @@ public class AdminHomeActivityTest extends TestCase {
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
     }
-
+    /** Test creating a user with a last name and email but no first name */
     @Test
     public void TestCreatingUserNoFirstName() {
         createUserRule.launchActivity(intent);
@@ -198,7 +200,7 @@ public class AdminHomeActivityTest extends TestCase {
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
     }
-
+    /** Test creating a user with a first name and email but no last name. */
     @Test
     public void TestCreatingUserNoLastName() {
         createUserRule.launchActivity(intent);
@@ -220,7 +222,7 @@ public class AdminHomeActivityTest extends TestCase {
                 .onChildView(withId(R.id.emailText))
                 .check(matches(withText(email)));
     }
-
+    /** Test creating a user with no email */
     @Test
     public void TestCreatingUserNoEmail() {
         createUserRule.launchActivity(intent);
@@ -235,7 +237,7 @@ public class AdminHomeActivityTest extends TestCase {
 
         onView(withText("Please provide an email address")).inRoot(new AdminHomeActivityTest.ToastMatcher()).check(matches(isDisplayed()));
     }
-
+    /** Test creating a user with an email that is already used . */
     public String username = "";
     public String id = "";
     @Test
@@ -264,6 +266,7 @@ public class AdminHomeActivityTest extends TestCase {
         deleteDummyUser();
     }
 
+    /** Test deleting a user with no associated projects. */
     @Test
     public void testDeleteUserWithoutProjects() throws InterruptedException {
         setupUsers();
@@ -274,7 +277,7 @@ public class AdminHomeActivityTest extends TestCase {
         onData(withContent(testUserList.get(0))).inAdapterView(withId(R.id.admin_user_list)).onChildView(withId(R.id.deleteUser)).perform(click());
         onView(withId(R.id.admin_user_list)).check(matches(not(withContent(testUserList.get(0)))));
     }
-
+    /** Test deleting a user with associated projects. */
     @Test
     public void testDeleteUserWithProjects() throws InterruptedException {
         setupUsers();

@@ -85,7 +85,7 @@ public class GenerateReportActivityTest extends TestBase {
     public void tearDown() {
         Intents.release();
     }
-
+    /** Test report when no sessions in time range. */
     @Test
     public void TestNoSessionInTimeRange() {
         onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(12, 0));
@@ -97,7 +97,7 @@ public class GenerateReportActivityTest extends TestBase {
         intended(hasComponent(GenerateReportStep2Activity.class.getName()));
         validateReport(exptectedSessionIndex, false, false);
     }
-
+    /** Test report when there are sessions in time range. */
     @Test
     public void TestSessionsReturnedInTimeRange() {
         onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(13, 10));
@@ -112,7 +112,7 @@ public class GenerateReportActivityTest extends TestBase {
         intended(hasComponent(GenerateReportStep2Activity.class.getName()));
         validateReport(exptectedSessionIndex, false, false);
     }
-
+    /** Test report when there sessions in time range and completed pomodors option is selected. */
     @Test
     public void TestIncludeCompletedPomodorosOption() {
         onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(13, 10));
@@ -129,7 +129,7 @@ public class GenerateReportActivityTest extends TestBase {
         intended(hasComponent(GenerateReportStep2Activity.class.getName()));
         validateReport(exptectedSessionIndex, true, false);
     }
-
+    /** Test report when there are sessions in time range and total hours worked on project is selected. */
     @Test
     public void TestIncludeTotalHoursWorkedOnProjectOption() {
         onView(withId(R.id.startPicker)).perform(scrollTo(), setTime(13, 10));

@@ -60,7 +60,7 @@ import java.util.Random;
 public class LoginActivityTest extends TestCase  {
 
 
-
+    /** Test logging in as admin. */
     @Test
     public void TestAdminLogin() {
         // Type text and then press the button.
@@ -78,7 +78,7 @@ public class LoginActivityTest extends TestCase  {
         intended(hasComponent(AdminHomeActivity.class.getName()));
         Intents.release();
     }
-
+    /** Test login attempt with invalid email that does not exist. */
     @Test
     public void TestUserLoginInvalidEmail() {
         // Type text and then press the button.
@@ -96,7 +96,7 @@ public class LoginActivityTest extends TestCase  {
         onView(withText("No such user")).inRoot(new LoginActivityTest.ToastMatcher()).check(matches(isDisplayed()));
 
     }
-
+    /** Test login with a valid email. */
     public String username = "";
     public String id = "";
     @Test

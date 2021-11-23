@@ -47,7 +47,7 @@ public class StartPomodoroStep2ActivityTest {
     public String projectId = "";
 
 
-
+    /** Test ending a pomodoro and starting a new one increments the number of pomodoros in this project and starts new pomodoro */
     @Test
     public void TestPomodoroTimerFinishYes() {
         ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
@@ -93,7 +93,7 @@ public class StartPomodoroStep2ActivityTest {
 
 
     }
-
+    /** Test ending a pomodoro and not starting a new one takes user back to home and logs session */
     @Test
     public void TestPomodoroTimerFinishNo() {
         ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
@@ -137,7 +137,7 @@ public class StartPomodoroStep2ActivityTest {
         deleteDummyUser();
         Intents.release();
     }
-
+    /** Test stopping a pomodoro and a dialog box appears for confirmation about partial logging */
     @Test
     public void TestPomodoroTimerStopWithProject(){
         ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
@@ -176,7 +176,7 @@ public class StartPomodoroStep2ActivityTest {
         Intents.release();
 
     }
-
+    /** Test stopping a pomodoro not associated with project takes user back home and does not show confirmation dialog */
     @Test
     public void TestPomodoroTimerStopWithNoProject(){
         ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
@@ -213,7 +213,7 @@ public class StartPomodoroStep2ActivityTest {
         Intents.release();
 
     }
-
+    /** Test stopping a pomodoro shows the confirmation dialog to log partial pomodoro and user selects yes so partial pomodoro is logged to system */
     @Test
     public void TestPomodoroTimerStopLogPartial() {
 
@@ -253,6 +253,7 @@ public class StartPomodoroStep2ActivityTest {
         deleteDummyUser();
         Intents.release();
     }
+    /** Test stopping a pomodoro shows the confirmation dialog to log partial pomodoro and user selects no so partial pomodoro is not logged to system */
     @Test
     public void TestPomodoroTimerStopNoLogPartial() {
         // Yes to log partial

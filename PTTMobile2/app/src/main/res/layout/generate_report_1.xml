@@ -12,10 +12,13 @@
             android:id="@+id/step1Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Generate Report Step 1"
-            android:textSize="36dp"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Generate Report "
+            android:textSize="36dp">
 
         </TextView>
 

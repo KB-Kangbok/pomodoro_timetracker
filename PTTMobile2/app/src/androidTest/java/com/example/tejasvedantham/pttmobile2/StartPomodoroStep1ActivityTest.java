@@ -73,6 +73,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
     public String username = "";
     public String projectId = "";
 
+    /** Test whether the projects associated to a user shows up in a pomodoro start attempt to associate to a project. */
     @Test
     public void TestProjectShowsInProjectListSpinnerPomodoro() {
         ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
@@ -111,7 +112,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         deleteDummyUser();
         Intents.release();
     }
-
+    /** Test whether there is a option for starting pomodoro with no project. */
     @Test
     public void TestNoProjectShowsInProjectListSpinnerPomodoro() {
         ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
@@ -150,7 +151,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         deleteDummyUser();
         Intents.release();
     }
-
+    /** Test starting pomodoro with no associated project. */
     @Test
     public void TestStartPomodoroButtonWithNoProject() {
         ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
@@ -186,7 +187,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         deleteDummyUser();
         Intents.release();
     }
-
+    /** Test starting pomodoro with  associated project. */
     @Test
     public void TestStartPomodoroButtonWithProject() {
         ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
@@ -222,7 +223,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         deleteDummyUser();
         Intents.release();
     }
-
+    /** Test starting pomodoro with associated project and whether number of pomodoros in this project is initialized. */
     @Test
     public void TestStartPomodoroButtonWithProjectIntializeNumberProjects() {
         ActivityTestRule<StartPomodoroStep1Activity> StartPomodoroStep1 =
