@@ -39,6 +39,7 @@ import org.hamcrest.TypeSafeMatcher;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -68,7 +69,10 @@ public class DeleteProjectActivityTest extends TestCase {
     public String username = "";
 
     public final static ActivityTestRule<UserHomeActivity> deleteProject = new ActivityTestRule<UserHomeActivity>(UserHomeActivity.class, false, false);
-
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
     /** Test deleting a project with no associated time. */
     @Test
     public void testDeleteNoTime() {
@@ -136,7 +140,7 @@ public class DeleteProjectActivityTest extends TestCase {
                 .onChildView(withId(R.id.nameProject))
                 .check(matches(withText("MyProj2")));
         deleteDummyUser();
-        Intents.release();
+
 
     }
     String projectId = "";
@@ -222,7 +226,7 @@ public class DeleteProjectActivityTest extends TestCase {
                 .onChildView(withId(R.id.nameProject))
                 .check(matches(withText("MyProj2")));
 
-        Intents.release();
+
 
     }
     /** Test deleting a user with associated time and yes provided on confirmation request. */
@@ -296,7 +300,7 @@ public class DeleteProjectActivityTest extends TestCase {
                 .check(matches(withText("MyProj2")));
 
 
-        Intents.release();
+
 
     }
 

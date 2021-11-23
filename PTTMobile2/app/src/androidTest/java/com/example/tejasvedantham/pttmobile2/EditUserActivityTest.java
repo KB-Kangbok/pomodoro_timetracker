@@ -35,6 +35,7 @@ import androidx.test.rule.ActivityTestRule;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,11 @@ import java.util.Random;
 
 @RunWith(AndroidJUnit4.class)
 public class EditUserActivityTest {
+
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
 
     private void removeAllCurrent() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -132,7 +138,7 @@ public class EditUserActivityTest {
 
         intended(hasComponent(EditUserActivity.class.getName()));
         deleteDummyUser();
-        Intents.release();
+
 
     }
 
@@ -199,7 +205,7 @@ public class EditUserActivityTest {
                 .atPosition(0)
                 .onChildView(withId(R.id.lastNameText))
                 .check(matches(withText("Lu2")));
-        Intents.release();
+
 
     }
     /** Test editing a user with only new first name. */
@@ -263,7 +269,7 @@ public class EditUserActivityTest {
                 .atPosition(0)
                 .onChildView(withId(R.id.lastNameText))
                 .check(matches(withText("Lu")));
-        Intents.release();
+
 
     }
     /** Test editing a user with only new last name. */
@@ -327,7 +333,7 @@ public class EditUserActivityTest {
                 .atPosition(0)
                 .onChildView(withId(R.id.lastNameText))
                 .check(matches(withText("Lu2")));
-        Intents.release();
+
 
     }
     /** Test editing a user with no new values provided. */
@@ -389,7 +395,8 @@ public class EditUserActivityTest {
                 .atPosition(0)
                 .onChildView(withId(R.id.lastNameText))
                 .check(matches(withText("Lu")));
-        Intents.release();
+
+
 
     }
     private void createDummyUser() {

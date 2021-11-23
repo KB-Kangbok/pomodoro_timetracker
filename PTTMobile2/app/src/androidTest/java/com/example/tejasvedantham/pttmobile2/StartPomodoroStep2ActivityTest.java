@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.Serializable;
@@ -46,6 +47,10 @@ public class StartPomodoroStep2ActivityTest {
     public String username = "";
     public String projectId = "";
 
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
 
     /** Test ending a pomodoro and starting a new one increments the number of pomodoros in this project and starts new pomodoro */
     @Test
@@ -89,11 +94,11 @@ public class StartPomodoroStep2ActivityTest {
         onView(withId(R.id.numPomodorosText)).check(matches(withText("Pomodoros in this session: 1")));
 
         deleteDummyUser();
-        Intents.release();
+
 
 
     }
-    /** Test ending a pomodoro and not starting a new one takes user back to home and logs session */
+    /** Test ending a pomodoro and not starting a new one takes user back to home  */
     @Test
     public void TestPomodoroTimerFinishNo() {
         ActivityTestRule<StartPomodoroStep2Activity> StartPomodoroStep2 =
@@ -135,7 +140,7 @@ public class StartPomodoroStep2ActivityTest {
         intended(hasComponent(UserHomeActivity.class.getName()));
 
         deleteDummyUser();
-        Intents.release();
+
     }
     /** Test stopping a pomodoro and a dialog box appears for confirmation about partial logging */
     @Test
@@ -173,7 +178,7 @@ public class StartPomodoroStep2ActivityTest {
         onView(withText("No")).perform(click());
         intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
-        Intents.release();
+
 
     }
     /** Test stopping a pomodoro not associated with project takes user back home and does not show confirmation dialog */
@@ -210,10 +215,10 @@ public class StartPomodoroStep2ActivityTest {
 
         intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
-        Intents.release();
+
 
     }
-    /** Test stopping a pomodoro shows the confirmation dialog to log partial pomodoro and user selects yes so partial pomodoro is logged to system */
+    /** Test stopping a pomodoro shows the confirmation dialog to log partial pomodoro and user selects yes  */
     @Test
     public void TestPomodoroTimerStopLogPartial() {
 
@@ -251,7 +256,7 @@ public class StartPomodoroStep2ActivityTest {
         onView(withText("Yes")).perform(click());
         intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
-        Intents.release();
+
     }
     /** Test stopping a pomodoro shows the confirmation dialog to log partial pomodoro and user selects no so partial pomodoro is not logged to system */
     @Test
@@ -290,7 +295,7 @@ public class StartPomodoroStep2ActivityTest {
         onView(withText("No")).perform(click());
         intended(hasComponent(UserHomeActivity.class.getName()));
         deleteDummyUser();
-        Intents.release();
+
     }
 
     private void removeAllCurrent() {

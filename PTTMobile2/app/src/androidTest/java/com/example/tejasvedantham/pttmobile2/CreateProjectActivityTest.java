@@ -55,6 +55,7 @@ import static org.hamcrest.Matchers.instanceOf;
 
 public class CreateProjectActivityTest extends TestCase {
 
+
     @Rule
     public final static ActivityTestRule<CreateProjectActivity> createProjectActivity = new ActivityTestRule<CreateProjectActivity>(CreateProjectActivity.class, false, false);
 

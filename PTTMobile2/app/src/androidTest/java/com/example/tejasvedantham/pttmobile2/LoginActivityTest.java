@@ -49,6 +49,7 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,7 +60,10 @@ import java.util.Random;
 @RunWith(AndroidJUnit4.class)
 public class LoginActivityTest extends TestCase  {
 
-
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
     /** Test logging in as admin. */
     @Test
     public void TestAdminLogin() {
@@ -76,7 +80,7 @@ public class LoginActivityTest extends TestCase  {
 
         // Check activity change
         intended(hasComponent(AdminHomeActivity.class.getName()));
-        Intents.release();
+
     }
     /** Test login attempt with invalid email that does not exist. */
     @Test
@@ -126,7 +130,7 @@ public class LoginActivityTest extends TestCase  {
         String name = UserHomeActivity.class.getName();
         // Check activity change
         intended(hasComponent(name));
-        Intents.release();
+
         deleteDummyUser();
     }
 

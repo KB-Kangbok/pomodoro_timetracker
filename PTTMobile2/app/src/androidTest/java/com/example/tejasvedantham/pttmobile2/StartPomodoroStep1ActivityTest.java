@@ -72,7 +72,10 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
     public String lastname = "";
     public String username = "";
     public String projectId = "";
-
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
     /** Test whether the projects associated to a user shows up in a pomodoro start attempt to associate to a project. */
     @Test
     public void TestProjectShowsInProjectListSpinnerPomodoro() {
@@ -110,7 +113,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.project_spinner)).check(matches(withSpinnerText("MyProject")));
         deleteDummyUser();
-        Intents.release();
+
     }
     /** Test whether there is a option for starting pomodoro with no project. */
     @Test
@@ -149,7 +152,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         onData(anything()).atPosition(0).perform(click());
         onView(withId(R.id.project_spinner)).check(matches(withSpinnerText("No Associated Project")));
         deleteDummyUser();
-        Intents.release();
+
     }
     /** Test starting pomodoro with no associated project. */
     @Test
@@ -185,7 +188,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         intended(hasComponent(StartPomodoroStep2Activity.class.getName()));
         onView(withId(R.id.projectNameText)).check(matches(withText("No Associated Project")));
         deleteDummyUser();
-        Intents.release();
+
     }
     /** Test starting pomodoro with  associated project. */
     @Test
@@ -221,7 +224,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         intended(hasComponent(StartPomodoroStep2Activity.class.getName()));
         onView(withId(R.id.projectNameText)).check(matches(withText("MyProject")));
         deleteDummyUser();
-        Intents.release();
+
     }
     /** Test starting pomodoro with associated project and whether number of pomodoros in this project is initialized. */
     @Test
@@ -258,7 +261,7 @@ public class StartPomodoroStep1ActivityTest extends TestCase {
         onView(withId(R.id.projectNameText)).check(matches(withText("MyProject")));
         onView(withId(R.id.numPomodorosText)).check(matches(withText("Pomodoros in this session: 0")));
         deleteDummyUser();
-        Intents.release();
+
     }
 
 
