@@ -31,4 +31,12 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How to use this web app
+
+### Create user
+
+Type in `admin` in username to go to admin page. In admin page, you can create new user, delete user, and edit user.
+
+### Login as user
+
+Come back to homepage to login as user. Username is email of created user. After successful login, there are three menus on the left side. All three menus are self-explanatory. Explore and enjoy!
