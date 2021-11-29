@@ -4,32 +4,35 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 public class CreateProjectTest extends BrowserFunctions {
-    private final String username = "kb@gmail.com";
-    private final String projName = "sample";
-
-    @BeforeClass
-    public void createUser() throws Exception {
-        utils.createUser("kb", "lee", username);
-    }
-
-    @AfterClass
-    public void deleteUser() throws Exception {
-        utils.deleteUser(username, true);
-    }
 
     @Test
     public void createValidProject() throws Exception {
-        utils.createProject(username, projName);
+        utils.createProject(PROJECT);
         
-        Assert.assertTrue(utils.checkProjects(projName));
+        Assert.assertTrue(utils.projectExists(PROJECT));
     }
     
     @Test(dependsOnMethods = {"createValidProject"})
     public void createDuplicateProject() throws Exception {
-        utils.createProject(username, projName);
-        String actual = utils.getAlertMessage();
-        String expected = "Project " + projName + " already exists!";
+        String actual = utils.createProject(PROJECT);
+        String expected = PROJ_ALREADY_EXISTS[0] + PROJECT + PROJ_ALREADY_EXISTS[1];
+        
         Assert.assertEquals(actual, expected);
     }
 
+    @BeforeClass
+    public void setup() throws Exception {
+        utils.login(ADMIN);
+        utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
+        utils.logout();
+        utils.login(USERNAME);
+    }
+
+    @AfterClass
+    public void teardown() throws Exception {
+        utils.logout();
+        utils.login(ADMIN);
+        utils.deleteUser(USERNAME, true);
+        utils.logout();
+    }
 }

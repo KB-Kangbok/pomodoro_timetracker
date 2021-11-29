@@ -1,30 +1,38 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Button, TextField, Grid, Typography } from "@material-ui/core";
+import ManageProject from "../components/ManageProject";
 import {
-  OutlinedInput,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Typography,
 } from "@mui/material";
+import { useState, useEffect } from "react";
+import Pomodoro from "../components/Pomodoro";
+import axios from "axios";
 import { apiUrl } from "../config.json";
+import Report from "../components/Report";
 
 export default function User({
   location: {
-    state: { firstName, id },
+    state: { id, firstName },
   },
+  isTest,
 }) {
   const [projects, setProjects] = useState([{ id: 0 }]);
-  const [selectedProject, setSelectedProject] = useState({});
-  const [hasSessions, setHasSessions] = useState(false);
-  const [input, setInput] = useState("");
+  const [selectedMenu, setSelectedMenu] = useState("project");
   const [update, setUpdate] = useState(false);
+
+  const handleProjectSelect = () => {
+    setSelectedMenu("project");
+  };
+  const handlePomodoroSelect = () => {
+    setSelectedMenu("pomodoro");
+  };
+
+  const handleReportSelect = () => {
+    setSelectedMenu("report");
+  };
 
   useEffect(() => {
     const getProjects = async () => {
@@ -35,180 +43,48 @@ export default function User({
     getProjects();
   }, [update, id]);
 
-  const handleSelect = (event) => {
-    const {
-      target: { value },
-    } = event;
-    console.log(value);
-    setSelectedProject(value);
-  };
-
-  const handleClose = () => {
-    setHasSessions(false);
-  };
-
-  const handleDelete = async () => {
-    console.log(selectedProject.id);
-    // const sessions = {
-    //   data: [
-    //     {
-    //       id: 1,
-    //       startTime: "2019-02-18T20:00Z",
-    //       endTime: "2019-02-18T20:00Z",
-    //       counter: 1,
-    //     },
-    //   ],
-    // };
-    const sessions = await axios.get(
-      `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`
-    );
-    if (sessions.data.length === 0) {
-      deleteProject();
-    } else {
-      setHasSessions(true);
-    }
-  };
-
-  const deleteProject = async () => {
-    // This is for test-case. Later delete console.log and uncomment axios part
-    const res = await axios.delete(
-      `${apiUrl}/users/${id}/projects/${selectedProject.id}`
-    );
-    if (res.status === 200) {
-      alert('Project "' + res.data.projectname + '" is successfully deleted.');
-    }
-    setSelectedProject({});
-    setHasSessions(false);
-    setUpdate(true);
-  };
-
-  const handleInput = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setInput(value);
-  };
-
-  const handleCreate = async () => {
-    try {
-      const res = await axios.post(`${apiUrl}/users/${id}/projects`, {
-        projectname: input,
-      });
-      console.log(res.data.id);
-      setInput("");
-      setUpdate(true);
-    } catch (e) {
-      if (e.response.status === 409) {
-        alert(`Project ${input} already exists!`);
-      }
-    }
-  };
-
-  const handleSession = async () => {
-    try {
-      const res = await axios.post(
-        `${apiUrl}/users/${id}/projects/${selectedProject.id}/sessions`,
-        {
-          startTime: "2019-02-18T20:00Z",
-          endTime: "2019-02-18T21:00Z",
-          counter: 0,
-        }
-      );
-      console.log(res.data.id);
-      setSelectedProject({});
-      setUpdate(true);
-    } catch (e) {
-      if (e.response.status === 404) {
-        alert(`Bad request`);
-      }
-    }
-  };
-  const gridStyle = {
-    padding: 20,
-    height: "60vh",
-    width: 500,
-    margin: "20px auto",
-  };
-
   return (
-    <div style={{ margin: 20 }}>
-      <Typography id="greeting" component="h6" align="right">{`Hi, ${firstName}`}</Typography>
-      <Typography variant="inherit" component="h1" style={{ marginTop: -20 }}>
-        Manage Projects
-      </Typography>
-      <Grid style={gridStyle}>
-        <FormControl sx={{ width: 200 }}>
-          <InputLabel>Project</InputLabel>
-          <Select
-            id="existing-projects-select"
-            value={selectedProject}
-            onChange={handleSelect}
-            input={<OutlinedInput label="Name" />}
-          >
-            {projects.map((project) => (
-              <MenuItem key={project.id} value={project}>
-                {project.projectname}
-              </MenuItem>
-            ))}
-          </Select>
-          <Button
-            id="delete-project-btn"
-            variant="contained"
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-        </FormControl>
+    <div
+      className="font-sans"
+      style={{ margin: 0, marginTop: 0, color: "#414244" }}
+    >
+      <Typography
+        id="greeting"
+        component="h6"
+        align="right"
+        sx={{ marginRight: 5, fontWeight: "bold" }}
+      >{`Hi, ${firstName}`}</Typography>
+      <Grid container style={{ marginTop: 30 }}>
+        <Grid item xs={2} alignItems="center">
+          <List sx={{ width: "100%", alignContent: "center" }}>
+            <ListItem key={0} disablePadding>
+              <ListItemButton id="project-btn" onClick={handleProjectSelect}>
+                <ListItemText disableTypography primary={"Manage Project"} />
+              </ListItemButton>
+            </ListItem>
 
-        <FormControl style={{ marginLeft: 30 }}>
-          <TextField
-            id="project-input"
-            label="New Project"
-            variant="outlined"
-            onChange={handleInput}
-            value={input}
-          />
-          <Button
-            id="project-create-btn"
-            variant="contained"
-            onClick={handleCreate}
-          >
-            Create
-          </Button>
-        </FormControl>
-        <Button
-          id="create-session-btn"
-          variant="contained"
-          onClick={handleSession}
-        >
-          Temporary create session
-        </Button>
+            <ListItem key={1} disablePadding>
+              <ListItemButton id="pomodoro-btn" onClick={handlePomodoroSelect}>
+                <ListItemText disableTypography primary={"Pomodoro"} />
+              </ListItemButton>
+            </ListItem>
 
-        <Dialog
-          open={hasSessions}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            Delete project "{selectedProject.projectname}"?
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              This project has an associated pomodoro(s). Deleting the project
-              will result in losing all information about the pomodoro(s). Do
-              you still want to delete this project?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button id="dialog-accept" onClick={deleteProject}>
-              Delete
-            </Button>
-            <Button id="dialog-cancel" onClick={handleClose} autoFocus>
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
+            <ListItem key={2} disablePadding>
+              <ListItemButton id="report-btn" onClick={handleReportSelect}>
+                <ListItemText disableTypography primary={"Report"} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Grid>
+        <Grid item xs alignContent="center">
+          {selectedMenu === "project" && (
+            <ManageProject id={id} projects={projects} setUpdate={setUpdate} />
+          )}
+          {selectedMenu === "pomodoro" && (
+            <Pomodoro id={id} projects={projects} isTest={isTest} />
+          )}
+          {selectedMenu === "report" && <Report id={id} projects={projects} />}
+        </Grid>
       </Grid>
     </div>
   );

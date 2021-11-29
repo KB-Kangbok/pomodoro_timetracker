@@ -7,12 +7,6 @@ import java.util.*;
 
 
 public class EditUserTest extends BrowserFunctions {
-    private final String ADMIN = "admin";
-    private final String FIRST_NAME = "Heejoo";
-    private final String LAST_NAME = "Cho";
-    private final String USERNAME = "test@gatech.edu";
-    private final String CHANGE = "change";
-    private final String[] SUCCESSFUL_UPDATE = new String[]{"User \"", "\" is successfully edited."};
     private Map<String, String> information;
 
     @Test(description = "Test to edit first-name for a user")
@@ -63,7 +57,7 @@ public class EditUserTest extends BrowserFunctions {
     }
 
     @AfterClass
-    public void clean() throws Exception {
+    public void teardown() throws Exception {
         utils.deleteUser(USERNAME, true);
         utils.logout();
     }

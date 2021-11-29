@@ -4,11 +4,6 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 public class LoginTest extends BrowserFunctions {
-    private final String ADMIN = "admin";
-    private final String FIRST_NAME = "John";
-    private final String LAST_NAME = "Doe";
-    private final String USERNAME = "test@gatech.edu";
-    private final String USER_NOT_FOUND = "User not found";
 
     @Test(description = "Test to login as an admin")
     public void loginAdminTest() throws Exception {
@@ -16,40 +11,45 @@ public class LoginTest extends BrowserFunctions {
         
         String expected = getBaseUrl() + "/admin";
         String actual = utils.driver.getCurrentUrl();
-        
+
         Assert.assertEquals(actual, expected);
     }
 
-    @Test(description = "Test to login as a valid user")
+    @Test(description = "Test to login as a non-existing user")
+    public void loginInvalidUserTest() throws Exception {
+        utils.login("InvalidName");
+        
+        String expected = USER_NOT_FOUND;
+        String actual = utils.getAlertMessage();
+        Thread.sleep(100);
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Test(description = "Test to login as a valid user", groups = {"validUser"})
     public void loginValidUserTest() throws Exception {
-        createUser();
+        utils.login(ADMIN);
+        utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
         utils.login(USERNAME);
         
         String expected = FIRST_NAME;
         String actual = utils.getFirstName();
-
+        Thread.sleep(100);
         Assert.assertEquals(actual, expected);
-        deleteUser();
+
+        utils.login(ADMIN);
+        utils.deleteUser(USERNAME, true);
     }
 
-    @Test(description = "Test to login as an invalid user - not registered")
-    public void loginInvalidUserTest() throws Exception {
-        utils.login(USERNAME);
-        
-        String expected = USER_NOT_FOUND;
-        String actual = utils.getAlertMessage();
-
-        Assert.assertEquals(actual, expected);
-    }
-
+    @BeforeGroups("validUser")
     public void createUser() throws Exception {
-        // utils.login(ADMIN);
+        utils.login(ADMIN);
         utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
         utils.logout();
     }
 
+    @AfterGroups("validUser")
     public void deleteUser() throws Exception {
-        // utils.login(ADMIN);
+        utils.login(ADMIN);
         utils.deleteUser(USERNAME, true);
         utils.logout();
     }

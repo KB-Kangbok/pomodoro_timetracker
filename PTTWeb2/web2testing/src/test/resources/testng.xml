@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Suite1" verbose="1">
-    <test name="Test">
+<suite name="PTT Web2 Test" verbose="1">
+    <!-- <test name="User-story set 1">
         <classes>
             <class name="edu.gatech.LoginTest" />
             <class name="edu.gatech.CreateUserTest" />
@@ -10,5 +10,13 @@
             <class name="edu.gatech.DeleteProjectTest" />
             <class name="edu.gatech.CreateProjectTest" />
         </classes>
-    </test>
+    </test> -->
+    <test name="User-story set 2">
+        <classes>
+            <class name="edu.gatech.StartPomodoroTest" />
+            <class name="edu.gatech.EndPomodoroTest" />
+            <class name="edu.gatech.EndPartialPomodoroTest" />
+            <class name="edu.gatech.ReportTest" />
+        </classes>
+    </test> 
 </suite>

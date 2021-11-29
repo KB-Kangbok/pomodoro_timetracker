@@ -8,17 +8,35 @@ import { useState } from "react";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [isTest, setIsTest] = useState(false);
   return (
-    <HashRouter>
-      <Navigation isLogin={isLogin} setIsLogin={setIsLogin} />
-      <Route
-        path="/"
-        exact={true}
-        render={(props) => <Home {...props} setIsLogin={setIsLogin} />}
-      />
-      <Route path="/admin" exact={true} component={Admin} />
-      <Route path="/user" exact={true} component={User} />
-    </HashRouter>
+    <div
+      style={{
+        backgroundColor: "pink",
+        height: "200vh",
+        minHeight: "100vh",
+      }}
+    >
+      <HashRouter>
+        <Navigation
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          setIsTest={setIsTest}
+          isTest={isTest}
+        />
+        <Route
+          path="/"
+          exact={true}
+          render={(props) => <Home {...props} setIsLogin={setIsLogin} />}
+        />
+        <Route path="/admin" exact={true} component={Admin} />
+        <Route
+          path="/user"
+          exact={true}
+          render={(props) => <User {...props} isTest={isTest} />}
+        />
+      </HashRouter>
+    </div>
   );
 }
 
