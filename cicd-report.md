@@ -15,3 +15,8 @@ gradle clean build
 (or)
 
 gradle clean BackendTestsBackend2
+
+
+
+
+Web2: CI/CD is fully working for Web2
