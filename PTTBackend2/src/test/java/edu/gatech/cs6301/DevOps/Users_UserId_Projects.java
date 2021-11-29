@@ -124,13 +124,13 @@ public class Users_UserId_Projects {
             response = putProjects(user_id);
 
             int status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             response.close();
 
             response = deleteProjects(user_id);
             status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
             response.close();
 

@@ -27,7 +27,7 @@ public class Users_UserId_Projects_ProjectId extends Base {
             response = postProject(user_id, "Project", "0");
             int status = response.getStatusLine().getStatusCode();
 
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
 
         } finally {
             this.httpclient.close();

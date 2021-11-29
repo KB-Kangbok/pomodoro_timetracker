@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Getter
 public class Report {
-    private List<ReportSession> reportSessionList;
+    private List<ReportSession> sessions;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer completedPomodoros;

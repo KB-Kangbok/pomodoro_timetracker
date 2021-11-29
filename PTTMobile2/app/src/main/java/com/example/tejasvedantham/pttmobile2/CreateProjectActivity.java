@@ -44,6 +44,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
+
         projectNameField = (EditText) findViewById(R.id.projectName);
 
 //        userId = userSession.getUserId();

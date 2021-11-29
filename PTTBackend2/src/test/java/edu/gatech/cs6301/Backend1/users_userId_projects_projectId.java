@@ -150,7 +150,7 @@ public class users_userId_projects_projectId extends BaseTestClass {
 
             response = deleteProject("123", "");
             status = response.getStatusLine().getStatusCode();
-            Assert.assertEquals(500, status);
+            Assert.assertEquals(405, status);
             EntityUtils.consume(response.getEntity());
             response.close();
         } finally {
