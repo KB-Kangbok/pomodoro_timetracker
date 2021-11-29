@@ -15,3 +15,7 @@ Installation Instructions for PTTMobile2
 
 This should install and deploy the application on the device.
 *Note: These steps should also work on an emulator, but the emulator needs to be up and running from Android Studio.*
+
+Instructions for using the application:
+
+On login prompt entering "admin" will allow you to login as an admin. You can create a user as an admin and then use this created user's email to login as a user. 
