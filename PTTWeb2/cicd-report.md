@@ -1,10 +1,10 @@
-### CI/CD status
+## CI/CD status
 
 CI/CD is fully working for Web 2
 
-### Installation
+## Installation
 
-## Web client
+### Web client
 
 1. Navigate to PTTWeb2/client
 2. Run `npm i`
@@ -12,7 +12,7 @@ CI/CD is fully working for Web 2
 4. To run the web client, `npm start`
 5. To build, `npm run build`
 
-## Web testing
+### Web testing
 
 1. Navigate to PTTWeb2/web2testing
 2. Change frontend url in `src/test/java/edu/gatech/BrowserFunctions.java`, `baseUrl`
