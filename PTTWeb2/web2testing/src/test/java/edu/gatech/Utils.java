@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.Keys;
@@ -80,7 +79,7 @@ public class Utils {
         }
     }
 
-    public String editUser(Map<String, String> information) throws Exception {
+    public boolean checkEditedUserInfo(Map<String, String> information) throws Exception {
         WebElement drop = driver.findElement(By.id("edit-email-select"));
         drop.click();
         Thread.sleep(100);
@@ -92,17 +91,36 @@ public class Utils {
             }
         }
 
-        String[] changes = new String[]{"firstName", "lastName"};
-        for (String change : changes) {
-            if (information.containsKey(change)) {
-                WebElement fname = driver.findElement(By.id("edit-fname"));
-                while (!fname.getAttribute("value").equals("")) {
-                    fname.sendKeys(Keys.BACK_SPACE);
-                }
-                    fname.sendKeys(information.get(change));
+        for (String change: information.keySet()) {
+            if(change.equals("username")) continue;
+            String current = driver.findElement(By.id(change)).getAttribute("value");
+            if(!current.equals(information.get(change))) {
+                System.out.println(change + " " + information.get(change) + " " + current);
+                return false;
             }
         }
-
+        
+        return true;
+    }
+    
+    public String editUser(Map<String, String> information) throws Exception {
+        WebElement drop = driver.findElement(By.id("edit-email-select"));
+        drop.click();
+        Thread.sleep(100);
+        List<WebElement> users = driver.findElements(By.tagName("li"));
+        for (WebElement user : users) {
+            if (user.getText().equals(information.get("username"))) {
+                user.click();
+                break;
+            }
+        }
+        
+        for (String change: information.keySet()) {
+            if(change.equals("username")) continue;
+            WebElement element = clearInput(change, "id");
+            element.sendKeys(information.get(change));
+        }
+        
         WebElement edit = driver.findElement(By.id("edit-user-btn"));
         edit.click();
         Thread.sleep(200);
@@ -170,25 +188,8 @@ public class Utils {
         Thread.sleep(200);
     }
 
-    public void createSession(String projName) throws Exception {
-        WebElement drop = driver.findElement(By.id("existing-projects-select"));
-        drop.click();
-        Thread.sleep(100);
-        List<WebElement> projects = driver.findElements(By.tagName("li"));
-        for (WebElement project : projects) {
-            if (project.getText().equals(projName)) {
-                project.click();
-                break;
-            }
-        }
-
-        WebElement create = driver.findElement(By.id("create-session-btn"));
-        create.click();
-    }
-
     //tabName: project, pomodoro, report
     public void clickUserTab(String tabName) throws Exception {
-        System.out.println(tabName.toLowerCase() + "-btn");
         WebElement btn = driver.findElement(By.id(tabName.toLowerCase() + "-btn"));
         btn.click();
         Thread.sleep(100);
@@ -273,26 +274,30 @@ public class Utils {
     }
 
     public boolean checkForTimer() throws Exception {
-        WebElement timer = driver.findElement(By.id("timer-present"));
-        if (timer == null) {
-            return false;
-        } else {
+        try {
+            driver.findElement(By.id("timer-present"));
             return true;
+        } catch(NoSuchElementException e) {
+            return false;
         }
     }
 
-    public void clearInput() throws Exception {
-        Thread.sleep(300);
-        WebElement[] elements = new WebElement[]{
-            driver.findElement(By.id("fname-input")),
-            driver.findElement(By.id("lname-input")),
-            driver.findElement(By.id("email-input"))
-        };
-        for (WebElement e : elements) {
-            while (!e.getAttribute("value").equals("")) {
-                e.sendKeys(Keys.BACK_SPACE);
-               }
+    public WebElement clearInput(String inputId, String idType) throws Exception {
+        WebElement input;
+        if(idType.equals("id")) {
+            input = driver.findElement(By.id(inputId));
+        } else {
+            input = driver.findElement(By.xpath(inputId));
         }
+        String os = System.getProperty("os.name");
+        if(os.startsWith("Mac")) {
+            input.sendKeys(Keys.COMMAND + "a");
+        } else {
+            input.sendKeys(Keys.CONTROL + "a");
+        }
+        input.sendKeys(Keys.DELETE);
+
+        return input;
     }
 
     public String getFirstName() throws Exception {
@@ -302,13 +307,13 @@ public class Utils {
 
     public String getAlertMessage() throws Exception {
         Thread.sleep(200);
-        try {
+        if(ExpectedConditions.alertIsPresent().apply(driver) != null) {
             Alert alert = driver.switchTo().alert();
             String message = alert.getText();
             alert.accept();
             Thread.sleep(200);
             return message;
-        } catch (NoAlertPresentException e) {
+        } else {
             return "\"NO ALERT FOUND\"";
         }
     }
@@ -334,11 +339,37 @@ public class Utils {
         Thread.sleep(200);
     }
 
-    public void changeDate(String xpath, String target) throws Exception {
-        WebElement input = driver.findElement(By.xpath(xpath));
-        input.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        input.sendKeys(Keys.DELETE);
+    public void changeDate(String xpath1, String xpath2, String xpath3, String xpath4, String target) throws Exception {
+        driver.findElement(By.xpath(xpath1)).click();
+        Thread.sleep(200);
+        driver.findElement(By.xpath(xpath2)).click();
+        Thread.sleep(200);
+        WebElement input = clearInput(xpath3, "xpath");
+        input.click();
         input.sendKeys(target);
         Thread.sleep(200);
+        driver.findElement(By.xpath(xpath4)).click();
+        Thread.sleep(200);
+    }
+
+    public void clickCheckbox(String id) throws Exception {
+        WebElement checkbox = driver.findElement(By.id(id));
+        checkbox.click();
+        Thread.sleep(100);
+    }
+
+    public int sessionCount() throws Exception {
+        List<WebElement> elements = driver.findElements(By.className("results"));
+        return elements.size();
+    }
+
+    public boolean isOptionReportExist(String type) throws Exception {
+        String id = type + "-report";
+        try {
+            driver.findElement(By.id(id));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

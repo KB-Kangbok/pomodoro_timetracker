@@ -50,7 +50,7 @@ export default function Result({
         subheader={<ListSubheader>Sessions List</ListSubheader>}
       >
         {data.sessions.map((session) => (
-          <ListItem sx={{ width: "100%" }} divider>
+          <ListItem className="results" sx={{ width: "100%" }} divider>
             <ListItemIcon>
               <AssessmentIcon />
             </ListItemIcon>
@@ -67,7 +67,7 @@ export default function Result({
         ))}
       </List>
       {totalHour && (
-        <ListItem>
+        <ListItem id="time-report">
           <ListItemIcon>
             <AssessmentIcon />
           </ListItemIcon>
@@ -79,7 +79,7 @@ export default function Result({
         </ListItem>
       )}
       {totalPomodoro && (
-        <ListItem>
+        <ListItem id="pomodoro-report">
           <ListItemIcon>
             <AssessmentIcon />
           </ListItemIcon>
@@ -90,6 +90,7 @@ export default function Result({
       )}
 
       <Button
+        id="close-report-btn"
         style={{ marginTop: 20 }}
         onClick={handleClose}
         variant="outlined"

@@ -176,13 +176,18 @@ export default function Report({ id, projects, dateAdapter }) {
                 </LocalizationProvider>
                 <FormControlLabel
                   control={
-                    <Checkbox checked={totalHour} onChange={handleChangeHour} />
+                    <Checkbox
+                      id="time-checkbox"
+                      checked={totalHour}
+                      onChange={handleChangeHour}
+                    />
                   }
                   label="Include Total Hours"
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
+                      id="pomodoro-checkbox"
                       checked={totalPomodoro}
                       onChange={handleChangePomodoro}
                     />
@@ -190,6 +195,7 @@ export default function Report({ id, projects, dateAdapter }) {
                   label="Include Total Pomodoros"
                 />
                 <Button
+                  id="show-report-btn"
                   style={{ marginTop: 20 }}
                   variant="outlined"
                   onClick={handleClick}

@@ -15,7 +15,7 @@ export default function Login({ username, handleChange, setIsLogin }) {
     };
     getUsers();
   }, []);
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
     const userObject = users.find((element) => element.email === username);
     if (username === "admin") {
       history.push("/admin");
@@ -25,6 +25,7 @@ export default function Login({ username, handleChange, setIsLogin }) {
         history.push({ pathname: "/user", state: userObject });
         setIsLogin(true);
       } else {
+        event.preventDefault();
         alert("User not found");
       }
     }

@@ -8,28 +8,39 @@ public class EndPomodoroTest extends BrowserFunctions {
 
     @Test(description = "Test to choose to end session after Pomodoro completes")
     public void endSessionTest() throws Exception {
-        utils.clickStartPomodoro();
+        String actual = utils.clickStartPomodoro();
+        String expected = START_POMODORO;
+        Thread.sleep(100);
+        Assert.assertEquals(actual, expected);
+        
+        utils.clickButton("dialog-accept", true);
         utils.selectProjectForPomodoro(PROJECT);
-
+        
         Thread.sleep(POMODORO_DURATION);
         Assert.assertEquals(utils.findContinueDialogMsg().getText(), CONTINUE_POMODORO);
-
-        utils.clickStopBtn();
-        Assert.assertEquals(utils.checkForTimer(), false);
+        
+        utils.clickButton("continue-cancel", true);
+        Assert.assertTrue(!utils.checkForTimer());
     }
-
-    @Test(description = "Test to continue session with another Pomodoro ")
+    
+    @Test(description = "Test to continue session with another Pomodoro ", dependsOnMethods = {"endSessionTest"})
     public void continueSessionTest() throws Exception {
-        utils.clickStartPomodoro();
-        utils.selectProjectForPomodoro(PROJECT2);
+        String actual = utils.clickStartPomodoro();
+        String expected = START_POMODORO;
+        Thread.sleep(100);
+        Assert.assertEquals(actual, expected);
+        
+        utils.clickButton("dialog-accept", true);
+        utils.selectProjectForPomodoro(PROJECT);
         
         Thread.sleep(POMODORO_DURATION);
         Assert.assertEquals(utils.findContinueDialogMsg().getText(), CONTINUE_POMODORO); 
 
         utils.clickContinueBtn();
-        Assert.assertEquals(utils.checkForTimer(), true);
-        Thread.sleep(POMODORO_DURATION);
+        Assert.assertTrue(utils.checkForTimer());
+        Thread.sleep(100);
         utils.clickStopBtn();
+        utils.clickLogPartialBtn("stop-accept-btn");
     }
 
     @BeforeClass
@@ -38,10 +49,9 @@ public class EndPomodoroTest extends BrowserFunctions {
         utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
         utils.logout();
         utils.login(USERNAME);
-        utils.activateTestButton();
-        utils.clickUserTab("pomodoro");
+        utils.clickUserTab("project");
         utils.createProject(PROJECT);
-        utils.createProject(PROJECT2);
+        utils.clickUserTab("pomodoro");
     }
 
     @AfterClass

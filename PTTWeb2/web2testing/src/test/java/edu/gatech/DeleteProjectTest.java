@@ -17,8 +17,16 @@ public class DeleteProjectTest extends BrowserFunctions {
     @Test(dependsOnMethods = {"deleteProject"})
     public void deleteProjectWithSessionCancel() throws Exception {
         utils.createProject(PROJECT);
-        utils.createSession(PROJECT);
-
+        utils.clickUserTab("pomodoro");
+        utils.clickStartPomodoro();
+        utils.clickButton("dialog-accept", true);
+        utils.selectProjectForPomodoro(PROJECT);
+        Thread.sleep(POMODORO_DURATION);
+        // Thread.sleep(2000);
+        utils.clickButton("continue-cancel", true);
+        Thread.sleep(200);
+        utils.clickUserTab("project");
+        
         utils.deleteProject(PROJECT, false);
 
         Assert.assertTrue(utils.projectExists(PROJECT));

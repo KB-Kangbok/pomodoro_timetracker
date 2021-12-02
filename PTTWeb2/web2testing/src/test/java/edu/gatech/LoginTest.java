@@ -13,16 +13,17 @@ public class LoginTest extends BrowserFunctions {
         String actual = utils.driver.getCurrentUrl();
 
         Assert.assertEquals(actual, expected);
+        utils.logout();
     }
 
     @Test(description = "Test to login as a non-existing user")
     public void loginInvalidUserTest() throws Exception {
-        utils.login("InvalidName");
-        
+        utils.login("Invalid");
         String expected = USER_NOT_FOUND;
         String actual = utils.getAlertMessage();
         Thread.sleep(100);
         Assert.assertEquals(actual, expected);
+        utils.clearInput("user-login-input", "id");
     }
 
     @Test(description = "Test to login as a valid user", groups = {"validUser"})
@@ -40,27 +41,8 @@ public class LoginTest extends BrowserFunctions {
         utils.deleteUser(USERNAME, true);
     }
 
-    @BeforeGroups("validUser")
-    public void createUser() throws Exception {
-        utils.login(ADMIN);
-        utils.createUser(FIRST_NAME, LAST_NAME, USERNAME);
+    @AfterClass
+    public void teardown() throws Exception {
         utils.logout();
     }
-
-    @AfterGroups("validUser")
-    public void deleteUser() throws Exception {
-        utils.login(ADMIN);
-        utils.deleteUser(USERNAME, true);
-        utils.logout();
-    }
-
-    @AfterMethod
-    public void logout() throws Exception {
-        utils.logout();
-    }
-
-
-
-
-
 }

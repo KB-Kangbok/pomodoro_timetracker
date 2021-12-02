@@ -32,7 +32,7 @@ public class CreateUserTest extends BrowserFunctions {
         String actual = utils.createUser(FIRST_NAME, LAST_NAME, "");
 
         Assert.assertEquals(actual, expected);
-        utils.clearInput();
+        clearInput();
     }
 
     @Test(description = "Test to create a user without first name")
@@ -41,7 +41,7 @@ public class CreateUserTest extends BrowserFunctions {
         String actual = utils.createUser("", LAST_NAME, USERNAME);
 
         Assert.assertEquals(actual, expected);
-        utils.clearInput();
+        clearInput();
     }
 
     @Test(description = "Test to create a user without last name")
@@ -50,7 +50,7 @@ public class CreateUserTest extends BrowserFunctions {
         String actual = utils.createUser(FIRST_NAME, "", USERNAME);
 
         Assert.assertEquals(actual, expected);
-        utils.clearInput();
+        clearInput();
     }
 
     @BeforeClass
@@ -62,4 +62,10 @@ public class CreateUserTest extends BrowserFunctions {
     public void logout() throws Exception {
         utils.logout();
     } 
+    public void clearInput() throws Exception {
+        Thread.sleep(300);
+        utils.clearInput("fname-input", "id");
+        utils.clearInput("lname-input", "id");
+        utils.clearInput("email-input", "id");
+    }
 }

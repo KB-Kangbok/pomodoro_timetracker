@@ -13,7 +13,6 @@ public class EndPartialPomodoroTest extends BrowserFunctions {
         utils.login(USERNAME);
         utils.createProject(PROJECT);
         utils.clickUserTab("pomodoro");
-        utils.activateTestButton();
     }
 
     @Test(description = "Test to end a pomodoro in progress")
