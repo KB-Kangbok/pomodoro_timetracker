@@ -159,10 +159,10 @@ public class UsersUserIdProjectsProjectIdTests {
             response.close();
 
             response = createProject(userId, "");
-            String projectId = getIdFromResponse(response);
-            response.close();
-            // TEST GET
-            response = getProject(userId, projectId);
+//            String projectId = getIdFromResponse(response);
+//            response.close();
+//            // TEST GET
+//            response = getProject(userId, projectId);
             int status = response.getStatusLine().getStatusCode();
             Assert.assertEquals(400, status);
             response.close();
@@ -182,10 +182,10 @@ public class UsersUserIdProjectsProjectIdTests {
             response.close();
 
             response = createProject(userId, " ");
-            String projectId = getIdFromResponse(response);
-            response.close();
-            // TEST GET
-            response = getProject(userId, projectId);
+//            String projectId = getIdFromResponse(response);
+//            response.close();
+//            // TEST GET
+//            response = getProject(userId, projectId);
             int status = response.getStatusLine().getStatusCode();
             Assert.assertEquals(400, status);
             response.close();
