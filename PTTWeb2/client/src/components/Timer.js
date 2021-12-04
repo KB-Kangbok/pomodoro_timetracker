@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import Tomato from "../assets/timer.png";
+import styled from "styled-components";
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -115,12 +117,31 @@ export default function Timer({
   }, 1000);
 
   return (
-    <div id="timer-present">
+    <Wrapper id="timer-present">
+      <img style={{marginTop: -70}} src={Tomato} width="250vH" alt="Tomato" />
       <span>
-        <p>{`${timerMinute}:${
+        <Time >
+        <Numbers>{`${timerMinute < 10 ? "0" + timerMinute : timerMinute} : ${
           timerSecond < 10 ? "0" + timerSecond : timerSecond
-        }`}</p>
+        }`}</Numbers>
+        </Time>
       </span>
-    </div>
+    </Wrapper>
   );
 }
+const Wrapper = styled.section`
+  position: relative;
+  color: white;
+  width: 200%;
+`;
+
+const Time = styled.section`
+  position: absolute;
+  top: 38%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+`;
+
+const Numbers = styled.p`
+  font-size: 3.5em;
+`;
