@@ -312,7 +312,7 @@ export default function Pomodoro({ id, projects, isTest }) {
                 isTest={isTest}
                 startTime={startTime}
               />
-              <div style={{top: "-12vh", left: "14vh",position:"relative"}}>
+              <div style={{top: "-11vh", left: "14vh",position:"relative"}}>
               <Button id="stop-btn" onClick={handleStop}>
                 stop
               </Button>
