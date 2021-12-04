@@ -1,0 +1,9 @@
+button {
+  background-color: pink;
+  color: pink;
+  border: none;
+}
+
+button:hover {
+  background-color: palevioletred;
+}
