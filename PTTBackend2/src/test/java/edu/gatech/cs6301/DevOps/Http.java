@@ -2,6 +2,7 @@ package edu.gatech.cs6301.DevOps;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,8 +21,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class Http {
-    private static final String baseUrl = "http://localhost:8080";
+    static Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private static String baseUrl = prop.getProperty("TEST_BASE_URL") + ":" + prop.getProperty("TEST_BASE_PORT");
     private static CloseableHttpClient client;
     private static PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private static boolean setup = false;
@@ -38,10 +42,11 @@ public class Http {
             // Increase max total connection to 100
             Http.cm.setMaxTotal(100);
             // Increase default max connection per route to 20
-            Http.cm.setDefaultMaxPerRoute(10);
+            int max = Integer.valueOf(prop.getProperty("MAX_CONN"));
+            Http.cm.setDefaultMaxPerRoute(max);
             // Increase max connections for localhost:80 to 50
-            HttpHost localhost = new HttpHost("locahost", 8080);
-            Http.cm.setMaxPerRoute(new HttpRoute(localhost), 10);
+            HttpHost localhost = new HttpHost(prop.getProperty("TEST_HOST_NAME"), Integer.parseInt(prop.getProperty("TEST_BASE_PORT")));
+            Http.cm.setMaxPerRoute(new HttpRoute(localhost), max);
             Http.client = HttpClients.custom().setConnectionManager(Http.cm)
                     .build();
             Http.setup = true;

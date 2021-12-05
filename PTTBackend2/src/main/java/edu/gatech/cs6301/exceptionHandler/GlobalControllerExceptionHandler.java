@@ -3,6 +3,8 @@ package edu.gatech.cs6301.exceptionHandler;
 import edu.gatech.cs6301.exception.InvalidRequestBodyException;
 import edu.gatech.cs6301.exception.ResourceConflictException;
 import edu.gatech.cs6301.exception.ResourceNotFoundException;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 //>>>>>>> origin/backend-jipeng:PTTBackend2/src/main/java/edu/gatech/cs6301/exceptionHandler/GlobalControllerExceptionHandler.java
 
 @ControllerAdvice
+@Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class GlobalControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -38,19 +41,19 @@ public class GlobalControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
-    public ResponseEntity<String> handleInvalidRequestBodyJackson(RuntimeException runtimeException) {
+    public ResponseEntity<String> handleInvalidRequestBodyJackson() {
         return new ResponseEntity<>("Invalid Request Body", HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({NumberFormatException.class})
-    public ResponseEntity<String> handleInvalidRequestParameter(RuntimeException runtimeException) {
+    public ResponseEntity<String> handleInvalidRequestParameter() {
         return new ResponseEntity<>("Invalid Path ID", HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentTypeMismatchException.class, IllegalArgumentException.class})
-    public ResponseEntity<String> handleInvalidQueryParameter(RuntimeException runtimeException) {
+    public ResponseEntity<String> handleInvalidQueryParameter() {
         return new ResponseEntity<>("Invalid Query Parameter(s)", HttpStatus.BAD_REQUEST);
     }
 
@@ -62,13 +65,15 @@ public class GlobalControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({NoHandlerFoundException.class})
-    public ResponseEntity<String> handleUnknownURL(RuntimeException runtimeException) {
+    public ResponseEntity<String> handleUnknownURL() {
         return new ResponseEntity<>("Unknown URL", HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-    public ResponseEntity<String> handleUnknownMethod(RuntimeException runtimeException) {
+    public ResponseEntity<String> handleUnknownMethod() {
         return new ResponseEntity<>("Unknown Method", HttpStatus.METHOD_NOT_ALLOWED);
     }
+
+
 }
