@@ -44,7 +44,7 @@ public class UsersUserIdProjectsProjectIdSessions {
             int max = Integer.valueOf(prop.getProperty("MAX_CONN"));
             cm.setDefaultMaxPerRoute(max);
             // Increase max connections for localhost:80 to 50
-            HttpHost localhost = new HttpHost("localhost", 8080);
+            HttpHost localhost = new HttpHost(prop.getProperty("TEST_HOST_NAME"), Integer.parseInt(prop.getProperty("TEST_BASE_PORT")));
             cm.setMaxPerRoute(new HttpRoute(localhost), max);
             httpclient = HttpClients.custom().setConnectionManager(cm).build();
             setupdone = true;
