@@ -25,7 +25,7 @@ import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
 
 public class Http {
     static Properties prop = readPropertiesFile("src/main/resources/test.properties");
-    private static String baseUrl = prop.getProperty("TEST_BASE_URL");
+    private static String baseUrl = prop.getProperty("TEST_BASE_URL") + ":" + prop.getProperty("TEST_BASE_PORT");
     private static CloseableHttpClient client;
     private static PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private static boolean setup = false;
@@ -45,7 +45,7 @@ public class Http {
             int max = Integer.valueOf(prop.getProperty("MAX_CONN"));
             Http.cm.setDefaultMaxPerRoute(max);
             // Increase max connections for localhost:80 to 50
-            HttpHost localhost = new HttpHost("locahost", 8080);
+            HttpHost localhost = new HttpHost(prop.getProperty("TEST_HOST_NAME"), Integer.parseInt(prop.getProperty("TEST_BASE_PORT")));
             Http.cm.setMaxPerRoute(new HttpRoute(localhost), max);
             Http.client = HttpClients.custom().setConnectionManager(Http.cm)
                     .build();

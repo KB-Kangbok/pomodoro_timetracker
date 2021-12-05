@@ -34,7 +34,7 @@ public class Users_userId_projects_projectId_sessions {
     ////////////////////////////////////////////////
 
     Properties prop = readPropertiesFile("src/main/resources/test.properties");
-    private String baseUrl = prop.getProperty("TEST_BASE_URL");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL") + ":" + prop.getProperty("TEST_BASE_PORT");
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;
     private boolean setupdone;
@@ -49,7 +49,7 @@ public class Users_userId_projects_projectId_sessions {
             int max = Integer.valueOf(prop.getProperty("MAX_CONN"));
             cm.setDefaultMaxPerRoute(max);
             // Increase max connections for localhost:80 to 50
-            HttpHost localhost = new HttpHost("locahost", 8080);
+            HttpHost localhost = new HttpHost(prop.getProperty("TEST_HOST_NAME"), Integer.parseInt(prop.getProperty("TEST_BASE_PORT")));
             cm.setMaxPerRoute(new HttpRoute(localhost), max);
             httpclient = HttpClients.custom().setConnectionManager(cm).build();
             setupdone = true;

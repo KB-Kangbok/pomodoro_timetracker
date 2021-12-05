@@ -31,7 +31,7 @@ import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
 public class UsersUserIdProjectsProjectIdReport {
 
     Properties prop = readPropertiesFile("src/main/resources/test.properties");
-    private String baseUrl = prop.getProperty("TEST_BASE_URL");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL") + ":" + prop.getProperty("TEST_BASE_PORT");
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;
     private boolean setupdone;

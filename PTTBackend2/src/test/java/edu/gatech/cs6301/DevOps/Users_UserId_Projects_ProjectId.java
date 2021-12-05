@@ -18,7 +18,7 @@ import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
 
 public class Users_UserId_Projects_ProjectId extends Base {
     Properties prop = readPropertiesFile("src/main/resources/test.properties");
-    private String baseUrl = prop.getProperty("TEST_BASE_URL");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL") + ":" + prop.getProperty("TEST_BASE_PORT");
     // Purpose: test POST error for /users/{userId}/projects/{projectId}
     @Test
     public void pttTest1() throws Exception {
