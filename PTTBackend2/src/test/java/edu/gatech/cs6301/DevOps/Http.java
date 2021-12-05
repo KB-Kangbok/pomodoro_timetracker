@@ -2,6 +2,7 @@ package edu.gatech.cs6301.DevOps;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,8 +21,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class Http {
-    private static final String baseUrl = "http://localhost:8080";
+    static Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private static String baseUrl = prop.getProperty("TEST_BASE_URL");
     private static CloseableHttpClient client;
     private static PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private static boolean setup = false;

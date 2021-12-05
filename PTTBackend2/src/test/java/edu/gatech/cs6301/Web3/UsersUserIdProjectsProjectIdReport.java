@@ -22,12 +22,16 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import java.net.URISyntaxException;
+import java.util.Properties;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class UsersUserIdProjectsProjectIdReport {
 
-    private String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL");
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;
     private boolean setupdone;

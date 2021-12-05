@@ -2,6 +2,7 @@ package edu.gatech.cs6301.Backend3;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Properties;
 
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.*;
@@ -23,9 +24,12 @@ import org.apache.http.util.EntityUtils;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class UsersUserIdProjectsTests {
 
-    private String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL");
     //private String baseUrl = "http://gazelle.cc.gatech.edu:9009/ptt";
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;

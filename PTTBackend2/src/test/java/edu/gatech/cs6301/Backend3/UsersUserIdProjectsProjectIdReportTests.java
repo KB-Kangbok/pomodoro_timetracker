@@ -23,10 +23,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Properties;
+
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
 
 public class UsersUserIdProjectsProjectIdReportTests {
 
-    private String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL");
     //private String baseUrl = "http://gazelle.cc.gatech.edu:9009/ptt";
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;

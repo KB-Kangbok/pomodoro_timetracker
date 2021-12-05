@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.logging.ConsoleHandler;
@@ -30,9 +31,12 @@ import org.apache.http.util.EntityUtils;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class Users_userId_projects_projectId_report {
 
-    private String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL");
     //private String baseUrl = "http://gazelle.cc.gatech.edu:9003/ptt";
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;

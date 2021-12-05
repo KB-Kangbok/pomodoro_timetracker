@@ -1,6 +1,7 @@
 package edu.gatech.cs6301.DevOps;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.*;
@@ -21,8 +22,11 @@ import org.apache.http.util.EntityUtils;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class Base {
-    public String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    public String baseUrl = prop.getProperty("TEST_BASE_URL");
     public PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     public CloseableHttpClient httpclient;
     private boolean setupdone;

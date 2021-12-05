@@ -2,6 +2,7 @@ package edu.gatech.cs6301.Backend1;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -27,8 +28,11 @@ import org.apache.http.util.EntityUtils;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class BaseTestClass {
-    protected String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    protected String baseUrl = prop.getProperty("TEST_BASE_URL");
     protected PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     protected CloseableHttpClient httpclient;
     protected boolean setupdone;

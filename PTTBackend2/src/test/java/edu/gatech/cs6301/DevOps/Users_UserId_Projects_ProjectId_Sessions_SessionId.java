@@ -25,14 +25,17 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Properties;
 
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class Users_UserId_Projects_ProjectId_Sessions_SessionId {
 //    private String baseUrl = "http://gazelle.cc.gatech.edu:9010/ptt";
-     private String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL");
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;
     private boolean setupdone;

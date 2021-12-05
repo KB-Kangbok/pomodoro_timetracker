@@ -2,7 +2,9 @@ package edu.gatech.cs6301.Web3;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Properties;
 
+import edu.gatech.cs6301.ReadProperties;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.*;
 import org.apache.http.conn.routing.HttpRoute;
@@ -23,13 +25,18 @@ import org.apache.http.util.EntityUtils;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
-public class users {
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
 
-    private String baseUrl = "http://localhost:8080";
+public class users {
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    private String baseUrl = prop.getProperty("TEST_BASE_URL");
     private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpclient;
     private boolean setupdone;
-    
+
+    public users() throws IOException {
+    }
+
     @Before
     public void runBefore() {
 	if (!setupdone) {

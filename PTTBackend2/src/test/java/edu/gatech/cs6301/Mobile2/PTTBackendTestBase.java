@@ -2,10 +2,7 @@ package edu.gatech.cs6301.Mobile2;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.*;
@@ -31,9 +28,12 @@ import org.apache.http.util.EntityUtils;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import static edu.gatech.cs6301.ReadProperties.readPropertiesFile;
+
 public class PTTBackendTestBase {
 
-    String baseUrl = "http://localhost:8080";
+    Properties prop = readPropertiesFile("src/main/resources/test.properties");
+    String baseUrl = prop.getProperty("TEST_BASE_URL");
     PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     CloseableHttpClient httpclient;
     boolean setupdone;
