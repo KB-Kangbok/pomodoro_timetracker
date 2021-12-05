@@ -41,10 +41,11 @@ public class users_userId_projetcs_projectId {
 	    // Increase max total connection to 100
 	    cm.setMaxTotal(100);
 	    // Increase default max connection per route to 20
-	    cm.setDefaultMaxPerRoute(10);
+        int max = Integer.valueOf(prop.getProperty("MAX_CONN"));
+	    cm.setDefaultMaxPerRoute(max);
 	    // Increase max connections for localhost:80 to 50
 	    HttpHost localhost = new HttpHost("locahost", 8080);
-	    cm.setMaxPerRoute(new HttpRoute(localhost), 10);
+	    cm.setMaxPerRoute(new HttpRoute(localhost), max);
 	    httpclient = HttpClients.custom().setConnectionManager(cm).build();
 	    setupdone = true;
 	}

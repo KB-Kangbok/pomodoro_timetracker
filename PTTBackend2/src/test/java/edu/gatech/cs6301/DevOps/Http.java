@@ -42,10 +42,11 @@ public class Http {
             // Increase max total connection to 100
             Http.cm.setMaxTotal(100);
             // Increase default max connection per route to 20
-            Http.cm.setDefaultMaxPerRoute(10);
+            int max = Integer.valueOf(prop.getProperty("MAX_CONN"));
+            Http.cm.setDefaultMaxPerRoute(max);
             // Increase max connections for localhost:80 to 50
             HttpHost localhost = new HttpHost("locahost", 8080);
-            Http.cm.setMaxPerRoute(new HttpRoute(localhost), 10);
+            Http.cm.setMaxPerRoute(new HttpRoute(localhost), max);
             Http.client = HttpClients.custom().setConnectionManager(Http.cm)
                     .build();
             Http.setup = true;
